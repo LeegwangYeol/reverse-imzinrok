@@ -105,86 +105,91 @@ IDLE_DIR_VECTORS: List[Tuple[float, float]] = [
 
 # Hand grip center offsets (dx, dy) relative to canvas center (cx, cy) at true chest/waist level
 IDLE_GRIP_OFFSETS: List[Tuple[int, int]] = [
-    (-2, -3),  # 0: SW (r_hand at cx+0, cy+1; f_hand at cx-4, cy-7)
-    (-3, -3),  # 1: W  (r_hand at cx-1, cy+1; f_hand at cx-5, cy-7)
-    (-2, -3),  # 2: NW (r_hand at cx+0, cy+1; f_hand at cx-4, cy-7)
-    (2, -3),   # 3: N  (r_hand at cx+0, cy+1; f_hand at cx+4, cy-7)
-    (-2, -3),  # 4: S  (r_hand at cx+0, cy+1; f_hand at cx-4, cy-7)
+    (-2, -3),  # 0: SW (front/three-quarter view)
+    (-4, -5),  # 1: W  (side-back profile: held in front of chest, occluded by torso)
+    (-3, -5),  # 2: NW (back view: held in front of upper chest, occluded by torso)
+    (3, -5),   # 3: N  (back view: held in front of upper-right chest, occluded by torso)
+    (-2, -3),  # 4: S  (front view)
 ]
 
 MOVE_GRIP_OFFSETS: List[Tuple[int, int]] = [
     (-2, -3),  # 0: SW
-    (-2, -3),  # 1: W
-    (-2, -3),  # 2: NW
-    (2, -3),   # 3: N
+    (-4, -5),  # 1: W  (held in front of chest, occluded by back/side armor)
+    (-3, -5),  # 2: NW (held in front of chest, occluded by back armor)
+    (3, -5),   # 3: N  (held in front of chest, occluded by back armor)
     (-2, -3),  # 4: S
 ]
 
 ATK_GRIP_OFFSETS: List[Tuple[int, int]] = [
-    (-1, -3),  # 0: SW (r_hand at cx+2, cy-5; f_hand at cx-5, cy+0)
-    (-2, -3),  # 1: W  (r_hand at cx+2, cy-4; f_hand at cx-7, cy-2)
-    (-1, -4),  # 2: NW (r_hand at cx+2, cy-2; f_hand at cx-5, cy-7)
-    (3, -4),   # 3: N  (r_hand at cx+2, cy+0; f_hand at cx+4, cy-9)
-    (-1, -2),  # 4: S  (r_hand at cx+1, cy-6; f_hand at cx-3, cy+3)
+    (-1, -3),  # 0: SW
+    (-4, -4),  # 1: W  (thrusting forward in front of chest, occluded by torso)
+    (-3, -5),  # 2: NW (thrusting forward in front of chest, occluded by back armor)
+    (3, -5),   # 3: N  (thrusting forward in front of chest, occluded by back armor)
+    (-1, -2),  # 4: S
 ]
 
-# Explicit 8-step overhead-to-downward slash trajectories per direction (0: SW, 1: W, 2: NW, 3: N, 4: S)
-# Kept close to the front of the torso so the hands and forearms stay anatomically connected to the shoulders.
+# Explicit 8-step 3D circular shoulder-arc slash trajectories per direction (0: SW, 1: W, 2: NW, 3: N, 4: S)
+# Here (h_dx, h_dy) is the TRUE 3D HAND GRIP CENTER relative to (cx + b_dx, cy + b_dy):
+# Step 0-1: Hands physically pull UP and BACK to the rear shoulder/helmet (+4..+5, -9..-11), coiling the blade back;
+# Step 2: Hands whip wide forward-outward (-4, -8) as the arms swing around the shoulder pivot;
+# Step 3: Both arms extend far forward in front of the chest (-8, -2) for the horizontal/diagonal mid-cleave;
+# Step 4-5: Arms sweep down-forward (-7, +3 -> -5, +4) in a deep follow-through;
+# Step 6-7: Arms retract smoothly back to chest guard.
 SWORD_SLASH_KEYFRAMES: List[List[Tuple[int, int, float]]] = [
-    # 0: SW (facing down-left: raise high overhead -> cleave diagonally down-left)
+    # 0: SW (facing down-left)
     [
-        (0, -7, -100.0),   # step 0: raise sword high overhead
-        (1, -9, -115.0),   # step 1: peak overhead chamber above head
-        (-2, -5, -155.0),  # step 2: begin downward-left slash
-        (-3, -2, 160.0),   # step 3: mid cleave across target
-        (-3, 1, 118.0),    # step 4: deep downward follow-through (hit!)
-        (-2, 2, 105.0),    # step 5: low follow-through hold
-        (-1, -1, 140.0),   # step 6: recovery toward guard
-        (-2, -4, -125.0),  # step 7: ready stance
+        (4, -9, -58.0),    # step 0: hands lift up-right to rear shoulder, blade angled up-back
+        (5, -11, -42.0),   # step 1: hands coil high behind right side of helmet, blade cocked back
+        (-4, -8, -135.0),  # step 2: arms whip wide forward-up-left in front of shoulders
+        (-8, -2, 172.0),   # step 3: full forward arm extension 8px in front of chest (mid-cleave)
+        (-7, 3, 138.0),    # step 4: deep diagonal-SW impact follow-through (hit!)
+        (-5, 4, 126.0),    # step 5: low follow-through hold
+        (-4, 0, 160.0),    # step 6: circular recovery sweep
+        (-2, -4, -120.0),  # step 7: return to chest ready guard
     ],
-    # 1: W (facing left: raise high overhead -> cleave wide down-left)
+    # 1: W (facing left)
     [
-        (-1, -7, -95.0),   # step 0: raise sword high overhead
-        (0, -9, -110.0),   # step 1: peak overhead chamber
-        (-3, -5, -150.0),  # step 2: begin downward slash
-        (-4, -2, 172.0),   # step 3: mid cleave through West axis
-        (-4, 1, 130.0),    # step 4: deep downward-left follow-through (hit!)
-        (-3, 2, 118.0),    # step 5: low follow-through hold
-        (-2, -1, 160.0),   # step 6: recovery
-        (-2, -4, -120.0),  # step 7: ready stance
+        (4, -9, -52.0),    # step 0: hands lift up-right behind shoulder
+        (5, -11, -38.0),   # step 1: peak overhead-back coil behind helmet
+        (-4, -8, -130.0),  # step 2: wide forward-up-left swing
+        (-8, -2, 178.0),   # step 3: full forward-left arm extension 8px in front of chest
+        (-7, 2, 148.0),    # step 4: deep West-SW follow-through cleave (hit!)
+        (-5, 3, 136.0),    # step 5: follow-through hold
+        (-4, -1, 168.0),   # step 6: recovery sweep
+        (-3, -4, -118.0),  # step 7: ready stance
     ],
-    # 2: NW (facing up-left: raise overhead -> cleave across up-left to down-left)
+    # 2: NW (facing up-left)
     [
-        (0, -7, -75.0),    # step 0: raise sword high overhead
-        (1, -9, -60.0),    # step 1: peak overhead chamber
-        (-2, -6, -115.0),  # step 2: sweep across top-left
-        (-4, -4, -155.0),  # step 3: mid cleave through NW axis
-        (-4, -1, 160.0),   # step 4: follow-through to West-SW (hit!)
-        (-3, 0, 148.0),    # step 5: follow-through hold
-        (-2, -2, -150.0),  # step 6: recovery
-        (-2, -4, -105.0),  # step 7: ready stance
+        (4, -9, -48.0),    # step 0: hands lift up-right behind shoulder
+        (5, -11, -35.0),   # step 1: coil back-right behind helmet
+        (-4, -8, -118.0),  # step 2: wide sweep across top-left
+        (-7, -5, -152.0),  # step 3: full forward-NW arm extension past left shoulder
+        (-7, -2, 174.0),   # step 4: follow-through cleave to West (hit!)
+        (-5, 0, 160.0),    # step 5: follow-through hold
+        (-4, -3, -155.0),  # step 6: recovery
+        (-3, -5, -112.0),  # step 7: ready stance
     ],
-    # 3: N (facing up/back: cock back overhead-left -> wide horizontal-diagonal cleave across North to NE)
+    # 3: N (facing up/back)
     [
-        (-1, -7, -135.0),  # step 0: cock back left shoulder
-        (-2, -9, -150.0),  # step 1: peak back-swing
-        (0, -8, -105.0),   # step 2: sweep across North
-        (3, -6, -55.0),    # step 3: mid cleave through N-NE
-        (4, -3, -15.0),    # step 4: full follow-through to East (hit!)
-        (4, -2, -5.0),     # step 5: follow-through hold
-        (3, -4, -55.0),    # step 6: recovery
-        (2, -5, -90.0),    # step 7: ready stance
+        (-4, -9, -132.0),  # step 0: hands lift up-left behind left shoulder
+        (-5, -11, -145.0), # step 1: coil back-left behind helmet
+        (3, -8, -65.0),    # step 2: wide sweep across North
+        (7, -5, -28.0),    # step 3: full forward-NE arm extension past right shoulder
+        (7, -2, 8.0),      # step 4: full follow-through to East (hit!)
+        (5, 0, 20.0),      # step 5: follow-through hold
+        (4, -3, -35.0),    # step 6: recovery
+        (3, -5, -72.0),    # step 7: ready stance
     ],
-    # 4: S (facing down/front: raise above right shoulder on screen-left -> cleave down-front)
+    # 4: S (facing down/front)
     [
-        (-2, -7, -110.0),  # step 0: raise high above right shoulder (screen-left)
-        (-3, -9, -125.0),  # step 1: peak overhead chamber
-        (-4, -4, -165.0),  # step 2: sweep down-left
-        (-3, 0, 125.0),    # step 3: mid cleave through South-SW
-        (-1, 2, 85.0),     # step 4: deep downward follow-through (hit!)
-        (0, 2, 75.0),      # step 5: low follow-through hold
-        (-2, 0, 110.0),    # step 6: recovery
-        (-3, -3, -105.0),  # step 7: ready stance
+        (4, -9, -60.0),    # step 0: hands lift high-right above shoulder
+        (5, -11, -45.0),   # step 1: peak overhead-back coil
+        (-5, -7, -142.0),  # step 2: wide outward-left swing
+        (-7, 0, 152.0),    # step 3: wide forward-down-left cleave
+        (-3, 4, 108.0),    # step 4: deep downward-front cleave across South (hit!)
+        (-1, 5, 95.0),     # step 5: low front follow-through hold
+        (-3, 1, 132.0),    # step 6: recovery
+        (-2, -4, -110.0),  # step 7: ready stance
     ],
 ]
 
@@ -197,25 +202,24 @@ def draw_slash_arc(
     ang_end_deg: float,
     radius: int,
 ) -> None:
-    """Draw a curved metallic sword-slash trail (검기/궤적) between ang_start_deg and ang_end_deg."""
+    """Draw a sleek, tight metallic sword-slash trail (검기) right behind the cutting edge (clamped to <= 26 deg)."""
     diff = (ang_end_deg - ang_start_deg + 180.0) % 360.0 - 180.0
-    steps = max(8, int(abs(diff) // 4))
+    if abs(diff) > 26.0:
+        ang_start_deg = ang_end_deg - (26.0 if diff > 0 else -26.0)
+        diff = 26.0 if diff > 0 else -26.0
+    steps = max(8, int(abs(diff) * 1.5))
     for i in range(steps + 1):
         t = i / float(steps)
         a_rad = math.radians(ang_start_deg + diff * t)
         ca, sa = math.cos(a_rad), math.sin(a_rad)
-        col_outer = IDX_STEEL_GLEAM if t >= 0.55 else IDX_STEEL_HIGH
-        col_inner = IDX_STEEL_MID if t >= 0.45 else IDX_STEEL_LOW
+        col_outer = IDX_STEEL_GLEAM if t >= 0.50 else IDX_STEEL_HIGH
+        col_inner = IDX_STEEL_MID if t >= 0.40 else IDX_STEEL_LOW
         ox = int(round(hx + radius * ca))
         oy = int(round(hy + radius * sa))
-        ix = int(round(hx + (radius - 2) * ca))
-        iy = int(round(hy + (radius - 2) * sa))
+        ix = int(round(hx + (radius - 1) * ca))
+        iy = int(round(hy + (radius - 1) * sa))
         set_safe_pixel(canvas, ox, oy, col_outer)
         set_safe_pixel(canvas, ix, iy, col_inner)
-        if t >= 0.65:
-            mx = int(round(hx + (radius - 1) * ca))
-            my = int(round(hy + (radius - 1) * sa))
-            set_safe_pixel(canvas, mx, my, IDX_STEEL_GLEAM)
 
 
 def draw_sword_arm(
@@ -1014,11 +1018,93 @@ def draw_two_handed_arms(
     else:
         lh, rh = hand2_xy, hand1_xy
 
-    el_l = ((sh_l[0] + lh[0]) // 2 + bend_l, (sh_l[1] + lh[1]) // 2 + 1)
-    el_r = ((sh_r[0] + rh[0]) // 2 + bend_r, (sh_r[1] + rh[1]) // 2 + 1)
+    # Raise elbows upward when hands are chambered high overhead (hy < sy)
+    bend_yl = -1 if lh[1] < sh_l[1] else 1
+    bend_yr = -1 if rh[1] < sh_r[1] else 1
+    el_l = ((sh_l[0] + lh[0]) // 2 + bend_l, (sh_l[1] + lh[1]) // 2 + bend_yl)
+    el_r = ((sh_r[0] + rh[0]) // 2 + bend_r, (sh_r[1] + rh[1]) // 2 + bend_yr)
 
     draw_3d_arm_via_elbow(canvas, sh_l[0], sh_l[1], el_l[0], el_l[1], lh[0], lh[1], upper_ramp, bracer_ramp)
     draw_3d_arm_via_elbow(canvas, sh_r[0], sh_r[1], el_r[0], el_r[1], rh[0], rh[1], upper_ramp, bracer_ramp)
+
+
+def apply_back_view_body_occlusion(
+    canvas: np.ndarray,
+    base: np.ndarray,
+    ox: int,
+    oy: int,
+    b_dx: int,
+    b_dy: int,
+    cx: int,
+    cy: int,
+    d: int,
+    style: str,
+    is_overhead: bool = False,
+    one_handed_sword: bool = False,
+) -> None:
+    """
+    When viewing a soldier from behind (d=2 NW / engine-mirrored NE, and d=3 N),
+    the weapon shaft, sword hilt, and hands are held IN FRONT OF the soldier's chest
+    (further from the camera than the soldier's back armor, helmet, and legs).
+    This function:
+      1. Clears any lower rear-shaft / hilt pixels inside the waist/leg silhouette so no butt pokes out below the back.
+      2. Re-composites the opaque 3ds Max body pixels (base: back armor, helmet, waist, legs) ON TOP OF the weapon shaft/hilt/hands.
+      3. Renders the outer 3D shoulder pauldrons / upper arms wrapping forward around the shoulders.
+    """
+    if d not in (1, 2, 3):
+        return
+    th, tw = canvas.shape
+    bh, bw = base.shape
+
+    # 1. Remove any stray lower shaft butt or hilt tail in the lower torso/leg zone behind the soldier
+    if not is_overhead:
+        y_clear_start = max(0, cy + b_dy - 3)
+        y_clear_end = min(th, cy + b_dy + 16)
+        x_clear_start = max(0, cx + b_dx - (5 if d == 1 else 7))
+        x_clear_end = min(tw, cx + b_dx + 7)
+        canvas[y_clear_start:y_clear_end, x_clear_start:x_clear_end] = 0
+
+    # 2. Composite the 3ds Max soldier body (helmet, back armor, waist, legs) ON TOP OF the chest-front weapon
+    by_start = 19 if is_overhead else 0
+    for by in range(by_start, bh):
+        for bx in range(bw):
+            val = base[by, bx]
+            if val == 0:
+                continue
+            ty, tx = by + oy + b_dy, bx + ox + b_dx
+            if 0 <= ty < th and 0 <= tx < tw:
+                canvas[ty, tx] = val
+
+    # 3. Draw the outer 3D shoulder pauldrons / rear upper arms wrapping forward around the torso edges
+    upper_ramp, _ = get_arm_ramps(style)
+    if d == 1:
+        sh_l = (cx + b_dx - 3, cy + b_dy - 8)
+        el_l = (cx + b_dx - 5, cy + b_dy - 5)
+        sh_r = (cx + b_dx + 2, cy + b_dy - 8)
+        el_r = (cx + b_dx + 3, cy + b_dy - 5)
+    elif d == 2:
+        sh_l = (cx + b_dx - 4, cy + b_dy - 8)
+        el_l = (cx + b_dx - 5, cy + b_dy - 6)
+        sh_r = (cx + b_dx + 3, cy + b_dy - 8)
+        el_r = (cx + b_dx + 4, cy + b_dy - 5)
+    else:
+        sh_l = (cx + b_dx - 4, cy + b_dy - 8)
+        el_l = (cx + b_dx - 5, cy + b_dy - 5)
+        sh_r = (cx + b_dx + 4, cy + b_dy - 8)
+        el_r = (cx + b_dx + 5, cy + b_dy - 6)
+
+    draw_3d_cyl_limb(canvas, sh_l[0], sh_l[1], el_l[0], el_l[1], upper_ramp, radius=1.30)
+    if not one_handed_sword or d in (1, 2, 3):
+        draw_3d_cyl_limb(canvas, sh_r[0], sh_r[1], el_r[0], el_r[1], upper_ramp, radius=1.30)
+
+    # Restore central spine pixels of base so upper-arm cylinders only wrap the outer shoulder edges
+    for by in range(max(18, by_start), bh):
+        for bx in range(27, 34):
+            val = base[by, bx]
+            if val != 0:
+                ty, tx = by + oy + b_dy, bx + ox + b_dx
+                if 0 <= ty < th and 0 <= tx < tw:
+                    canvas[ty, tx] = val
 
 
 def draw_hand_wrapping_weapon(
@@ -1102,7 +1188,10 @@ def get_polearm_pose(
 ) -> Tuple[int, int, int, int, int, int, float, float]:
     """
     Compute (butt_x, butt_y, grip_x, grip_y, tip_x, tip_y, ux, uy) for a two-handed polearm
-    so that it is held upright in Idle, diagonally across the chest in Move, and thrust/swung in Attack.
+    so that it is held upright in Idle, sways naturally across the chest in Move, and
+    physically pulls back and thrusts forward with the hands/arms in Attack.
+    In back-facing directions (d=2 NW/NE, d=3 N), rear_len is tucked inside the chest silhouette
+    so no shaft butt pokes out behind the back or between the legs.
     """
     if state == "idle":
         gx_off, gy_off = IDLE_GRIP_OFFSETS[d]
@@ -1111,18 +1200,37 @@ def get_polearm_pose(
         gx, gy = cx + gx_off, cy + gy_off + breathe
     elif state == "move":
         gx_off, gy_off = MOVE_GRIP_OFFSETS[d]
-        ux, uy = MOVE_DIR_VECTORS[d]
+        ux_b, uy_b = MOVE_DIR_VECTORS[d]
+        # Subtle 8-step walk-cycle angular sway and hand stride oscillation
+        sway_rad = math.radians((-3.5, -2.5, 0.0, 2.5, 3.5, 2.5, 0.0, -2.5)[step])
+        cs, ss = math.cos(sway_rad), math.sin(sway_rad)
+        ux = ux_b * cs - uy_b * ss
+        uy = ux_b * ss + uy_b * cs
+        stride = (-1.0, -0.8, 0.0, 0.8, 1.0, 0.8, 0.0, -0.8)[step]
         bob = -1 if step in (1, 2, 5, 6) else 0
-        gx, gy = cx + gx_off, cy + gy_off + bob
+        gx = int(round(cx + gx_off + stride * ux))
+        gy = int(round(cy + gy_off + bob + stride * uy))
     else:
         gx_off, gy_off = ATK_GRIP_OFFSETS[d]
-        ux, uy = ATK_DIR_VECTORS[d]
-        gx, gy = cx + gx_off, cy + gy_off
+        ux_b, uy_b = ATK_DIR_VECTORS[d]
+        # Angular coil on wind-up (steps 0..1) and downward-forward drive on lunge (steps 3..5)
+        coil_sign = -1.0 if d == 3 else 1.0
+        coil_rad = math.radians(coil_sign * (5.0, 7.0, 0.0, -2.0, -3.0, -2.0, 0.0, 2.0)[step])
+        cc, sc = math.cos(coil_rad), math.sin(coil_rad)
+        ux = ux_b * cc - uy_b * sc
+        uy = ux_b * sc + uy_b * cc
+        # Physical two-handed pull-back (steps 0..1) and deep forward arm thrust (steps 2..5)
+        thrust_shift = (-4.5, -6.0, 1.5, 6.5, 9.0, 6.5, 2.0, -1.5)[step]
+        gx = int(round(cx + gx_off + thrust_shift * ux))
+        gy = int(round(cy + gy_off + thrust_shift * uy))
 
-    butt_x = int(round(gx - rear_len * ux))
-    butt_y = int(round(gy - rear_len * uy))
-    tip_x = int(round(gx + front_len * ux))
-    tip_y = int(round(gy + front_len * uy))
+    eff_rear_len = min(rear_len, 4) if d in (1, 2, 3) else rear_len
+    eff_front_len = (front_len + 2) if d in (1, 2, 3) else front_len
+
+    butt_x = int(round(gx - eff_rear_len * ux))
+    butt_y = int(round(gy - eff_rear_len * uy))
+    tip_x = int(round(gx + eff_front_len * ux))
+    tip_y = int(round(gy + eff_front_len * uy))
     return butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy
 
 
@@ -1135,8 +1243,8 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     68x68, 168 frames for 등패수 (0x7A):
     - Blue dujeonggap with golden rivets
     - Angled isometric oval rattan shield (등패) on the shield arm with iron boss and dark rim
-    - Crisp steel Hwando blade held in right-hand guard in Idle/Move and slashing forward in Attack,
-      with articulated 3D sword arm and visible hand gripping the Hwando hilt.
+    - Crisp steel Hwando blade held in right-hand guard in Idle/Move and slashing in a wide 3D circular arc in Attack,
+      with back-view torso occlusion in d=2 (NW/NE) and d=3 (N).
     """
     spec = UNIT_SPECS["dengpaesu"]
     tw, th = spec["width"], spec["height"]  # 68x68
@@ -1170,12 +1278,12 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             draw_line_indices(c, cx + 2, cy + 8, cx + 14, cy + 12, IDX_STEEL_GLEAM, width=1)
             set_safe_pixel(c, cx + 2, cy + 8, IDX_GOLD_BRIGHT)
         else:
-            # Shield held on the shield forearm (screen-left for d=0..3, screen-right for d=4)
+            # Shield held on the shield forearm (in front of left shoulder in d=2,3 so torso occludes inner half)
             shield_pos = [
                 (cx - 6, cy - 1, 5.5, 6.8),  # 0: SW
                 (cx - 6, cy - 2, 5.0, 6.8),  # 1: W
-                (cx - 5, cy - 3, 5.0, 6.5),  # 2: NW
-                (cx - 5, cy - 4, 4.5, 6.0),  # 3: N
+                (cx - 5, cy - 5, 4.8, 6.2),  # 2: NW (in front of front-left shoulder)
+                (cx - 5, cy - 5, 4.5, 5.8),  # 3: N  (in front of left shoulder)
                 (cx + 6, cy - 1, 5.5, 6.8),  # 4: S
             ]
             sx, sy, rx, ry = shield_pos[d]
@@ -1221,28 +1329,26 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
 
             if state == "attack":
                 h_dx, h_dy, ang_deg = SWORD_SLASH_KEYFRAMES[d][step]
-                # Keep one-handed Hwando hilt on the sword-hand side so it never crosses over the shield
-                if d in (0, 1, 2):
-                    hx = cx + b_dx + max(0, h_dx + 3)
-                else:
-                    hx = cx + b_dx + h_dx
-                hy = cy + b_dy + h_dy
+                # True 3D hand center for the Hwando sword arm
+                hand_cx = cx + b_dx + (h_dx + 1 if d in (0, 1, 2) else h_dx)
+                hand_cy = cy + b_dy + h_dy
                 ang = math.radians(ang_deg)
                 cos_a, sin_a = math.cos(ang), math.sin(ang)
                 px_a, py_a = -sin_a, cos_a
+                # Crossguard (hx, hy) sits 1.5px ahead of the fist center; pommel (butt) sits 2.5px behind
+                hx = int(round(hand_cx + 1.5 * cos_a))
+                hy = int(round(hand_cy + 1.5 * sin_a))
                 blen = 17  # Constant 17px Hwando blade
                 tx = int(round(hx + blen * cos_a))
                 ty = int(round(hy + blen * sin_a))
-                butt_x = int(round(hx - 4 * cos_a))
-                butt_y = int(round(hy - 4 * sin_a))
+                butt_len = 2.0 if (d in (2, 3) and step >= 2) else 2.5
+                butt_x = int(round(hand_cx - butt_len * cos_a))
+                butt_y = int(round(hand_cy - butt_len * sin_a))
 
-                if step in (2, 3, 4):
-                    prev_ang = SWORD_SLASH_KEYFRAMES[d][step - 1][2]
-                    draw_slash_arc(c, hx, hy, prev_ang, ang_deg, radius=blen - 1)
-
-                el_x = (sh_sword_x + hx) // 2 + (-1 if d == 4 else (0 if d in (1, 2) else 1))
-                el_y = (sh_sword_y + hy) // 2 + 1
-                draw_3d_arm_via_elbow(c, sh_sword_x, sh_sword_y, el_x, el_y, hx, hy, upper_ramp, bracer_ramp)
+                bend_y = -1 if hand_cy < sh_sword_y else 1
+                el_x = (sh_sword_x + hand_cx) // 2 + (-1 if d == 4 else (0 if d in (1, 2) else 1))
+                el_y = (sh_sword_y + hand_cy) // 2 + bend_y
+                draw_3d_arm_via_elbow(c, sh_sword_x, sh_sword_y, el_x, el_y, hand_cx, hand_cy, upper_ramp, bracer_ramp)
 
                 # Hwando hilt + brass pommel + disc guard (코등이)
                 draw_line_indices(c, butt_x, butt_y, hx, hy, IDX_WOOD_DARK, width=1)
@@ -1253,18 +1359,19 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 draw_line_indices(c, hx, hy, mid_x, mid_y, IDX_STEEL_GLEAM, width=1)
                 draw_line_indices(c, mid_x, mid_y, tx, ty, IDX_STEEL_GLEAM, width=1)
                 # 3D Hand wrapping directly around the Hwando hilt + brass disc guard
-                draw_hand_wrapping_weapon(c, int(round(hx - 1.5 * cos_a)), int(round(hy - 1.5 * sin_a)), cos_a, sin_a)
+                draw_hand_wrapping_weapon(c, hand_cx, hand_cy, cos_a, sin_a)
                 set_safe_pixel(c, hx, hy, IDX_GOLD_BRIGHT)
                 set_safe_pixel(c, tx, ty, IDX_STEEL_GLEAM)
             else:
-                # Held cleanly in poised sword-hand guard on the sword side (screen-right for d=0..3, screen-left for d=4)
+                # Held cleanly in poised sword-hand guard on the sword side, with walk stride sway in Move
                 bob = -1 if (state == "move" and step in (1, 2, 5, 6)) else 0
+                stride = (-1, -1, 0, 1, 1, 1, 0, -1)[step] if state == "move" else 0
                 sword_ready = [
-                    (cx + 5, cy - 3 + bob, cx + 9, cy - 17 + bob),   # 0: SW
-                    (cx + 4, cy - 4 + bob, cx + 7, cy - 18 + bob),   # 1: W
-                    (cx + 5, cy - 4 + bob, cx + 8, cy - 18 + bob),   # 2: NW
-                    (cx + 5, cy - 5 + bob, cx + 8, cy - 19 + bob),   # 3: N
-                    (cx - 5, cy - 3 + bob, cx - 9, cy - 17 + bob),   # 4: S
+                    (cx + 5, cy - 3 + bob, cx + 9 + stride, cy - 17 + bob),   # 0: SW
+                    (cx + 4, cy - 4 + bob, cx + 7 + stride, cy - 18 + bob),   # 1: W
+                    (cx + 3, cy - 5 + bob, cx + 7 + stride, cy - 19 + bob),   # 2: NW (in front of chest)
+                    (cx + 3, cy - 5 + bob, cx + 7 + stride, cy - 19 + bob),   # 3: N  (in front of chest)
+                    (cx - 5, cy - 3 + bob, cx - 9 - stride, cy - 17 + bob),   # 4: S
                 ]
                 hx, hy, tx, ty = sword_ready[d]
                 dx_s, dy_s = tx - hx, ty - hy
@@ -1285,6 +1392,14 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 set_safe_pixel(c, hx, hy, IDX_GOLD_BRIGHT)
                 set_safe_pixel(c, tx, ty, IDX_STEEL_GLEAM)
 
+            if d in (1, 2, 3):
+                apply_back_view_body_occlusion(
+                    c, base, ox, oy, b_dx, b_dy, cx, cy, d,
+                    style="dujeonggap_blue",
+                    is_overhead=(state == "attack" and step in (0, 1)),
+                    one_handed_sword=True,
+                )
+
         seal_canvas_pinholes(c, ox, oy)
         frames.append(c)
 
@@ -1296,7 +1411,8 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     80x74, 168 frames for 쌍수도병 (0x7B):
     - Solid Team-Blue & Steel Gyeongbeongap lamellar armor
     - Two-Handed Greatsword (쌍수도) held with BOTH hands on the 9px long hilt in Idle/Move,
-      and executing a massive overhead-to-ground two-handed cleave during Attack.
+      and executing a wide 3D circular shoulder-arc two-handed cleave during Attack,
+      with full back-view torso occlusion in d=2 (NW/NE) and d=3 (N).
     """
     spec = UNIT_SPECS["ssangsudo"]
     tw, th = spec["width"], spec["height"]  # 80x74
@@ -1328,25 +1444,27 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             set_safe_pixel(c, cx - 6, cy + 12, IDX_GOLD_BRIGHT)
             draw_line_indices(c, cx - 5, cy + 12, cx + 20, cy + 12, IDX_STEEL_GLEAM, width=2)
         elif state == "attack":
-            # Full two-handed overhead-to-downward greatsword cleave (1.2x scaled 양손 대도 내려베기)
+            # Full two-handed 3D circular shoulder-arc greatsword cleave (1.2x scaled 양손 대도 회전 베기)
+            # (hand_cx, hand_cy) is the true midpoint between the warrior's two hands!
             h_dx, h_dy, ang_deg = SWORD_SLASH_KEYFRAMES[d][step]
-            gx, gy = cx + b_dx + h_dx, cy + b_dy + (h_dy // 2 if step in (0, 1) else h_dy)
+            hand_cx, hand_cy = cx + b_dx + h_dx, cy + b_dy + h_dy
             ang = math.radians(ang_deg)
             cos_a, sin_a = math.cos(ang), math.sin(ang)
             px_a, py_a = -sin_a, cos_a
-            butt_x = int(round(gx - 9 * cos_a))
-            butt_y = int(round(gy - 9 * sin_a))
-            blen = 29  # 1.2x scaled greatsword blade (24 -> 29px, total 38px with 9px two-handed hilt)
+
+            # Two hands centered around (hand_cx, hand_cy); crossguard (gx, gy) is 3.5px ahead of hand center
+            r_off = 1.5 if (d in (2, 3) and step >= 2) else 2.2
+            f_off = 2.0
+            r_hand = (int(round(hand_cx - r_off * cos_a)), int(round(hand_cy - r_off * sin_a)))
+            f_hand = (int(round(hand_cx + f_off * cos_a)), int(round(hand_cy + f_off * sin_a)))
+            butt_off = 2.5 if (d in (2, 3) and step >= 2) else 4.5
+            butt_x = int(round(hand_cx - butt_off * cos_a))
+            butt_y = int(round(hand_cy - butt_off * sin_a))
+            gx = int(round(hand_cx + 3.5 * cos_a))
+            gy = int(round(hand_cy + 3.5 * sin_a))
+            blen = 27  # 1.2x scaled greatsword blade
             tip_x = int(round(gx + blen * cos_a))
             tip_y = int(round(gy + blen * sin_a))
-
-            f_hand = ( int(round(gx - 2 * cos_a)), int(round(gy - 2 * sin_a)) )
-            r_hand = ( int(round(gx - 6 * cos_a)), int(round(gy - 6 * sin_a)) )
-
-            if step in (2, 3, 4):
-                prev_ang = SWORD_SLASH_KEYFRAMES[d][step - 1][2]
-                draw_slash_arc(c, gx, gy, prev_ang, ang_deg, radius=blen - 1)
-                draw_slash_arc(c, gx, gy, prev_ang, ang_deg, radius=blen - 4)
 
             # Both 3D arms connecting shoulders to the two grip positions on the greatsword hilt
             draw_two_handed_arms(c, cx + b_dx, cy + b_dy, f_hand, r_hand, "gyeongbeongap_steel", d=d)
@@ -1374,6 +1492,13 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], cos_a, sin_a, cuff_col=IDX_RED_HIGH)
             draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], cos_a, sin_a, cuff_col=IDX_RED_HIGH)
             set_safe_pixel(c, tip_x, tip_y, IDX_STEEL_GLEAM)
+
+            if d in (1, 2, 3):
+                apply_back_view_body_occlusion(
+                    c, base, ox, oy, b_dx, b_dy, cx, cy, d,
+                    style="gyeongbeongap_steel",
+                    is_overhead=(step in (0, 1)),
+                )
         else:
             # High two-handed shoulder/chest guard stance (1.2x scaled: rear_len=9, front_len=27 -> 36px total)
             butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy = get_polearm_pose(
@@ -1381,7 +1506,7 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             )
             px_a, py_a = -uy, ux
             f_hand = (int(round(gx - 1.5 * ux)), int(round(gy - 1.5 * uy)))
-            r_hand = (int(round(gx - 6.0 * ux)), int(round(gy - 6.0 * uy)))
+            r_hand = (int(round(gx - (3.5 if d in (1, 2, 3) else 6.0) * ux)), int(round(gy - (3.5 if d in (1, 2, 3) else 6.0) * uy)))
 
             draw_two_handed_arms(c, cx + b_dx, cy + b_dy, f_hand, r_hand, "gyeongbeongap_steel", d=d)
             draw_line_indices(c, butt_x, butt_y, gx, gy, IDX_WOOD_DARK, width=2)
@@ -1392,6 +1517,13 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], ux, uy, cuff_col=IDX_RED_HIGH)
             set_safe_pixel(c, gx, gy, IDX_GOLD_BRIGHT)
             set_safe_pixel(c, tip_x, tip_y, IDX_STEEL_GLEAM)
+
+            if d in (1, 2, 3):
+                apply_back_view_body_occlusion(
+                    c, base, ox, oy, b_dx, b_dy, cx, cy, d,
+                    style="gyeongbeongap_steel",
+                    is_overhead=False,
+                )
 
         seal_canvas_pinholes(c, ox, oy)
         frames.append(c)
@@ -1404,8 +1536,8 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     144x140, 168 frames for 장창수 (0x7C):
     - Crimson & Team-Blue Dujeonggap with golden rivets
     - Full 2x-length (70px~78px) 15-foot Joseon long spear (장창) held upright in Idle,
-      diagonally across chest in Move, and thrusting deep on Attack,
-      with two articulated 3D arms and two hands visibly clasping the spear shaft (창대).
+      diagonally across chest in Move, and physically pulled back & thrust deep by the hands/arms in Attack,
+      with full back-view torso occlusion in d=2 (NW/NE) and d=3 (N).
     """
     spec = UNIT_SPECS["jangchangsu"]
     tw, th = spec["width"], spec["height"]  # 144x140
@@ -1420,12 +1552,12 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
         base = clean_base_human(np.frombuffer(base_frames[f_idx], dtype=np.uint8).reshape((bh, bw)), f_idx)
         base = apply_joseon_armor(base, f_idx, style="dujeonggap_crimson")
 
-        # Subtle forward lunge shift during peak spear thrust (steps 2..5)
+        # Forward body lunge shift during peak spear thrust (steps 2..5)
         b_dx, b_dy = 0, 0
         if state == "attack" and step in (2, 3, 4, 5):
             ux_a, uy_a = ATK_DIR_VECTORS[d]
-            b_dx = int(round(1.8 * ux_a))
-            b_dy = int(round(1.5 * uy_a))
+            b_dx = int(round(2.0 * ux_a))
+            b_dy = int(round(1.6 * uy_a))
 
         for by in range(bh):
             for bx in range(bw):
@@ -1445,11 +1577,11 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             draw_line_indices(c, cx + 35, cy + 13, cx + 44, cy + 13, IDX_STEEL_GLEAM, width=1)
             draw_line_indices(c, cx + 32, cy + 13, cx + 37, cy + 17, IDX_RED_BRIGHT, width=1)
         else:
-            # Exactly 2.0x the previous spear length (Idle/Move: 52+18=70px; Attack: 44..66+12..20)
+            # Rigid 70px spear length (52px front + 18px rear) while get_polearm_pose physically thrusts the hands/arms!
             if state == "attack":
                 thrust = (step / 4.0) if step <= 4 else (1.0 - (step - 4) / 3.0)
-                front_len = int(44 + 22 * thrust)
-                rear_len = (10 if d == 4 else max(8, int(20 - 8 * thrust)))
+                front_len = int(52 + 4 * thrust)
+                rear_len = (10 if d == 4 else max(10, int(18 - 4 * thrust)))
             else:
                 front_len = 52
                 rear_len = 18
@@ -1494,6 +1626,13 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             draw_line_indices(c, neck_x, neck_y, tip_x, tip_y, IDX_STEEL_GLEAM, width=1)
             set_safe_pixel(c, tip_x, tip_y, IDX_STEEL_GLEAM)
 
+            if d in (1, 2, 3):
+                apply_back_view_body_occlusion(
+                    c, base, ox, oy, b_dx, b_dy, cx, cy, d,
+                    style="dujeonggap_crimson",
+                    is_overhead=False,
+                )
+
         seal_canvas_pinholes(c, ox, oy)
         frames.append(c)
 
@@ -1505,7 +1644,8 @@ def build_woldo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     78x74, 168 frames for 월도병 (0x7D):
     - Heavy Gyeongbeongap with gold & steel lamellar rows
     - Authentic Joseon Crescent Halberd (월도) gripped with both hands on the wooden pole
-      in Idle, Move, and sweeping Attack.
+      in Idle, Move, and wide 3D circular shoulder-arc sweeping Attack,
+      with full back-view torso occlusion in d=2 (NW/NE) and d=3 (N).
     """
     spec = UNIT_SPECS["woldo"]
     tw, th = spec["width"], spec["height"]  # 78x74
@@ -1544,16 +1684,13 @@ def build_woldo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 h_dx, h_dy, ang_deg = SWORD_SLASH_KEYFRAMES[d][step]
                 ang = math.radians(ang_deg)
                 ux, uy = math.cos(ang), math.sin(ang)
-                gx, gy = cx + b_dx + h_dx, cy + b_dy + (h_dy // 2 if step in (0, 1) else h_dy)
-                rear_len = 10   # 1.2x scaled rear shaft (8 -> 10px)
-                shaft_len = 18  # 1.2x scaled front shaft (15 -> 18px)
+                gx, gy = cx + b_dx + h_dx, cy + b_dy + h_dy
+                rear_len = 4 if (d in (2, 3) and step >= 2) else 9   # 1.2x scaled rear shaft
+                shaft_len = 16  # 1.2x scaled front shaft
                 butt_x = int(round(gx - rear_len * ux))
                 butt_y = int(round(gy - rear_len * uy))
                 collar_x = int(round(gx + shaft_len * ux))
                 collar_y = int(round(gy + shaft_len * uy))
-                if step in (2, 3, 4):
-                    prev_ang = SWORD_SLASH_KEYFRAMES[d][step - 1][2]
-                    draw_slash_arc(c, gx, gy, prev_ang, ang_deg, radius=shaft_len + 15)
             else:
                 # 1.2x scaled Idle/Move polearm pose (rear_len=10, front_len=18)
                 butt_x, butt_y, gx, gy, collar_x, collar_y, ux, uy = get_polearm_pose(
@@ -1611,6 +1748,13 @@ def build_woldo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             set_safe_pixel(c, int(round(c2_x + 4 * ux - 1.8 * perp_x)), int(round(c2_y + 4 * uy - 1.8 * perp_y)), IDX_STEEL_GLEAM)
             set_safe_pixel(c, tip_b_x, tip_b_y, IDX_STEEL_GLEAM)
 
+            if d in (1, 2, 3):
+                apply_back_view_body_occlusion(
+                    c, base, ox, oy, b_dx, b_dy, cx, cy, d,
+                    style="gyeongbeongap_heavy",
+                    is_overhead=(state == "attack" and step in (0, 1)),
+                )
+
         seal_canvas_pinholes(c, ox, oy)
         frames.append(c)
 
@@ -1622,8 +1766,8 @@ def build_nangseon_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     144x140, 168 frames for 낭선병 (0x7E):
     - Agile vanguard soldier in steel-shouldered Dujeonggap
     - Full 2x-length (66px~74px) multi-tier bamboo branch spear (낭선) held upright in Idle,
-      diagonally across chest in Move, and thrusting deep on Attack,
-      with two articulated 3D arms and two hands visibly clasping the bamboo main shaft.
+      diagonally across chest in Move, and physically pulled back & thrust deep by the hands/arms in Attack,
+      with full back-view torso occlusion in d=2 (NW/NE) and d=3 (N).
     """
     spec = UNIT_SPECS["nangseon"]
     tw, th = spec["width"], spec["height"]  # 144x140
@@ -1641,8 +1785,8 @@ def build_nangseon_frames(base_frames: List[bytes]) -> List[np.ndarray]:
         b_dx, b_dy = 0, 0
         if state == "attack" and step in (2, 3, 4, 5):
             ux_a, uy_a = ATK_DIR_VECTORS[d]
-            b_dx = int(round(1.8 * ux_a))
-            b_dy = int(round(1.5 * uy_a))
+            b_dx = int(round(2.0 * ux_a))
+            b_dy = int(round(1.6 * uy_a))
 
         for by in range(bh):
             for bx in range(bw):
@@ -1671,26 +1815,18 @@ def build_nangseon_frames(base_frames: List[bytes]) -> List[np.ndarray]:
         else:
             if state == "attack":
                 thrust = (step / 4.0) if step <= 4 else (1.0 - (step - 4) / 3.0)
-                front_len = int(42 + 22 * thrust)
-                rear_len = (10 if d == 4 else max(8, int(18 - 8 * thrust)))
-                tier_specs = (
-                    (0.24, 9, 5),
-                    (0.37, 11, 6),
-                    (0.50, 12, 6),
-                    (0.63, 11, 5),
-                    (0.76, 9, 5),
-                    (0.87, 7, 4),
-                )
+                front_len = int(50 + 4 * thrust)
+                rear_len = (10 if d == 4 else max(10, int(16 - 4 * thrust)))
             else:
                 front_len = 50
                 rear_len = 16
-                tier_specs = (
-                    (0.26, 9, 5),
-                    (0.40, 11, 6),
-                    (0.54, 11, 6),
-                    (0.68, 10, 5),
-                    (0.82, 8, 4),
-                )
+            tier_specs = (
+                (0.26, 9, 5),
+                (0.40, 11, 6),
+                (0.54, 11, 6),
+                (0.68, 10, 5),
+                (0.82, 8, 4),
+            )
 
             butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy = get_polearm_pose(
                 state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len
@@ -1781,6 +1917,13 @@ def build_nangseon_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             draw_line_indices(c, neck_x, neck_y, tip_x, tip_y, IDX_STEEL_MID, width=2)
             draw_line_indices(c, neck_x, neck_y, tip_x, tip_y, IDX_STEEL_GLEAM, width=1)
             set_safe_pixel(c, tip_x, tip_y, IDX_STEEL_GLEAM)
+
+            if d in (1, 2, 3):
+                apply_back_view_body_occlusion(
+                    c, base, ox, oy, b_dx, b_dy, cx, cy, d,
+                    style="dujeonggap_vanguard",
+                    is_overhead=False,
+                )
 
         seal_canvas_pinholes(c, ox, oy)
         frames.append(c)
