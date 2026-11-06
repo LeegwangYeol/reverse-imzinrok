@@ -1287,16 +1287,18 @@ def build_attack_effects_cave(
     # .status_effects:
     va_status = cur_va()
     buf[off_jne_status + 1] = va_status - (cave_va + off_jne_status + 2)
-    # bl == 9: 0x70 유생 포박술 (150 frames)
-    buf += b"\x80\xFB\x09"                              # cmp bl, 9 (3B)
+    # Gate strictly by Attacker KindID (dl = byte ptr [ecx + 0x0066B81D]), NOT AttackAtb (bl),
+    # because vanilla cannons use AttackAtb == 7 and vanilla shamans/monks use AttackAtb == 9!
+    # dl == 0x70: 유생 포박술 (150 frames)
+    buf += b"\x80\xFA\x70"                              # cmp dl, 0x70 (3B)
     buf += b"\xB9\x96\x00\x00\x00"                      # mov ecx, 150 (5B)
     off_je_apply = len(buf)
     buf += b"\x74\x00"                                  # je .apply (2B)
-    # bl == 7 or 26: 얼리기
-    buf += b"\x80\xFB\x07"                              # cmp bl, 7 (3B)
+    # dl == 0x76 (털가면) or 0x77 (설녀): 얼리기 (90 frames)
+    buf += b"\x80\xFA\x76"                              # cmp dl, 0x76 (3B)
     off_je_frz = len(buf)
     buf += b"\x74\x00"                                  # je .freeze (2B)
-    buf += b"\x80\xFB\x1A"                              # cmp bl, 26 (3B)
+    buf += b"\x80\xFA\x77"                              # cmp dl, 0x77 (3B)
     off_jne_ret = len(buf)
     buf += b"\x75\x00"                                  # jne .return (2B)
 

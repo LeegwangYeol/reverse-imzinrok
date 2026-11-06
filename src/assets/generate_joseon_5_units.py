@@ -268,41 +268,36 @@ def draw_sword_arm(
     set_safe_pixel(canvas, hx, hy, IDX_WOOD_LIGHT)
 
 
+def get_upper_body_offset(state: str, d: int, step: int) -> Tuple[int, int]:
+    """
+    Compute (ub_dx, ub_dy) for the upper torso & shoulders so that:
+      - In Move (0..39), the soldier's upper body has a natural 2-beat running bounce (뜀박질 바운스)
+        and forward athletic sprint lean.
+      - In Attack (48..87), the lower body & feet stay 100% planted on the ground (0px foot twitch)
+        while the upper torso coils back slightly (step 1) and lunges forward into the strike (steps 3..5).
+      - In Idle (88..167), the torso stays grounded while the forearms/hands sway the weapon.
+    """
+    if state == "move":
+        ub_dy = (1, 0, -1, 0, 1, 0, -1, 0)[step]
+        ub_dx = -1 if d in (0, 1, 2) else (1 if d == 3 else 0)
+        return ub_dx, ub_dy
+    if state == "attack":
+        ux, uy = ATK_DIR_VECTORS[d]
+        lunge = (0.0, -0.8, 0.4, 1.3, 2.0, 1.3, 0.4, 0.0)[step]
+        ub_dx = int(round(lunge * ux))
+        ub_dy = int(round(max(0.0, lunge) * 0.5 * uy))
+        return ub_dx, ub_dy
+    return 0, 0
+
+
 def get_slash_body_frame_idx(f_idx: int) -> Tuple[int, int, int]:
     """
-    For sword/halberd slashing units (등패수, 쌍수도병, 월도병), replace the crouched spear-poke
-    frames at Attack step 0, 1, 6, 7 with upright standing/stepping frames so the soldier
-    stands tall during the overhead wind-up and leans forward with his upper body during the cleave.
-    Returns (source_frame_idx, body_dx, body_dy).
+    Keep the frame index consistent (no splicing between Idle, Move, and Attack leg frames)
+    and return (f_idx, ub_dx, ub_dy) where (ub_dx, ub_dy) is the upper-body shoulder lunge offset.
     """
     state, d, step = get_frame_state(f_idx)
-    if state != "attack":
-        return f_idx, 0, 0
-    ux, uy = ATK_DIR_VECTORS[d]
-    if step == 0:
-        # Upright wind-up lift
-        return 88 + d * 8 + 0, 0, -1
-    elif step == 1:
-        # High overhead chamber (slight coil back/up)
-        return 88 + d * 8 + 1, int(round(-ux)), -1
-    elif step == 2:
-        # Upper body transfers weight forward as arms pull hilt across chest
-        return 0 + d * 8 + 2, 0, 0
-    elif step == 3:
-        # Step into outward forearm whip
-        return f_idx, int(round(ux)), 0
-    elif step == 4:
-        # Peak forward lunge at full arm extension & wrist snap
-        return f_idx, int(round(1.6 * ux)), int(round(0.8 * uy))
-    elif step == 5:
-        # Deep downward cleave follow-through
-        return f_idx, int(round(1.2 * ux)), int(round(0.6 * uy))
-    elif step == 6:
-        # Cross-body follow-through step back
-        return 0 + d * 8 + 6, int(round(0.5 * ux)), 0
-    else:
-        # Ready stance
-        return 88 + d * 8 + 7, 0, 0
+    ub_dx, ub_dy = get_upper_body_offset(state, d, step)
+    return f_idx, ub_dx, ub_dy
 
 
 def draw_line_indices(canvas: np.ndarray, x0: int, y0: int, x1: int, y1: int, color_idx: int, width: int = 1):
@@ -515,11 +510,23 @@ RAMP_STEEL = [241, 242, 243, 243, 243, 156, 156, 211, 211, 250, 250, 253]
 RAMP_DARK_IRON = [241, 242, 208, 243, 244, 65, 156, 246, 248, 211, 250, 253]
 RAMP_BRASS = [191, 214, 214, 69, 69, 69, 41, 41, 35, 35, 33, 33]
 RAMP_BLUE = [206, 236, 237, 204, 201, 238, 200, 239, 136, 193, 159, 250]
+RAMP_BAJI = [242, 95, 90, 83, 52, 53, 54, 54, 55, 55, 240, 240]
 
 HELMET_SET_GK11 = {17, 22, 23, 24, 66, 98, 99, 107, 108, 109, 110, 111, 112, 170, 188, 191, 212, 224}
 RED_SET_GK11 = {46, 47, 48, 113, 114, 115, 116, 117, 118, 119, 120, 163, 164, 165, 166, 232, 233, 234, 235}
 BLUE_SET_GK11 = set(range(193, 208)) | set(range(236, 240)) | {136, 137, 138, 139, 159}
 YELLOW_LEG_SET_GK11 = {36, 37, 66, 68, 69, 75, 107, 109, 153, 214, 224}
+
+# 3ds Max human leg palette sets in SwordPirate_online.spr (excludes katana steel 49..58, 247..255 and ground shadow 228..229)
+SP_LEG_VALID = {
+    9, 14, 18, 19, 20, 21, 22, 23, 24, 37, 43, 64, 65, 66, 67, 71, 72, 74, 75, 76,
+    77, 78, 79, 80, 81, 82, 83, 84, 85, 87, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98,
+    99, 100, 101, 102, 103, 105, 106, 126, 147, 148, 149, 150, 172, 174, 175, 176,
+    177, 178, 182, 183, 190, 191, 208, 209, 212, 224, 241, 242, 243, 244, 245, 246,
+}
+SP_LEG_OUTLINE = {14, 66, 190, 191, 208, 212, 224, 241, 242}
+SP_LEG_DARK_WRAP = {65, 72, 89, 90, 91, 94, 95, 96, 148, 149, 150, 209, 243, 244, 245, 246}
+SP_ATK_STEP_MAP = (0, 1, 2, 3, 4, 3, 2, 0)
 
 _GK11_3D_CACHE: dict = {}
 
@@ -527,7 +534,8 @@ _GK11_3D_CACHE: dict = {}
 def _get_gk11_3d_cache() -> Tuple[List[np.ndarray], np.ndarray]:
     """
     Lazy-load and cache the 152 native 3ds Max frames of Kwon Yul on foot
-    (generalk11.spr + generalk12.spr + generalk13.spr, 130x110) and the imjin2.pal luminance LUT.
+    (generalk11.spr + generalk12.spr + generalk13.spr, 128x108), SwordPirate_online.spr
+    (for 3ds Max running & grounded martial-arts lower body), and the imjin2.pal luminance LUT.
     """
     if "frames" in _GK11_3D_CACHE:
         return _GK11_3D_CACHE["frames"], _GK11_3D_CACHE["lum"]
@@ -552,9 +560,94 @@ def _get_gk11_3d_cache() -> Tuple[List[np.ndarray], np.ndarray]:
                 np.frombuffer(dec.decode_frame_raw(i), dtype=np.uint8).reshape((dec.height, dec.width))
             )
 
+    dec_sp = SpriteDecoder.from_file(char_dir / "SwordPirate_online.spr")
+    sp_frames: List[np.ndarray] = [
+        np.frombuffer(dec_sp.decode_frame_raw(i), dtype=np.uint8).reshape((dec_sp.height, dec_sp.width))
+        for i in range(min(120, dec_sp.frame_count))
+    ]
+
     _GK11_3D_CACHE["frames"] = gk_frames
+    _GK11_3D_CACHE["sp_frames"] = sp_frames
     _GK11_3D_CACHE["lum"] = lum
     return gk_frames, lum
+
+
+def _extract_sp_3d_legs(state: str, d: int, step: int) -> Tuple[np.ndarray, float]:
+    """
+    Extract clean 3ds Max human lower body (thighs, knees, shin wraps, boots) from SwordPirate_online.spr:
+      - Move (0..39):   SwordPirate_online.spr[80 + d*8 + step] (dynamic 3ds Max running stride 뜀박질)
+      - Attack (48..87): SwordPirate_online.spr[0 + d*8 + SP_ATK_STEP_MAP[step]] (wide planted martial stance, 0px foot twitch)
+      - Idle (88..167): SwordPirate_online.spr[40 + d*8 + 0] (balanced wide ready stance)
+    """
+    _get_gk11_3d_cache()
+    sp_frames = _GK11_3D_CACHE["sp_frames"]
+    if state == "move":
+        f_i = 80 + d * 8 + step
+        cx_ref = (21.5, 20.5, 21.5, 19.5, 21.5)[d]
+    elif state == "attack":
+        f_i = 0 + d * 8 + SP_ATK_STEP_MAP[step]
+        cx_ref = (19.0, 17.5, 19.0, 19.0, 21.0)[d]
+    else:
+        f_i = 40 + d * 8 + (step % 2 if d == 4 else 0)
+        cx_ref = (19.0, 17.5, 19.0, 19.0, 21.0)[d]
+
+    cache_key = ("sp_leg", state, d, step)
+    if cache_key in _GK11_3D_CACHE:
+        return _GK11_3D_CACHE[cache_key], cx_ref
+
+    from collections import deque
+
+    f = sp_frames[f_i]
+    sub = f[53:83, 26:70].copy()
+    if state == "move" and d == 4:
+        # In South Move (112..119), the katana crosses horizontally over the left thigh (sy=0..9, sx=16..25)
+        for y_k in range(10):
+            for x_k in range(16, 26):
+                if sub[y_k, x_k] > 0 and sub[y_k, x_k] not in (228, 229) and sub[y_k, x_k] not in SP_LEG_VALID:
+                    sub[y_k, x_k] = 75
+    sub[~np.isin(sub, list(SP_LEG_VALID))] = 0
+
+    # Strip any side hand/scabbard/hilt outside the anatomical leg corridor
+    c_i = int(round(cx_ref))
+    sub[:6, : max(0, c_i - 9)] = 0
+    sub[:6, min(sub.shape[1], c_i + 9) :] = 0
+    if state == "move":
+        if d in (0, 1, 2):
+            sub[:, :9] = 0
+            sub[:, 37:] = 0
+        elif d == 3:
+            sub[:, :12] = 0
+            sub[:, 28:] = 0
+        else:  # d == 4: strip swinging left-of-screen fist (sx_l < 15)
+            sub[:, :15] = 0
+            sub[:, 29:] = 0
+    else:
+        sub[:, : max(0, c_i - 12)] = 0
+        sub[:, min(sub.shape[1], c_i + 13) :] = 0
+
+    # Remove detached specks/islands (< 20px)
+    vis = np.zeros_like(sub, dtype=bool)
+    sh, sw = sub.shape
+    for y in range(sh):
+        for x in range(sw):
+            if sub[y, x] > 0 and not vis[y, x]:
+                comp = []
+                q = deque([(y, x)])
+                vis[y, x] = True
+                while q:
+                    cy_p, cx_p = q.popleft()
+                    comp.append((cy_p, cx_p))
+                    for ny in range(max(0, cy_p - 1), min(sh, cy_p + 2)):
+                        for nx in range(max(0, cx_p - 1), min(sw, cx_p + 2)):
+                            if sub[ny, nx] > 0 and not vis[ny, nx]:
+                                vis[ny, nx] = True
+                                q.append((ny, nx))
+                if len(comp) < 20:
+                    for cy_p, cx_p in comp:
+                        sub[cy_p, cx_p] = 0
+
+    _GK11_3D_CACHE[cache_key] = sub
+    return sub, cx_ref
 
 
 def _pick_ramp(ramp: List[int], l_val: float, boost: float = 0.0) -> int:
@@ -587,17 +680,14 @@ def _map_168_to_gk11_idx(f_idx: int) -> int:
 def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
     """
     Build a 100% genuine 3ds Max pre-rendered Joseon armored soldier (60x60) by fusing:
-      1. Upper 75% (Conical Cheomju Helmet 첨주 투구, Neck Guard 드림, Shoulder Pauldrons 견철,
-         Lamellar/Brigandine Torso 두정갑/경번갑, Team-Blue Surcoat 전복, Waist Sash 전대,
-         and Knee-Length Tassets 갑상) from native 3ds Max generalk11..13.spr with 100% of its
-         original 1-hand sword stripped and 3ds Max luminance mapped into 5 distinct armor styles:
-           - "dujeonggap_blue"     (등패수): Brass-rimmed Conical Helmet + Crimson Pauldrons/Tassets + Team-Blue Studded Dujeong-gap
-           - "gyeongbeongap_steel" (쌍수도병): Polished Steel Conical Helmet + Steel Lamellar Scale Mail (철편 경번갑)
-           - "dujeonggap_crimson"  (장창수): Conical Helmet with Red Plume + Full Crimson Dujeong-gap (적색 융복 두정갑) with Brass Rivets
-           - "gyeongbeongap_heavy" (월도병): Heavy Brass-and-Steel Conical Helmet + Brass & Steel Lamellar Scale Armor (황동·철편 중장 경번갑)
-           - "dujeonggap_vanguard" (낭선병): Dark-Iron Conical Helmet & Pauldrons + Crimson & Steel Vanguard Brigandine
-      2. Lower 25% (Animated 3ds Max Lower Legs, Armored Shin Greaves 경갑, and War Boots 전투화)
-         from swordk.spr (`base`), shaded with 3ds Max steel/dark-iron luminance ramps.
+      1. Lower 40% (ty = 27..50): Dynamic 3ds Max Running & Martial-Stance Lower Body from SwordPirate_online.spr,
+         shaded as traditional Joseon Baji (바지), Knee Ties (행전끈), Shin Wraps/Greaves (행전/경갑), and War Boots (전투화).
+         - In Move (0..39), executes a full athletic running stride (자연스러운 뜀박질).
+         - In Attack (48..87), maintains a wide, grounded martial stance (기마립/궁보) where both feet stay planted
+           on the ground across all 8 steps (공격할때 다리가 방정거리지 않게) while the front knee flexes into the lunge.
+      2. Upper 60% (ty = 2..32): Conical Cheomju Helmet (첨주 투구), Neck Guard (드림), Shoulder Pauldrons (견철),
+         Lamellar/Brigandine Torso (두정갑/경번갑), Waist Sash (전대), and Hip-Length Tassets (갑상) from native 3ds Max
+         generalk11..13.spr with natural 2-beat running bounce (뜀박질 바운스) and forward athletic lean.
     """
     gk_frames, lum = _get_gk11_3d_cache()
     state, d, step = get_frame_state(f_idx)
@@ -607,7 +697,6 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
 
     # --- DIE FRAMES (40..47): 3ds Max Fallen Armored Corpse ---
     if state == "die":
-        # Strip fallen sword blade & isolated 1px sword wire above corpse
         for y in range(min(60, gh)):
             for x in range(gw):
                 v = int(arr[y, x])
@@ -628,7 +717,6 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
         cy_c = int(round(float(ys.mean()))) if len(ys) else 60
         out_die = np.zeros((60, 60), dtype=np.uint8)
 
-        # Base fallen lower legs/boots from swordk.spr (`base`)
         for ty in range(60):
             for tx in range(60):
                 bv = int(base[ty, tx])
@@ -638,7 +726,6 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
                         float(lum[bv]),
                     )
 
-        # Overlay 3ds Max fallen armored body from generalk11..13.spr
         for ty in range(60):
             sy = cy_c - 30 + ty
             if not (0 <= sy < gh):
@@ -708,7 +795,6 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
                     else:
                         arr[y, x] = 245
 
-    # Remove yellow leg-wire remnants at y >= hy_top + 31 and prune 1px detached sword splinters
     for y in range(min(hy_top + 31, gh), gh):
         for x in range(gw):
             if int(arr[y, x]) in YELLOW_LEG_SET_GK11:
@@ -723,21 +809,107 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
                         cl[y, x] = 0
         arr = cl
 
-    # 3. Map 3ds Max upper body (hy_top - 2 .. hy_top + 34 -> ty = 2 .. 38) with 3ds Max luminance preservation
     out = np.zeros((60, 60), dtype=np.uint8)
-    for ty in range(2, 38):
-        sy = hy_top - 4 + ty
+
+    # 3. Render 3ds Max Lower Body (Thighs 바지, Knee Ties 행전끈, Shin Greaves/Wraps 행전/경갑, War Boots 전투화)
+    #    from SwordPirate_online.spr at ty = 27..51 BEFORE overlaying the upper torso/hip tassets
+    sub_leg, cx_ref = _extract_sp_3d_legs(state, d, step)
+    sh_l, sw_l = sub_leg.shape
+    for ty in range(27, 52):
+        sy_l = int(round((ty - 27) * 1.05))
+        if not (0 <= sy_l < sh_l):
+            continue
+        row_lv: List[Tuple[int, int]] = []
+        for tx in range(10, 50):
+            sx_l = int(round(cx_ref + (tx - 30)))
+            if 0 <= sx_l < sw_l and int(sub_leg[sy_l, sx_l]) > 0:
+                row_lv.append((tx, int(sub_leg[sy_l, sx_l])))
+        if not row_lv:
+            continue
+        # Group into contiguous horizontal leg segments [x_start .. x_end]
+        segs: List[List[Tuple[int, int]]] = [[row_lv[0]]]
+        for item in row_lv[1:]:
+            if item[0] == segs[-1][-1][0] + 1:
+                segs[-1].append(item)
+            else:
+                segs.append([item])
+        for seg in segs:
+            w_seg = len(seg)
+            x_s, x_e = seg[0][0], seg[-1][0]
+            mid_x = 0.5 * (x_s + x_e)
+            half_w = max(1.0, 0.5 * w_seg)
+            for tx, lv in seg:
+                is_edge = (w_seg >= 3 and (tx == x_s or tx == x_e)) or (w_seg == 2 and tx == x_e)
+                if lv == IDX_OUTLINE and is_edge:
+                    out[ty, tx] = IDX_OUTLINE
+                    continue
+                if is_edge and (lv in SP_LEG_OUTLINE or sy_l >= 14):
+                    out[ty, tx] = IDX_OUTLINE
+                    continue
+                nx_leg = (tx - mid_x) / half_w
+                cyl_lit = math.sqrt(max(0.0, 1.0 - nx_leg * nx_leg)) * 0.72 + max(0.0, -nx_leg) * 0.28
+                l_b = float(lum[lv])
+                eff_l = max(l_b, 0.36 + 0.52 * cyl_lit)
+                if sy_l <= 12:
+                    # Traditional Joseon Baji (warm off-white cotton trousers)
+                    if lv in SP_LEG_DARK_WRAP and sy_l <= 4 and is_edge:
+                        out[ty, tx] = _pick_ramp(RAMP_DARK_IRON, eff_l)
+                    else:
+                        out[ty, tx] = _pick_ramp(RAMP_BAJI, eff_l, boost=0.10)
+                elif sy_l == 13:
+                    # Knee tie (행전끈)
+                    out[ty, tx] = _pick_ramp(
+                        RAMP_CRIMSON if "dujeonggap" in style else RAMP_BRASS,
+                        max(0.45, eff_l),
+                        boost=0.14,
+                    )
+                elif sy_l <= 19:
+                    # Shin wraps / greaves (행전 / 정강이 경갑): crisp white cotton or bright steel with dark border
+                    if "gyeongbeongap" in style:
+                        out[ty, tx] = _pick_ramp(RAMP_STEEL, max(0.48, eff_l), boost=0.14)
+                    else:
+                        out[ty, tx] = _pick_ramp(RAMP_BAJI, max(0.42, eff_l), boost=0.06)
+                else:
+                    # War boots (전투화 / 목화): lit vamp/instep + dark sole
+                    out[ty, tx] = _pick_ramp(
+                        RAMP_BAJI if eff_l > 0.62 else RAMP_DARK_IRON,
+                        max(0.38, eff_l),
+                        boost=0.08,
+                    )
+
+    # 4. Compute upper-torso vertical bounce (뜀박질 바운스) & lunge/lean offset
+    ub_dx, ub_dy = get_upper_body_offset(state, d, step)
+
+    # 5. Overlay 3ds Max Upper Body (Conical Helmet, Face, Pauldrons, Chest Armor, Waist Sash, and Short Hip Tassets dy <= 27)
+    for ty in range(2, 34):
+        sy = hy_top - 4 + (ty - ub_dy)
         if not (0 <= sy < gh):
             continue
         dy = sy - hy_top
-        for tx in range(60):
-            sx = hx_c - 30 + tx
+        if dy > 27:
+            continue
+
+        row_lean = ub_dx
+        if state == "move" and dy <= 15 and d in (0, 1, 2):
+            row_lean -= 1
+
+        if dy < 13:
+            x_min, x_max = 21 + row_lean, 38 + row_lean
+        elif dy <= 18:
+            x_min, x_max = 23 + row_lean, 37 + row_lean  # Broad 3ds Max Shoulder Pauldrons (견철)
+        elif dy <= 23:
+            x_min, x_max = 25 + row_lean, 35 + row_lean  # Chest & Waist Sash (전대)
+        else:
+            x_min, x_max = 24 + row_lean, 36 + row_lean  # Short Hip Tassets (갑상: dy = 24..27)
+
+        for tx in range(max(0, x_min), min(60, x_max + 1)):
+            sx = hx_c - 30 + (tx - row_lean)
             if not (0 <= sx < gw):
                 continue
             v = int(arr[sy, sx])
             if v == 0:
                 continue
-            if v == IDX_OUTLINE:
+            if v == IDX_OUTLINE or tx == x_min or tx == x_max or dy == 27:
                 out[ty, tx] = IDX_OUTLINE
                 continue
 
@@ -745,6 +917,7 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
             is_blue = v in BLUE_SET_GK11
             is_red = v in RED_SET_GK11
             is_helmet = (dy <= 8) and (v in HELMET_SET_GK11 or v in RED_SET_GK11)
+            tx_rel = tx - row_lean
 
             # A. 3ds Max Conical War Helmet (첨주 투구: dy <= 8)
             if is_helmet:
@@ -753,29 +926,29 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
                 elif dy in (7, 8):
                     out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.15)
                 elif style == "dujeonggap_crimson":
-                    if (tx - 30) in (-3, 0, 3) and dy in (3, 5):
+                    if (tx_rel - 30) in (-3, 0, 3) and dy in (3, 5):
                         out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.20)
                     else:
                         out[ty, tx] = _pick_ramp(RAMP_CRIMSON, l_v, boost=0.08)
                 elif style == "dujeonggap_blue":
-                    if (tx - 30) in (-3, 0, 3) and dy in (4, 6):
+                    if (tx_rel - 30) in (-3, 0, 3) and dy in (4, 6):
                         out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.20)
                     else:
                         out[ty, tx] = _pick_ramp(RAMP_DARK_IRON, l_v, boost=0.05)
                 elif style == "dujeonggap_vanguard":
                     out[ty, tx] = _pick_ramp(RAMP_DARK_IRON, l_v, boost=0.05)
                 elif style == "gyeongbeongap_steel":
-                    if tx == 30:
+                    if tx_rel == 30:
                         out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.15)
                     else:
                         out[ty, tx] = _pick_ramp(RAMP_STEEL, l_v, boost=0.10)
                 elif style == "gyeongbeongap_heavy":
-                    out[ty, tx] = _pick_ramp(RAMP_BRASS if (tx % 2 == 0) else RAMP_STEEL, l_v, boost=0.12)
+                    out[ty, tx] = _pick_ramp(RAMP_BRASS if (tx_rel % 2 == 0) else RAMP_STEEL, l_v, boost=0.12)
                 continue
 
             # B. 3ds Max Face (dy = 8..13 near center) & Neck Flaps (드림)
             if 8 <= dy <= 13:
-                if d != 3 and abs(tx - 29) <= 2 and v in FLESH_INDICES:
+                if d != 3 and abs(tx_rel - 29) <= 2 and v in FLESH_INDICES:
                     out[ty, tx] = v
                     continue
                 if "gyeongbeongap" in style:
@@ -784,10 +957,10 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
                     out[ty, tx] = _pick_ramp(RAMP_CRIMSON, l_v, boost=0.05)
                 continue
 
-            # C. 3ds Max Torso, Pauldrons (견철), Sleeves, & Waist Sash (dy = 14..26)
-            if 14 <= dy <= 26:
+            # C. 3ds Max Torso, Pauldrons (견철), Sleeves, & Waist Sash (dy = 14..24)
+            if 14 <= dy <= 24:
                 if dy in (22, 23, 24) and is_red:
-                    if abs(tx - 30) <= 2 and dy == 23:
+                    if abs(tx_rel - 30) <= 2 and dy == 23:
                         out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.20)
                     elif "gyeongbeongap" in style:
                         out[ty, tx] = _pick_ramp(RAMP_CRIMSON, l_v, boost=0.10)
@@ -796,52 +969,52 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
                     continue
 
                 if style == "dujeonggap_blue":
-                    if is_blue and abs(tx - 30) <= 5:
-                        if (dy % 3 == 1) and (tx % 3 == 0):
+                    if is_blue and abs(tx_rel - 30) <= 5:
+                        if (dy % 3 == 1) and (tx_rel % 3 == 0):
                             out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.22)
                         else:
                             out[ty, tx] = _pick_ramp(RAMP_BLUE, l_v, boost=0.05)
                     else:
-                        if (dy % 3 == 0) and (tx % 3 == 0):
+                        if (dy % 3 == 0) and (tx_rel % 3 == 0):
                             out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.20)
                         else:
                             out[ty, tx] = _pick_ramp(RAMP_CRIMSON, l_v, boost=0.06)
 
                 elif style == "dujeonggap_crimson":
-                    if is_blue and abs(tx - 30) <= 2 and 16 <= dy <= 21:
-                        if dy == 18 and abs(tx - 30) <= 1:
+                    if is_blue and abs(tx_rel - 30) <= 2 and 16 <= dy <= 21:
+                        if dy == 18 and abs(tx_rel - 30) <= 1:
                             out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.25)
                         else:
                             out[ty, tx] = _pick_ramp(RAMP_BLUE, l_v, boost=0.05)
                     else:
-                        if (dy % 3 == 1) and ((tx + dy) % 3 == 0):
+                        if (dy % 3 == 1) and ((tx_rel + dy) % 3 == 0):
                             out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.22)
                         else:
                             out[ty, tx] = _pick_ramp(RAMP_CRIMSON, l_v, boost=0.08)
 
                 elif style == "dujeonggap_vanguard":
-                    if is_blue and abs(tx - 30) <= 2 and 16 <= dy <= 21:
+                    if is_blue and abs(tx_rel - 30) <= 2 and 16 <= dy <= 21:
                         out[ty, tx] = _pick_ramp(RAMP_BLUE, l_v, boost=0.05)
-                    elif abs(tx - 30) >= 4 or dy <= 16:
+                    elif abs(tx_rel - 30) >= 4 or dy <= 16:
                         out[ty, tx] = _pick_ramp(RAMP_STEEL, l_v, boost=0.08)
                     else:
-                        if (dy % 3 == 0) and (tx % 3 == 0):
+                        if (dy % 3 == 0) and (tx_rel % 3 == 0):
                             out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.22)
                         else:
                             out[ty, tx] = _pick_ramp(RAMP_CRIMSON, l_v, boost=0.05)
 
                 elif style == "gyeongbeongap_steel":
-                    if is_blue and abs(tx - 30) <= 2 and 16 <= dy <= 21:
+                    if is_blue and abs(tx_rel - 30) <= 2 and 16 <= dy <= 21:
                         out[ty, tx] = _pick_ramp(RAMP_BLUE, l_v, boost=0.05)
                     else:
-                        plate_mod = -0.07 if (dy % 3 == 0) else (0.06 if ((tx + dy) % 2 == 0) else 0.0)
-                        if (dy % 3 == 0) and (tx % 3 == 0):
+                        plate_mod = -0.07 if (dy % 3 == 0) else (0.06 if ((tx_rel + dy) % 2 == 0) else 0.0)
+                        if (dy % 3 == 0) and (tx_rel % 3 == 0):
                             out[ty, tx] = _pick_ramp(RAMP_CRIMSON, l_v, boost=0.10)
                         else:
                             out[ty, tx] = _pick_ramp(RAMP_STEEL, l_v, boost=0.08 + plate_mod)
 
                 elif style == "gyeongbeongap_heavy":
-                    if is_blue and abs(tx - 30) <= 2 and 16 <= dy <= 21:
+                    if is_blue and abs(tx_rel - 30) <= 2 and 16 <= dy <= 21:
                         out[ty, tx] = _pick_ramp(RAMP_BLUE, l_v, boost=0.05)
                     else:
                         if (dy // 2) % 2 == 0:
@@ -850,24 +1023,24 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
                             out[ty, tx] = _pick_ramp(RAMP_STEEL, l_v, boost=0.08)
                 continue
 
-            # D. 3ds Max Thigh Tassets / Armored Coat Skirt (갑상: dy >= 27)
-            s_dy = dy - 27
+            # D. Short Hip Tassets (갑상: dy = 25..26, leaving thighs & knees exposed for running/stance)
+            s_dy = dy - 25
             if style == "dujeonggap_crimson":
-                if (s_dy % 3 == 1) and ((tx + s_dy) % 3 == 0):
+                if (tx_rel + s_dy) % 3 == 0:
                     out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.22)
                 else:
                     out[ty, tx] = _pick_ramp(RAMP_CRIMSON, l_v, boost=0.08)
             elif style == "dujeonggap_blue":
-                if abs(tx - 30) >= 5:
+                if abs(tx_rel - 30) >= 5:
                     out[ty, tx] = _pick_ramp(RAMP_CRIMSON, l_v, boost=0.06)
-                elif (s_dy % 3 == 1) and (tx % 3 == 0):
+                elif tx_rel % 3 == 0:
                     out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.22)
                 else:
                     out[ty, tx] = _pick_ramp(RAMP_BLUE, l_v, boost=0.04)
             elif style == "dujeonggap_vanguard":
-                if abs(tx - 30) >= 5:
+                if abs(tx_rel - 30) >= 5:
                     out[ty, tx] = _pick_ramp(RAMP_STEEL, l_v, boost=0.08)
-                elif (s_dy % 3 == 1) and (tx % 3 == 0):
+                elif tx_rel % 3 == 0:
                     out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.22)
                 else:
                     out[ty, tx] = _pick_ramp(RAMP_CRIMSON, l_v, boost=0.06)
@@ -875,63 +1048,17 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
                 plate_mod = -0.06 if (s_dy % 2 == 1) else 0.06
                 out[ty, tx] = _pick_ramp(RAMP_STEEL, l_v, boost=0.08 + plate_mod)
             elif style == "gyeongbeongap_heavy":
-                if (s_dy // 2) % 2 == 0:
+                if s_dy % 2 == 0:
                     out[ty, tx] = _pick_ramp(RAMP_BRASS, l_v, boost=0.12)
                 else:
                     out[ty, tx] = _pick_ramp(RAMP_STEEL, l_v, boost=0.08)
 
-    # 4. Composite 3ds Max Lower Legs, Armored Shin Greaves (경갑), and War Boots (전투화) from swordk.spr (`base`) at ty = 35..50
-    for ty in range(35, 51):
-        for tx in range(20, 40):
-            if ty >= 37 and out[ty, tx] != 0:
-                out[ty, tx] = 0
-            bv = int(base[ty, tx])
-            if bv == 0:
-                continue
-            if bv == IDX_OUTLINE:
-                if out[ty, tx] == 0:
-                    out[ty, tx] = IDX_OUTLINE
-                continue
-            l_b = float(lum[bv])
-            if ty <= 37 and out[ty, tx] != 0:
-                continue
-            if ty <= 44:
-                if ty == 38 and (tx % 2 == 0):
-                    out[ty, tx] = _pick_ramp(RAMP_BRASS, l_b, boost=0.10)
-                elif "gyeongbeongap" in style:
-                    out[ty, tx] = _pick_ramp(RAMP_STEEL, l_b, boost=-0.04)
-                else:
-                    out[ty, tx] = _pick_ramp(RAMP_DARK_IRON, l_b, boost=-0.06)
-            else:
-                out[ty, tx] = _pick_ramp(RAMP_DARK_IRON, l_b * 0.65, boost=-0.10)
-
-    # 4b. Strip Kwon Yul's detached passive side-arm/empty hand and any stray hem pixels outside the 3ds Max
-    # Pauldrons (견철), Chest/Waist, Thigh Tassets (갑상), and Lower Legs across the entire 60x60 frame.
-    for ty in range(60):
-        if ty < 17:
-            x_min, x_max = 21, 38
-        elif ty <= 22:
-            x_min, x_max = 23, 37  # Full broad 3ds Max Shoulder Pauldrons (견철)
-        elif ty <= 26:
-            x_min, x_max = 25, 35  # 3ds Max Chest & Waist Sash (전대)
-        elif ty <= 36:
-            x_min, x_max = 24, 36  # Flared 3ds Max Thigh Tassets (갑상)
-        else:
-            x_min, x_max = 22, 38  # Lower legs & boots (removes stray side pixels at tx > 38)
-        for tx in range(60):
-            if tx < x_min or tx > x_max:
-                out[ty, tx] = 0
-        if 17 <= ty <= 36:
-            if out[ty, x_min] > 0:
-                out[ty, x_min] = IDX_OUTLINE
-            if out[ty, x_max] > 0:
-                out[ty, x_max] = IDX_OUTLINE
-
-    # 5. Morphological interior pinhole fill (2 passes) so 0 transparent pinholes exist inside the 3ds Max body
+    # 6. Morphological interior pinhole fill STRICTLY on the upper torso (y = 6..30)
+    #    so the transparent separation between the left and right legs (y >= 31) is NEVER filled!
     for _ in range(2):
         fill = out.copy()
-        for y in range(8, 49):
-            for x in range(20, 40):
+        for y in range(6, 31):
+            for x in range(18, 42):
                 if out[y, x] == 0:
                     l, r = int(out[y, x - 1]), int(out[y, x + 1])
                     u, d_v = int(out[y - 1, x]), int(out[y + 1, x])
@@ -945,20 +1072,21 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
 
 def get_arm_ramps(style: str) -> Tuple[List[int], List[int]]:
     """
-    Return (upper_arm_ramp, bracer_ramp) with clear visual contrast against each unit's chest armor
-    so the upper arm sleeve (동달이 소매) and forearm vambrace (팔뚝 토시) are always readable.
+    Return (upper_arm_ramp, bracer_ramp) where the upper sleeve (동달이 소매) contrasts with the
+    chest armor and the forearm vambrace (팔뚝 완갑/토시) uses dark iron or steel so the warm flesh
+    human hand (손) at the end of the arm stands out clearly instead of blending into yellow brass.
     """
     if style == "dujeonggap_crimson":
-        return RAMP_BLUE, RAMP_BRASS
+        return RAMP_BLUE, RAMP_DARK_IRON
     if style == "dujeonggap_blue":
-        return RAMP_CRIMSON, RAMP_BRASS
+        return RAMP_CRIMSON, RAMP_DARK_IRON
     if style == "dujeonggap_vanguard":
-        return RAMP_BLUE, RAMP_BRASS
+        return RAMP_BLUE, RAMP_STEEL
     if style == "gyeongbeongap_steel":
-        return RAMP_CRIMSON, RAMP_BRASS
+        return RAMP_CRIMSON, RAMP_DARK_IRON
     if style == "gyeongbeongap_heavy":
         return RAMP_BLUE, RAMP_STEEL
-    return RAMP_CRIMSON, RAMP_BRASS
+    return RAMP_CRIMSON, RAMP_DARK_IRON
 
 
 def draw_3d_cyl_limb(
@@ -968,10 +1096,10 @@ def draw_3d_cyl_limb(
     x1: int,
     y1: int,
     ramp: List[int],
-    radius: float = 1.35,
+    radius: float = 1.0,
     outline: bool = True,
 ) -> None:
-    """Render a 3D cylindrical shaded limb segment with a 1px dark silhouette border and top-left highlight."""
+    """Render a natural human-proportioned 3D cylindrical limb segment with top-left lighting."""
     dx = x1 - x0
     dy = y1 - y0
     length = math.hypot(dx, dy)
@@ -983,27 +1111,27 @@ def draw_3d_cyl_limb(
         px, py = -px, -py
     steps = int(math.ceil(length * 2.0)) + 1
     if outline:
-        out_off = radius + 0.55
+        out_off = radius + 0.45
         for i in range(steps + 1):
             t = i / max(1, steps)
             cx_p = x0 + dx * t
             cy_p = y0 + dy * t
-            for sgn in (-1.0, 1.0):
-                ix = int(round(cx_p + sgn * out_off * px))
-                iy = int(round(cy_p + sgn * out_off * py))
-                if 0 <= iy < canvas.shape[0] and 0 <= ix < canvas.shape[1]:
-                    canvas[iy, ix] = IDX_OUTLINE
+            # Subtle 1px dark contour on the shaded underside so arms stay slender and natural
+            ix = int(round(cx_p - out_off * px))
+            iy = int(round(cy_p - out_off * py))
+            if 0 <= iy < canvas.shape[0] and 0 <= ix < canvas.shape[1] and canvas[iy, ix] == 0:
+                canvas[iy, ix] = IDX_OUTLINE
     for i in range(steps + 1):
         t = i / max(1, steps)
         cx_p = x0 + dx * t
         cy_p = y0 + dy * t
-        for off in (-1.1, -0.55, 0.0, 0.55, 1.1):
+        for off in (-0.85, -0.40, 0.0, 0.40, 0.85):
             if abs(off) > radius:
                 continue
             ix = int(round(cx_p + off * px))
             iy = int(round(cy_p + off * py))
             if 0 <= iy < canvas.shape[0] and 0 <= ix < canvas.shape[1]:
-                lit = 0.78 - 0.34 * (off / radius)
+                lit = 0.82 - 0.36 * (off / max(0.5, radius))
                 canvas[iy, ix] = _pick_ramp(ramp, lit)
 
 
@@ -1013,13 +1141,12 @@ def solve_arm_elbow_ik(
     hx: int,
     hy: int,
     bend_side: int,
-    bone_len: float = 4.6,
+    bone_len: float = 4.4,
 ) -> Tuple[int, int]:
     """
     2-Bone Inverse Kinematics solver for the soldier's elbow (팔꿈치):
-    Given shoulder (sx, sy) and hand grip (hx, hy), maintains constant upper-arm and forearm
-    bone lengths (~4.6px each) so the elbow bends wide outward when the hand is coiled near the
-    shoulder/chest and visibly unbends/straightens when the arm whips outward to swing the blade.
+    Given shoulder (sx, sy) and hand grip (hx, hy), maintains natural upper-arm and forearm
+    bone lengths (~4.4px each) so the elbow bends smoothly when coiled and extends on the strike.
     """
     dx = float(hx - sx)
     dy = float(hy - sy)
@@ -1027,14 +1154,12 @@ def solve_arm_elbow_ik(
     mx = 0.5 * (sx + hx)
     my = 0.5 * (sy + hy)
     if dist < 0.5:
-        return int(round(mx + bend_side * 3.0)), int(round(my + 2.0))
+        return int(round(mx + bend_side * 2.5)), int(round(my + 2.0))
     half_d = min(bone_len - 0.25, 0.5 * dist)
-    bend_mag = math.sqrt(max(1.2, bone_len * bone_len - half_d * half_d))
+    bend_mag = math.sqrt(max(1.0, bone_len * bone_len - half_d * half_d))
     ux, uy = dx / dist, dy / dist
-    # Two candidate unit normals perpendicular to (shoulder -> hand)
     n1x, n1y = -uy, ux
     n2x, n2y = uy, -ux
-    # Anatomical outward + gravity elbow preference (lifts upward when hand is high above shoulder)
     pref_x = float(bend_side) * 0.85 if bend_side != 0 else -0.65
     pref_y = -0.45 if hy < sy - 2 else 0.65
     if (n1x * pref_x + n1y * pref_y) >= (n2x * pref_x + n2y * pref_y):
@@ -1057,10 +1182,23 @@ def draw_3d_arm_via_elbow(
     upper_ramp: List[int],
     bracer_ramp: List[int],
 ) -> None:
-    """Render an articulated 3D upper arm (pauldron -> elbow), elbow guard, and forearm bracer (elbow -> hand)."""
-    draw_3d_cyl_limb(canvas, sx, sy, ex, ey, upper_ramp, radius=1.35, outline=True)
-    draw_3d_cyl_limb(canvas, ex, ey, hx, hy, bracer_ramp, radius=1.20, outline=True)
-    set_safe_pixel(canvas, ex, ey, IDX_GOLD_MID)
+    """
+    Render an anatomical, tapered 3D human arm:
+      - Upper arm sleeve (소매: shoulder -> elbow, radius=1.0)
+      - Forearm bracer (토시/완갑: elbow -> wrist just behind hand, radius=0.80)
+      - No artificial yellow hinge dot at the elbow!
+    """
+    draw_3d_cyl_limb(canvas, sx, sy, ex, ey, upper_ramp, radius=1.0, outline=True)
+    # Taper forearm to wrist (stopping 0.8px short of hand center so the fist stays crisp)
+    dx_f = hx - ex
+    dy_f = hy - ey
+    f_len = math.hypot(dx_f, dy_f)
+    if f_len > 1.2:
+        wx = int(round(hx - 0.8 * (dx_f / f_len)))
+        wy = int(round(hy - 0.8 * (dy_f / f_len)))
+    else:
+        wx, wy = hx, hy
+    draw_3d_cyl_limb(canvas, ex, ey, wx, wy, bracer_ramp, radius=0.80, outline=True)
 
 
 def draw_two_handed_arms(
@@ -1077,7 +1215,6 @@ def draw_two_handed_arms(
     via natural flexing elbows to the two weapon grip points (hand1_xy, hand2_xy).
     """
     upper_ramp, bracer_ramp = get_arm_ramps(style)
-    # Direction-specific shoulder anchors so side profiles (d=1 W, d=2 NW) never protrude behind the back
     shoulder_pairs = [
         ((cx - 4, cy - 8), (cx + 3, cy - 8), -1, 1),   # 0: SW
         ((cx - 3, cy - 8), (cx + 1, cy - 8), -1, 1),   # 1: W (side profile facing left)
@@ -1087,7 +1224,6 @@ def draw_two_handed_arms(
     ]
     sh_l, sh_r, bend_l, bend_r = shoulder_pairs[d]
 
-    # Assign hands to (sh_l, sh_r) by minimizing total squared shoulder-to-hand distance (prevents arm crossing)
     d_direct = (
         (hand1_xy[0] - sh_l[0]) ** 2 + (hand1_xy[1] - sh_l[1]) ** 2
         + (hand2_xy[0] - sh_r[0]) ** 2 + (hand2_xy[1] - sh_r[1]) ** 2
@@ -1104,7 +1240,6 @@ def draw_two_handed_arms(
     el_l = solve_arm_elbow_ik(sh_l[0], sh_l[1], lh[0], lh[1], bend_l)
     el_r = solve_arm_elbow_ik(sh_r[0], sh_r[1], rh[0], rh[1], bend_r)
 
-    # Draw far arm first, then near/lead arm on top
     if d in (0, 1, 2):
         draw_3d_arm_via_elbow(canvas, sh_l[0], sh_l[1], el_l[0], el_l[1], lh[0], lh[1], upper_ramp, bracer_ramp)
         draw_3d_arm_via_elbow(canvas, sh_r[0], sh_r[1], el_r[0], el_r[1], rh[0], rh[1], upper_ramp, bracer_ramp)
@@ -1131,32 +1266,29 @@ def apply_back_view_body_occlusion(
     When viewing a soldier from behind (d=2 NW / engine-mirrored NE, and d=3 N),
     the weapon shaft, sword hilt, and hands are held IN FRONT OF the soldier's chest
     (further from the camera than the soldier's back armor, helmet, and legs).
-    This function:
-      1. Clears any lower rear-shaft / hilt pixels inside the waist/leg silhouette so no butt pokes out below the back.
-      2. Re-composites the opaque 3ds Max body pixels (base: back armor, helmet, waist, legs) ON TOP OF the weapon shaft/hilt/hands.
-      3. Renders the outer 3D shoulder pauldrons / upper arms wrapping forward around the shoulders.
     """
     if d not in (1, 2, 3):
         return
     th, tw = canvas.shape
     bh, bw = base.shape
 
-    # 1. Remove any stray lower shaft butt or hilt tail in the lower torso/leg zone behind the soldier
+    # 1. Remove any stray lower shaft butt or hilt tail in the waist/hip zone behind the soldier
+    #    (keep y_clear_end <= cy + 2 so the wide running legs below cy + 2 are NEVER erased!)
     if not is_overhead:
-        y_clear_start = max(0, cy + b_dy - 3)
-        y_clear_end = min(th, cy + b_dy + 16)
-        x_clear_start = max(0, cx + b_dx - (5 if d == 1 else 7))
-        x_clear_end = min(tw, cx + b_dx + 7)
+        y_clear_start = max(0, cy + b_dy - 4)
+        y_clear_end = min(th, cy + b_dy + 2)
+        x_clear_start = max(0, cx + b_dx - 5)
+        x_clear_end = min(tw, cx + b_dx + 6)
         canvas[y_clear_start:y_clear_end, x_clear_start:x_clear_end] = 0
 
-    # 2. Composite the 3ds Max soldier body (helmet, back armor, waist, legs) ON TOP OF the chest-front weapon
+    # 2. Composite the 3ds Max soldier body (helmet, back armor, waist, and running/planted legs) ON TOP OF the chest-front weapon
     by_start = 19 if is_overhead else 0
     for by in range(by_start, bh):
         for bx in range(bw):
             val = base[by, bx]
             if val == 0:
                 continue
-            ty, tx = by + oy + b_dy, bx + ox + b_dx
+            ty, tx = by + oy, bx + ox
             if 0 <= ty < th and 0 <= tx < tw:
                 canvas[ty, tx] = val
 
@@ -1178,16 +1310,16 @@ def apply_back_view_body_occlusion(
         sh_r = (cx + b_dx + 4, cy + b_dy - 8)
         el_r = (cx + b_dx + 5, cy + b_dy - 6)
 
-    draw_3d_cyl_limb(canvas, sh_l[0], sh_l[1], el_l[0], el_l[1], upper_ramp, radius=1.30)
+    draw_3d_cyl_limb(canvas, sh_l[0], sh_l[1], el_l[0], el_l[1], upper_ramp, radius=0.95)
     if not one_handed_sword or d in (1, 2, 3):
-        draw_3d_cyl_limb(canvas, sh_r[0], sh_r[1], el_r[0], el_r[1], upper_ramp, radius=1.30)
+        draw_3d_cyl_limb(canvas, sh_r[0], sh_r[1], el_r[0], el_r[1], upper_ramp, radius=0.95)
 
     # Restore central spine pixels of base so upper-arm cylinders only wrap the outer shoulder edges
     for by in range(max(18, by_start), bh):
         for bx in range(27, 34):
             val = base[by, bx]
             if val != 0:
-                ty, tx = by + oy + b_dy, bx + ox + b_dx
+                ty, tx = by + oy, bx + ox
                 if 0 <= ty < th and 0 <= tx < tw:
                     canvas[ty, tx] = val
 
@@ -1201,33 +1333,32 @@ def draw_hand_wrapping_weapon(
     cuff_col: int = IDX_GOLD_MID,
 ) -> None:
     """
-    Draw a crisp dark-outlined 3D fist/gauntlet directly ON TOP OF the spear shaft or sword hilt at (gx, gy)
-    so the fingers visibly clasp and wrap around the weapon shaft against any armor background.
+    Draw a compact, natural 3D human fist (주먹 쥔 손) directly ON TOP OF the spear shaft or sword hilt at (gx, gy)
+    with a 1px wrist cuff behind the knuckles and warm flesh fingers clasping around the weapon.
     """
     px, py = -uy, ux
     if px + py > 0:
         px, py = -px, -py  # Ensure (px, py) points toward top-left light source
 
-    # 1. Subtle 1px dark contour on the outer sides of the fist so the hand never merges into chest armor
-    set_safe_pixel(canvas, int(round(gx + 1.5 * px)), int(round(gy + 1.5 * py)), IDX_OUTLINE)
-    set_safe_pixel(canvas, int(round(gx - 1.5 * px)), int(round(gy - 1.5 * py)), IDX_OUTLINE)
+    # 1. Subtle 1px dark contour on the shaded bottom-right side of the fist
+    set_safe_pixel(canvas, int(round(gx - 1.3 * px)), int(round(gy - 1.3 * py)), IDX_OUTLINE)
 
-    # 2. Armored wrist cuff slightly behind the knuckle
-    wx = int(round(gx - 1.3 * ux))
-    wy = int(round(gy - 1.3 * uy))
+    # 2. 1px wrist cuff slightly behind the knuckle
+    wx = int(round(gx - 1.2 * ux))
+    wy = int(round(gy - 1.2 * uy))
     set_safe_pixel(canvas, wx, wy, cuff_col)
 
-    # 3. 3D shaded knuckles & fingers wrapping directly across the shaft at (gx, gy)
-    set_safe_pixel(canvas, gx, gy, 175)  # Warm lit flesh mid-tone directly ON TOP OF shaft
-    set_safe_pixel(canvas, int(round(gx + 0.8 * ux)), int(round(gy + 0.8 * uy)), 176)  # Bright leading knuckle
-    set_safe_pixel(canvas, int(round(gx + 0.9 * px)), int(round(gy + 0.9 * py)), 176)  # Lit thumb wrap (top-left)
-    set_safe_pixel(canvas, int(round(gx - 0.9 * px)), int(round(gy - 0.9 * py)), 126)  # Shaded finger wrap (bottom-right)
+    # 3. Compact 3D human knuckles & thumb/finger wrap across the shaft at (gx, gy)
+    set_safe_pixel(canvas, gx, gy, 175)  # Warm lit flesh center knuckle
+    set_safe_pixel(canvas, int(round(gx + 0.8 * ux)), int(round(gy + 0.8 * uy)), 176)  # Leading index knuckle
+    set_safe_pixel(canvas, int(round(gx + 0.8 * px)), int(round(gy + 0.8 * py)), 176)  # Lit thumb wrap (top-left)
+    set_safe_pixel(canvas, int(round(gx - 0.8 * px)), int(round(gy - 0.8 * py)), 20)   # Shaded finger wrap (bottom-right)
 
 
 def seal_canvas_pinholes(canvas: np.ndarray, ox: int, oy: int) -> None:
-    """Seal any 4-connected interior transparent pinholes created where arms/weapons meet the torso."""
+    """Seal any 1x1 4-connected interior transparent pinholes inside (oy + 10 .. oy + 45)."""
     for _ in range(2):
-        for y in range(oy + 12, oy + 46):
+        for y in range(oy + 10, oy + 45):
             for x in range(ox + 22, ox + 38):
                 if canvas[y, x] == 0:
                     l, r = int(canvas[y, x - 1]), int(canvas[y, x + 1])
@@ -1299,15 +1430,14 @@ def get_polearm_pose(
     elif state == "move":
         gx_off, gy_off = MOVE_GRIP_OFFSETS[d]
         ux_b, uy_b = MOVE_DIR_VECTORS[d]
-        # 8-step walk-cycle arm-tip stride oscillation & wrist pitch sway
-        sway_rad = math.radians((-7.5, -4.5, 0.0, 4.5, 7.5, 4.5, 0.0, -4.5)[step] * sway_scale)
+        # Dynamic 8-step athletic running (자연스러운 뜀박질) arm-tip pump & wrist pitch
+        sway_rad = math.radians((-11.0, -5.0, 2.0, 9.0, 13.0, 6.0, -2.0, -7.0)[step] * sway_scale)
         cs, ss = math.cos(sway_rad), math.sin(sway_rad)
         ux = ux_b * cs - uy_b * ss
         uy = ux_b * ss + uy_b * cs
-        stride = (-2.0, -1.2, 0.0, 1.2, 2.0, 1.2, 0.0, -1.2)[step] * sway_scale
-        bob = -1 if step in (1, 2, 5, 6) else 0
+        stride = (-2.6, -1.3, 0.4, 2.0, 2.8, 1.3, -0.4, -1.8)[step] * sway_scale
         gx = int(round(cx + gx_off + stride * ux))
-        gy = int(round(cy + gy_off + bob + stride * uy))
+        gy = int(round(cy + gy_off + stride * uy))
     else:
         gx_off, gy_off = ATK_GRIP_OFFSETS[d]
         ux_b, uy_b = ATK_DIR_VECTORS[d]
@@ -1364,7 +1494,7 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 val = base[by, bx]
                 if val == 0:
                     continue
-                ty, tx = by + oy + b_dy, bx + ox + b_dx
+                ty, tx = by + oy, bx + ox
                 if not (0 <= ty < th and 0 <= tx < tw):
                     continue
                 c[ty, tx] = val
@@ -1376,7 +1506,7 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             draw_line_indices(c, cx + 2, cy + 8, cx + 14, cy + 12, IDX_STEEL_GLEAM, width=1)
             set_safe_pixel(c, cx + 2, cy + 8, IDX_GOLD_BRIGHT)
         else:
-            # Shield held on the shield forearm (with subtle breathing poise in Idle and walk bob in Move)
+            # Shield held on the shield forearm (with breathing poise in Idle and running counter-swing in Move)
             shield_pos = [
                 (cx - 6, cy - 1, 5.5, 6.8),  # 0: SW
                 (cx - 6, cy - 2, 5.0, 6.8),  # 1: W
@@ -1385,13 +1515,15 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 (cx + 6, cy - 1, 5.5, 6.8),  # 4: S
             ]
             sx, sy, rx, ry = shield_pos[d]
+            sx += b_dx
+            sy += b_dy
             if state == "idle":
                 sx += (-1, 0, 0, 1, 1, 0, 0, -1)[step]
                 sy += (0, 0, -1, -1, 0, 1, 1, 0)[step]
-            elif state == "move" and step in (1, 2, 5, 6):
-                sy -= 1
+            elif state == "move":
+                sx += (-1 if d == 4 else 1) * (-1, -1, 0, 1, 1, 1, 0, -1)[step]
             elif state == "attack":
-                brace_dx = 2 if d == 4 else -2
+                brace_dx = 1 if d == 4 else -1
                 brace_dy = 1 if step in (2, 3, 4, 5) else 0
                 sx += brace_dx
                 sy += brace_dy
@@ -1399,7 +1531,7 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             # Connect shield shoulder to shield center via 3D arm
             sh_shield_x = cx + b_dx + (5 if d == 4 else -5)
             sh_shield_y = cy + b_dy - 9
-            draw_3d_cyl_limb(c, sh_shield_x, sh_shield_y, int(sx), int(sy), upper_ramp, radius=1.45)
+            draw_3d_cyl_limb(c, sh_shield_x, sh_shield_y, int(sx), int(sy), upper_ramp, radius=1.05)
 
         # 1. Render 3D convex hemisphere normal-shaded woven rattan shield (등패) FIRST
         irx, iry = int(math.ceil(rx)), int(math.ceil(ry))
@@ -1479,12 +1611,12 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                     arm_dy = int(round(IDLE_ARM_DY[step]))
                     wrist_deg = s_sign * IDLE_WRIST_DEG[step] * 1.15
                 else:
-                    arm_dx = int(round(s_sign * (-2.0, -1.0, 0.0, 1.0, 2.0, 1.0, 0.0, -1.0)[step]))
-                    arm_dy = -1 if step in (1, 2, 5, 6) else 0
-                    wrist_deg = s_sign * (-9.0, -5.0, 0.0, 5.0, 9.0, 5.0, 0.0, -5.0)[step]
+                    arm_dx = int(round(s_sign * (-2.5, -1.2, 0.5, 2.0, 2.5, 1.2, -0.5, -1.8)[step]))
+                    arm_dy = (-1, -1, 0, 1, 1, 1, 0, -1)[step]
+                    wrist_deg = s_sign * (-12.0, -6.0, 2.0, 9.0, 13.0, 6.0, -2.0, -8.0)[step]
 
-                hand_cx = bhx + arm_dx
-                hand_cy = bhy + arm_dy
+                hand_cx = bhx + b_dx + arm_dx
+                hand_cy = bhy + b_dy + arm_dy
                 ang = math.radians(base_ang_deg + wrist_deg)
                 ux_s, uy_s = math.cos(ang), math.sin(ang)
                 px_a, py_a = -uy_s, ux_s
@@ -1551,7 +1683,7 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 val = base[by, bx]
                 if val == 0:
                     continue
-                ty, tx = by + oy + b_dy, bx + ox + b_dx
+                ty, tx = by + oy, bx + ox
                 if not (0 <= ty < th and 0 <= tx < tw):
                     continue
                 c[ty, tx] = val
@@ -1570,16 +1702,16 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             cos_a, sin_a = math.cos(ang), math.sin(ang)
             px_a, py_a = -sin_a, cos_a
 
-            # Two hands centered tightly around (hand_cx, hand_cy) so both arms extend fully with the swing
-            r_off = 1.4 if (d in (2, 3) and step >= 2) else 1.8
-            f_off = 2.0
+            # Two hands spaced cleanly along the greatsword handle so both hands & arms are distinct
+            r_off = 1.8 if (d in (2, 3) and step >= 2) else 2.2
+            f_off = 2.4
             r_hand = (int(round(hand_cx - r_off * cos_a)), int(round(hand_cy - r_off * sin_a)))
             f_hand = (int(round(hand_cx + f_off * cos_a)), int(round(hand_cy + f_off * sin_a)))
-            butt_off = 2.5 if (d in (2, 3) and step >= 2) else 4.2
+            butt_off = 2.8 if (d in (2, 3) and step >= 2) else 4.5
             butt_x = int(round(hand_cx - butt_off * cos_a))
             butt_y = int(round(hand_cy - butt_off * sin_a))
-            gx = int(round(hand_cx + 3.5 * cos_a))
-            gy = int(round(hand_cy + 3.5 * sin_a))
+            gx = int(round(hand_cx + 3.8 * cos_a))
+            gy = int(round(hand_cy + 3.8 * sin_a))
             blen = 27  # 1.2x scaled greatsword blade
             tip_x = int(round(gx + blen * cos_a))
             tip_y = int(round(gy + blen * sin_a))
@@ -1607,8 +1739,8 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 width=1,
             )
             # Both hands visibly clasping the long two-handed hilt ON TOP OF the hilt
-            draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], cos_a, sin_a, cuff_col=IDX_RED_HIGH)
-            draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], cos_a, sin_a, cuff_col=IDX_RED_HIGH)
+            draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], cos_a, sin_a, cuff_col=IDX_STEEL_HIGH)
+            draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], cos_a, sin_a, cuff_col=IDX_STEEL_HIGH)
             set_safe_pixel(c, tip_x, tip_y, IDX_STEEL_GLEAM)
 
             if d in (1, 2, 3):
@@ -1620,19 +1752,19 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
         else:
             # Living two-handed shoulder/chest guard stance (1.2x scaled: rear_len=9, front_len=27 -> 36px total)
             butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy = get_polearm_pose(
-                state, d, step, cx, cy, rear_len=9, front_len=27, sway_scale=1.0
+                state, d, step, cx + b_dx, cy + b_dy, rear_len=9, front_len=27, sway_scale=1.0
             )
             px_a, py_a = -uy, ux
             f_hand = (int(round(gx - 1.5 * ux)), int(round(gy - 1.5 * uy)))
-            r_hand = (int(round(gx - (3.5 if d in (1, 2, 3) else 5.5) * ux)), int(round(gy - (3.5 if d in (1, 2, 3) else 5.5) * uy)))
+            r_hand = (int(round(gx - (3.8 if d in (1, 2, 3) else 5.5) * ux)), int(round(gy - (3.8 if d in (1, 2, 3) else 5.5) * uy)))
 
             draw_two_handed_arms(c, cx + b_dx, cy + b_dy, f_hand, r_hand, "gyeongbeongap_steel", d=d)
             draw_line_indices(c, butt_x, butt_y, gx, gy, IDX_WOOD_DARK, width=2)
             set_safe_pixel(c, butt_x, butt_y, IDX_GOLD_BRIGHT)
             draw_line_indices(c, gx, gy, tip_x, tip_y, IDX_STEEL_MID, width=2)
             draw_line_indices(c, int(round(gx + px_a)), int(round(gy + py_a)), tip_x, tip_y, IDX_STEEL_GLEAM, width=1)
-            draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], ux, uy, cuff_col=IDX_RED_HIGH)
-            draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], ux, uy, cuff_col=IDX_RED_HIGH)
+            draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], ux, uy, cuff_col=IDX_STEEL_HIGH)
+            draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], ux, uy, cuff_col=IDX_STEEL_HIGH)
             set_safe_pixel(c, gx, gy, IDX_GOLD_BRIGHT)
             set_safe_pixel(c, tip_x, tip_y, IDX_STEEL_GLEAM)
 
@@ -1667,22 +1799,16 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     for f_idx in range(168):
         c = np.zeros((th, tw), dtype=np.uint8)
         state, d, step = get_frame_state(f_idx)
+        b_dx, b_dy = get_upper_body_offset(state, d, step)
         base = clean_base_human(np.frombuffer(base_frames[f_idx], dtype=np.uint8).reshape((bh, bw)), f_idx)
         base = apply_joseon_armor(base, f_idx, style="dujeonggap_crimson")
-
-        # Forward body lunge shift during peak spear thrust (steps 2..5)
-        b_dx, b_dy = 0, 0
-        if state == "attack" and step in (2, 3, 4, 5):
-            ux_a, uy_a = ATK_DIR_VECTORS[d]
-            b_dx = int(round(2.0 * ux_a))
-            b_dy = int(round(1.6 * uy_a))
 
         for by in range(bh):
             for bx in range(bw):
                 val = base[by, bx]
                 if val == 0:
                     continue
-                ty, tx = by + oy + b_dy, bx + ox + b_dx
+                ty, tx = by + oy, bx + ox
                 if 0 <= ty < th and 0 <= tx < tw:
                     c[ty, tx] = val
 
@@ -1705,7 +1831,7 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 rear_len = 18
 
             butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy = get_polearm_pose(
-                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len, sway_scale=0.50
+                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len, sway_scale=0.55
             )
             perp_x, perp_y = -uy, ux
 
@@ -1727,8 +1853,8 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             set_safe_pixel(c, butt_x, butt_y, IDX_STEEL_LOW)
 
             # 3. Draw both 3D hands wrapping ON TOP OF the spear shaft so the soldier visibly grasps the pole!
-            draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], ux, uy, cuff_col=IDX_GOLD_MID)
-            draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], ux, uy, cuff_col=IDX_GOLD_MID)
+            draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], ux, uy, cuff_col=IDX_STEEL_MID)
+            draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], ux, uy, cuff_col=IDX_STEEL_MID)
 
             # 4. Prominent crimson horsehair tassel (붉은 영자) at neck collar
             tassel_end_x = int(round(neck_x + 5 * perp_x - 3 * ux))
@@ -1784,7 +1910,7 @@ def build_woldo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 val = base[by, bx]
                 if val == 0:
                     continue
-                ty, tx = by + oy + b_dy, bx + ox + b_dx
+                ty, tx = by + oy, bx + ox
                 if not (0 <= ty < th and 0 <= tx < tw):
                     continue
                 c[ty, tx] = val
@@ -1809,8 +1935,8 @@ def build_woldo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 butt_y = int(round(gy - rear_len * uy))
                 collar_x = int(round(gx + shaft_len * ux))
                 collar_y = int(round(gy + shaft_len * uy))
-                r_hand = (int(round(gx - 2.0 * ux)), int(round(gy - 2.0 * uy)))
-                f_hand = (int(round(gx + 3.0 * ux)), int(round(gy + 3.0 * uy)))
+                r_hand = (int(round(gx - 2.4 * ux)), int(round(gy - 2.4 * uy)))
+                f_hand = (int(round(gx + 3.4 * ux)), int(round(gy + 3.4 * uy)))
             else:
                 # 1.2x scaled Idle/Move polearm pose (rear_len=10, front_len=18) with full arm-tip sway
                 butt_x, butt_y, gx, gy, collar_x, collar_y, ux, uy = get_polearm_pose(
@@ -1830,8 +1956,8 @@ def build_woldo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             set_safe_pixel(c, butt_x, butt_y, IDX_GOLD_MID)
 
             # 1b. Draw both 3D hands wrapping ON TOP OF the Woldo wooden pole
-            draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], ux, uy, cuff_col=IDX_RED_HIGH)
-            draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], ux, uy, cuff_col=IDX_RED_HIGH)
+            draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], ux, uy, cuff_col=IDX_STEEL_HIGH)
+            draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], ux, uy, cuff_col=IDX_STEEL_HIGH)
 
             # 2. Golden dragon collar (용두) + crimson tassel streamer
             c2_x = int(round(collar_x + 2 * ux))
@@ -1899,21 +2025,16 @@ def build_nangseon_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     for f_idx in range(168):
         c = np.zeros((th, tw), dtype=np.uint8)
         state, d, step = get_frame_state(f_idx)
+        b_dx, b_dy = get_upper_body_offset(state, d, step)
         base = clean_base_human(np.frombuffer(base_frames[f_idx], dtype=np.uint8).reshape((bh, bw)), f_idx)
         base = apply_joseon_armor(base, f_idx, style="dujeonggap_vanguard")
-
-        b_dx, b_dy = 0, 0
-        if state == "attack" and step in (2, 3, 4, 5):
-            ux_a, uy_a = ATK_DIR_VECTORS[d]
-            b_dx = int(round(2.0 * ux_a))
-            b_dy = int(round(1.6 * uy_a))
 
         for by in range(bh):
             for bx in range(bw):
                 val = base[by, bx]
                 if val == 0:
                     continue
-                ty, tx = by + oy + b_dy, bx + ox + b_dx
+                ty, tx = by + oy, bx + ox
                 if 0 <= ty < th and 0 <= tx < tw:
                     c[ty, tx] = val
 
@@ -1949,7 +2070,7 @@ def build_nangseon_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             )
 
             butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy = get_polearm_pose(
-                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len, sway_scale=0.50
+                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len, sway_scale=0.55
             )
             perp_x, perp_y = -uy, ux
 
@@ -1967,8 +2088,8 @@ def build_nangseon_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             set_safe_pixel(c, butt_x, butt_y, IDX_STEEL_LOW)
 
             # 1b. Draw both 3D hands wrapping ON TOP OF the bamboo main shaft
-            draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], ux, uy, cuff_col=IDX_GOLD_MID)
-            draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], ux, uy, cuff_col=IDX_GOLD_MID)
+            draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], ux, uy, cuff_col=IDX_STEEL_HIGH)
+            draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], ux, uy, cuff_col=IDX_STEEL_HIGH)
 
             # 2. Multi-tiered lateral branches (주 가지) + forked secondary sub-twigs (잔가지) + iron barbs
             for t_idx, (t_node, b_len, twig_len) in enumerate(tier_specs):

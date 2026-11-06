@@ -2033,10 +2033,10 @@ class TestJoseonNewUnitsPatch(unittest.TestCase):
             dec = SpriteDecoder.from_file(char_dir / primary)
             self.assertEqual((dec.width, dec.height, dec.frame_count), (exp_w, exp_h, 168))
 
-            # Check Idle frame 128 (SW) and 160 (S): verify authentic Dujeong-gap / Gyeongbeon-gap heavy armor
+            # Check Idle frame 128 (SW) and 160 (S): verify authentic Dujeong-gap / Gyeongbeon-gap armor & Joseon Baji
             armor_indices = (
-                33, 35, 41, 46, 47, 69, 113, 156, 211, 214, 232,
-                236, 237, 238, 239, 243, 250, 253,
+                33, 35, 41, 46, 47, 48, 52, 53, 54, 55, 69, 83, 90, 95, 113, 156, 165, 211, 214, 232,
+                236, 237, 238, 239, 240, 243, 250, 253,
             )
             for f_no in (128, 160):
                 arr = np.frombuffer(dec.decode_frame_raw(f_no), dtype=np.uint8).reshape((exp_h, exp_w))
@@ -2045,7 +2045,7 @@ class TestJoseonNewUnitsPatch(unittest.TestCase):
                 armor_px = sum(int(np.sum(body == idx)) for idx in armor_indices)
                 self.assertGreaterEqual(
                     armor_px, 180,
-                    f"{primary} frame {f_no} must have >=180 Dujeong-gap/Gyeongbeon-gap armor pixels, got {armor_px}",
+                    f"{primary} frame {f_no} must have >=180 Dujeong-gap/Gyeongbeon-gap armor & Baji pixels, got {armor_px}",
                 )
 
                 # Verify 0 4-connected interior transparent pinholes inside the core body
@@ -2056,6 +2056,14 @@ class TestJoseonNewUnitsPatch(unittest.TestCase):
                             if arr[y, x - 1] > 0 and arr[y, x + 1] > 0 and arr[y - 1, x] > 0 and arr[y + 1, x] > 0:
                                 pinholes += 1
                 self.assertEqual(pinholes, 0, f"{primary} frame {f_no} must have 0 interior transparent pinholes")
+
+            # Verify Move (0..7) has a dynamic 8-step running stride (>= 6 distinct lower-body frames)
+            ox, oy = (exp_w - 60) // 2, (exp_h - 60) // 2
+            move_legs = {
+                np.frombuffer(dec.decode_frame_raw(s), dtype=np.uint8).reshape((exp_h, exp_w))[oy + 32 : oy + 50, ox + 15 : ox + 45].tobytes()
+                for s in range(8)
+            }
+            self.assertGreaterEqual(len(move_legs), 6, f"{primary} Move (0..7) must have >= 6 distinct running leg poses")
 
         # Verify 장창수 and 낭선병 2x spear span (>= 65px in Idle and Attack) + 낭선병 prominent branches & sub-twigs
         dec_jc = SpriteDecoder.from_file(char_dir / "jangchangsu.spr")
@@ -2160,9 +2168,18 @@ class TestJoseonNewUnitsPatch(unittest.TestCase):
         )
 
         cave = build_attack_effects_cave(VA_CAVE_ATTACK_EFFECTS)
-        # Locate .status_effects (cmp bl, 9 -> 80 FB 09)
-        idx_status = cave.index(b"\x80\xFB\x09")
+        # Locate .status_effects (cmp dl, 0x70 -> 80 FA 70, gated strictly by Attacker KindID dl, NOT AttackAtb bl!)
+        idx_status = cave.index(b"\x80\xFA\x70")
         knockback_branch = cave[:idx_status]
+        status_branch = cave[idx_status:]
+
+        # 0. Status effects branch must check Attacker KindID (dl = 0x70, 0x76, 0x77) and NEVER check AttackAtb (bl = 7, 9, 26)
+        self.assertIn(b"\x80\xFA\x70", status_branch, "Must check cmp dl, 0x70 (유생)")
+        self.assertIn(b"\x80\xFA\x76", status_branch, "Must check cmp dl, 0x76 (털가면)")
+        self.assertIn(b"\x80\xFA\x77", status_branch, "Must check cmp dl, 0x77 (설녀)")
+        self.assertNotIn(b"\x80\xFB\x09", cave, "Must NOT check cmp bl, 9 (AttackAtb=9 is shared by shamans/monks!)")
+        self.assertNotIn(b"\x80\xFB\x07", cave, "Must NOT check cmp bl, 7 (AttackAtb=7 is shared by cannons/ships!)")
+        self.assertNotIn(b"\x80\xFB\x1A", cave, "Must NOT check cmp bl, 26")
 
         # 1. Knockback branch must NOT write HaltTimer (+0x370 = 0x0066BB00, paralysis visual effect)
         self.assertNotIn(
