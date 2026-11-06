@@ -128,68 +128,81 @@ ATK_GRIP_OFFSETS: List[Tuple[int, int]] = [
     (-1, -2),  # 4: S
 ]
 
-# Explicit 8-step 3D circular shoulder-arc slash trajectories per direction (0: SW, 1: W, 2: NW, 3: N, 4: S)
-# Here (h_dx, h_dy) is the TRUE 3D HAND GRIP CENTER relative to (cx + b_dx, cy + b_dy):
-# Step 0-1: Hands physically pull UP and BACK to the rear shoulder/helmet (+4..+5, -9..-11), coiling the blade back;
-# Step 2: Hands whip wide forward-outward (-4, -8) as the arms swing around the shoulder pivot;
-# Step 3: Both arms extend far forward in front of the chest (-8, -2) for the horizontal/diagonal mid-cleave;
-# Step 4-5: Arms sweep down-forward (-7, +3 -> -5, +4) in a deep follow-through;
-# Step 6-7: Arms retract smoothly back to chest guard.
+# 8-step Idle forearm/hand-tip poise trajectory & wrist pitch oscillation:
+# Across the 8 Idle frames (step = 0..7), the forearms move the hands (팔끝/손끝) along a smooth
+# 8-step poise arc and the wrists pitch the blade angle so the sword/halberd visibly sways back and forth
+# following the moving tip of the arm (팔끝을 따라서 검이 왔다갔다 함).
+IDLE_ARM_DX: Tuple[float, ...] = (-2.0, -1.0, 0.5, 2.0, 3.0, 2.0, 0.0, -1.0)
+IDLE_ARM_DY: Tuple[float, ...] = (1.0, 0.0, -1.0, -2.0, -1.0, 0.0, 1.0, 2.0)
+IDLE_WRIST_DEG: Tuple[float, ...] = (-11.0, -5.5, 2.5, 10.0, 15.0, 9.0, 0.0, -6.5)
+
+# Explicit 8-step 3D elliptical Arm-Lead -> Forearm-Whip -> Wrist-Snap -> Cross-Body Follow-Through
+# slash trajectories per direction (0: SW, 1: W, 2: NW, 3: N, 4: S).
+# Here (h_dx, h_dy) is the TRUE 3D HAND GRIP CENTER (손끝/팔끝) relative to (cx + b_dx, cy + b_dy):
+# - Step 0 (Lift): Hands lift up-right in front of rear shoulder, blade angled up;
+# - Step 1 (Coil): Hands pull high behind rear shoulder/helmet, elbow bent wide, blade cocked back;
+# - Step 2 (Arm-Lead Pull): Shoulders & elbows pull the hands forward across the upper chest FIRST
+#   while the heavy blade lags upright-back behind the hands;
+# - Step 3 (Forearm Whip): Elbows unbend, whipping the forearms & hands wide outward-forward;
+# - Step 4 (Full Extension & Wrist Snap): Arms reach maximum forward extension while the wrist snaps the blade across;
+# - Step 5 (Downward Cut): Outstretched arms sweep down-forward through the target;
+# - Step 6 (Cross-Body Follow-Through): Hands continue the circular arc across the lower front waist/hip;
+# - Step 7 (Guard Recovery): Elbows flex to lift the hands and blade smoothly back to chest guard.
 SWORD_SLASH_KEYFRAMES: List[List[Tuple[int, int, float]]] = [
     # 0: SW (facing down-left)
     [
-        (4, -9, -58.0),    # step 0: hands lift up-right to rear shoulder, blade angled up-back
-        (5, -11, -42.0),   # step 1: hands coil high behind right side of helmet, blade cocked back
-        (-4, -8, -135.0),  # step 2: arms whip wide forward-up-left in front of shoulders
-        (-8, -2, 172.0),   # step 3: full forward arm extension 8px in front of chest (mid-cleave)
-        (-7, 3, 138.0),    # step 4: deep diagonal-SW impact follow-through (hit!)
-        (-5, 4, 126.0),    # step 5: low follow-through hold
-        (-4, 0, 160.0),    # step 6: circular recovery sweep
-        (-2, -4, -120.0),  # step 7: return to chest ready guard
+        (4, -8, -55.0),    # step 0: hands lift up-right to rear shoulder, blade tilted back-right
+        (6, -10, -32.0),   # step 1: hands coil deep behind right shoulder, blade cocked far back
+        (-3, -9, -118.0),  # step 2: arms drive hilt high forward-left past shoulder, blade whips overhead
+        (-7, -5, -155.0),  # step 3: forearms whip wide forward-left, blade accelerates out
+        (-9, -1, 165.0),   # step 4: full forward arm extension + wrist snap across SW
+        (-7, 3, 132.0),    # step 5: deep downward-SW arc cleave (hit!)
+        (-2, 4, 108.0),    # step 6: cross-body low follow-through across front waist
+        (-2, -3, -128.0),  # step 7: elbows flex back to chest ready guard
     ],
     # 1: W (facing left)
     [
-        (4, -9, -52.0),    # step 0: hands lift up-right behind shoulder
-        (5, -11, -38.0),   # step 1: peak overhead-back coil behind helmet
-        (-4, -8, -130.0),  # step 2: wide forward-up-left swing
-        (-8, -2, 178.0),   # step 3: full forward-left arm extension 8px in front of chest
-        (-7, 2, 148.0),    # step 4: deep West-SW follow-through cleave (hit!)
-        (-5, 3, 136.0),    # step 5: follow-through hold
-        (-4, -1, 168.0),   # step 6: recovery sweep
-        (-3, -4, -118.0),  # step 7: ready stance
+        (4, -8, -52.0),    # step 0: hands lift up-right behind shoulder
+        (6, -10, -30.0),   # step 1: deep overhead-back coil behind shoulder
+        (-3, -9, -115.0),  # step 2: arms drive forward-left past top of shoulder
+        (-7, -5, -150.0),  # step 3: forearms whip wide forward-up-left
+        (-9, -2, 174.0),   # step 4: full horizontal-left arm extension + wrist snap
+        (-7, 2, 144.0),    # step 5: deep West-SW cleave follow-through (hit!)
+        (-3, 3, 120.0),    # step 6: cross-body low follow-through
+        (-3, -3, -125.0),  # step 7: return to guard
     ],
     # 2: NW (facing up-left)
     [
-        (4, -9, -48.0),    # step 0: hands lift up-right behind shoulder
-        (5, -11, -35.0),   # step 1: coil back-right behind helmet
-        (-4, -8, -118.0),  # step 2: wide sweep across top-left
-        (-7, -5, -152.0),  # step 3: full forward-NW arm extension past left shoulder
-        (-7, -2, 174.0),   # step 4: follow-through cleave to West (hit!)
-        (-5, 0, 160.0),    # step 5: follow-through hold
-        (-4, -3, -155.0),  # step 6: recovery
-        (-3, -5, -112.0),  # step 7: ready stance
+        (4, -8, -48.0),    # step 0: hands lift up-right behind shoulder
+        (6, -10, -28.0),   # step 1: coil back-right behind helmet
+        (-3, -9, -112.0),  # step 2: arms pull forward-left past shoulder
+        (-7, -6, -145.0),  # step 3: forearms whip out past left shoulder
+        (-8, -3, -172.0),  # step 4: full forward-NW arm extension + wrist snap
+        (-7, 0, 160.0),    # step 5: follow-through cleave to West (hit!)
+        (-3, 1, 140.0),    # step 6: cross-body follow-through in front of chest
+        (-3, -4, -120.0),  # step 7: ready stance
     ],
     # 3: N (facing up/back)
     [
-        (-4, -9, -132.0),  # step 0: hands lift up-left behind left shoulder
-        (-5, -11, -145.0), # step 1: coil back-left behind helmet
-        (3, -8, -65.0),    # step 2: wide sweep across North
-        (7, -5, -28.0),    # step 3: full forward-NE arm extension past right shoulder
-        (7, -2, 8.0),      # step 4: full follow-through to East (hit!)
-        (5, 0, 20.0),      # step 5: follow-through hold
-        (4, -3, -35.0),    # step 6: recovery
-        (3, -5, -72.0),    # step 7: ready stance
+        (-4, -8, -125.0),  # step 0: hands lift up-left behind left shoulder
+        (-6, -10, -148.0), # step 1: coil back-left behind helmet
+        (3, -9, -65.0),    # step 2: arms drive forward-right past right shoulder
+        (7, -6, -35.0),    # step 3: forearms whip out past right shoulder
+        (8, -3, -8.0),     # step 4: full forward-NE arm extension + wrist snap
+        (7, 0, 20.0),      # step 5: full follow-through to East (hit!)
+        (3, 1, 40.0),      # step 6: cross-body follow-through
+        (3, -4, -60.0),    # step 7: ready stance
     ],
     # 4: S (facing down/front)
     [
-        (4, -9, -60.0),    # step 0: hands lift high-right above shoulder
-        (5, -11, -45.0),   # step 1: peak overhead-back coil
-        (-5, -7, -142.0),  # step 2: wide outward-left swing
-        (-7, 0, 152.0),    # step 3: wide forward-down-left cleave
-        (-3, 4, 108.0),    # step 4: deep downward-front cleave across South (hit!)
-        (-1, 5, 95.0),     # step 5: low front follow-through hold
-        (-3, 1, 132.0),    # step 6: recovery
-        (-2, -4, -110.0),  # step 7: ready stance
+        (4, -8, -58.0),    # step 0: hands lift high-right above shoulder
+        (6, -10, -35.0),   # step 1: peak overhead-back coil
+        (-3, -8, -122.0),  # step 2: arms drive hilt forward-left above shoulder
+        (-7, -4, -158.0),  # step 3: forearms whip wide out-left
+        (-7, 1, 145.0),    # step 4: full downward-front-left arm extension + wrist snap
+        (-2, 5, 102.0),    # step 5: deep downward cleave straight across South (hit!)
+        (2, 4, 78.0),      # step 6: cross-body follow-through to lower-right hip
+        (-1, -2, -122.0),  # step 7: return to front chest guard
     ],
 ]
 
@@ -259,7 +272,7 @@ def get_slash_body_frame_idx(f_idx: int) -> Tuple[int, int, int]:
     """
     For sword/halberd slashing units (등패수, 쌍수도병, 월도병), replace the crouched spear-poke
     frames at Attack step 0, 1, 6, 7 with upright standing/stepping frames so the soldier
-    stands tall during the overhead wind-up and cleaves downward with his upper body.
+    stands tall during the overhead wind-up and leans forward with his upper body during the cleave.
     Returns (source_frame_idx, body_dx, body_dy).
     """
     state, d, step = get_frame_state(f_idx)
@@ -267,20 +280,26 @@ def get_slash_body_frame_idx(f_idx: int) -> Tuple[int, int, int]:
         return f_idx, 0, 0
     ux, uy = ATK_DIR_VECTORS[d]
     if step == 0:
-        # Upright wind-up
+        # Upright wind-up lift
         return 88 + d * 8 + 0, 0, -1
     elif step == 1:
-        # High overhead chamber (slight arch back/up)
+        # High overhead chamber (slight coil back/up)
         return 88 + d * 8 + 1, int(round(-ux)), -1
     elif step == 2:
-        # Step into downward slash
-        return 0 + d * 8 + 2, int(round(ux)), 0
-    elif step in (3, 4, 5):
-        # Full forward lunge cleave
+        # Upper body transfers weight forward as arms pull hilt across chest
+        return 0 + d * 8 + 2, 0, 0
+    elif step == 3:
+        # Step into outward forearm whip
         return f_idx, int(round(ux)), 0
+    elif step == 4:
+        # Peak forward lunge at full arm extension & wrist snap
+        return f_idx, int(round(1.6 * ux)), int(round(0.8 * uy))
+    elif step == 5:
+        # Deep downward cleave follow-through
+        return f_idx, int(round(1.2 * ux)), int(round(0.6 * uy))
     elif step == 6:
-        # Step back to guard
-        return 0 + d * 8 + 6, 0, 0
+        # Cross-body follow-through step back
+        return 0 + d * 8 + 6, int(round(0.5 * ux)), 0
     else:
         # Ready stance
         return 88 + d * 8 + 7, 0, 0
@@ -925,17 +944,20 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
 
 
 def get_arm_ramps(style: str) -> Tuple[List[int], List[int]]:
-    """Return (upper_arm_ramp, bracer_ramp) matching each unit's 3ds Max armor style."""
+    """
+    Return (upper_arm_ramp, bracer_ramp) with clear visual contrast against each unit's chest armor
+    so the upper arm sleeve (동달이 소매) and forearm vambrace (팔뚝 토시) are always readable.
+    """
     if style == "dujeonggap_crimson":
-        return RAMP_CRIMSON, RAMP_BRASS
+        return RAMP_BLUE, RAMP_BRASS
     if style == "dujeonggap_blue":
         return RAMP_CRIMSON, RAMP_BRASS
     if style == "dujeonggap_vanguard":
-        return RAMP_STEEL, RAMP_CRIMSON
+        return RAMP_BLUE, RAMP_BRASS
     if style == "gyeongbeongap_steel":
-        return RAMP_STEEL, RAMP_DARK_IRON
+        return RAMP_CRIMSON, RAMP_BRASS
     if style == "gyeongbeongap_heavy":
-        return RAMP_BRASS, RAMP_STEEL
+        return RAMP_BLUE, RAMP_STEEL
     return RAMP_CRIMSON, RAMP_BRASS
 
 
@@ -947,8 +969,9 @@ def draw_3d_cyl_limb(
     y1: int,
     ramp: List[int],
     radius: float = 1.35,
+    outline: bool = True,
 ) -> None:
-    """Render a 3D cylindrical shaded limb segment with top-left highlight and bottom-right shadow."""
+    """Render a 3D cylindrical shaded limb segment with a 1px dark silhouette border and top-left highlight."""
     dx = x1 - x0
     dy = y1 - y0
     length = math.hypot(dx, dy)
@@ -959,6 +982,17 @@ def draw_3d_cyl_limb(
     if px + py > 0:
         px, py = -px, -py
     steps = int(math.ceil(length * 2.0)) + 1
+    if outline:
+        out_off = radius + 0.55
+        for i in range(steps + 1):
+            t = i / max(1, steps)
+            cx_p = x0 + dx * t
+            cy_p = y0 + dy * t
+            for sgn in (-1.0, 1.0):
+                ix = int(round(cx_p + sgn * out_off * px))
+                iy = int(round(cy_p + sgn * out_off * py))
+                if 0 <= iy < canvas.shape[0] and 0 <= ix < canvas.shape[1]:
+                    canvas[iy, ix] = IDX_OUTLINE
     for i in range(steps + 1):
         t = i / max(1, steps)
         cx_p = x0 + dx * t
@@ -969,8 +1003,47 @@ def draw_3d_cyl_limb(
             ix = int(round(cx_p + off * px))
             iy = int(round(cy_p + off * py))
             if 0 <= iy < canvas.shape[0] and 0 <= ix < canvas.shape[1]:
-                lit = 0.76 - 0.34 * (off / radius)
+                lit = 0.78 - 0.34 * (off / radius)
                 canvas[iy, ix] = _pick_ramp(ramp, lit)
+
+
+def solve_arm_elbow_ik(
+    sx: int,
+    sy: int,
+    hx: int,
+    hy: int,
+    bend_side: int,
+    bone_len: float = 4.6,
+) -> Tuple[int, int]:
+    """
+    2-Bone Inverse Kinematics solver for the soldier's elbow (팔꿈치):
+    Given shoulder (sx, sy) and hand grip (hx, hy), maintains constant upper-arm and forearm
+    bone lengths (~4.6px each) so the elbow bends wide outward when the hand is coiled near the
+    shoulder/chest and visibly unbends/straightens when the arm whips outward to swing the blade.
+    """
+    dx = float(hx - sx)
+    dy = float(hy - sy)
+    dist = math.hypot(dx, dy)
+    mx = 0.5 * (sx + hx)
+    my = 0.5 * (sy + hy)
+    if dist < 0.5:
+        return int(round(mx + bend_side * 3.0)), int(round(my + 2.0))
+    half_d = min(bone_len - 0.25, 0.5 * dist)
+    bend_mag = math.sqrt(max(1.2, bone_len * bone_len - half_d * half_d))
+    ux, uy = dx / dist, dy / dist
+    # Two candidate unit normals perpendicular to (shoulder -> hand)
+    n1x, n1y = -uy, ux
+    n2x, n2y = uy, -ux
+    # Anatomical outward + gravity elbow preference (lifts upward when hand is high above shoulder)
+    pref_x = float(bend_side) * 0.85 if bend_side != 0 else -0.65
+    pref_y = -0.45 if hy < sy - 2 else 0.65
+    if (n1x * pref_x + n1y * pref_y) >= (n2x * pref_x + n2y * pref_y):
+        nx, ny = n1x, n1y
+    else:
+        nx, ny = n2x, n2y
+    ex = int(round(mx + bend_mag * nx))
+    ey = int(round(my + bend_mag * ny))
+    return ex, ey
 
 
 def draw_3d_arm_via_elbow(
@@ -984,9 +1057,10 @@ def draw_3d_arm_via_elbow(
     upper_ramp: List[int],
     bracer_ramp: List[int],
 ) -> None:
-    """Render an articulated 3D upper arm (pauldron -> elbow) and forearm bracer (elbow -> hand)."""
-    draw_3d_cyl_limb(canvas, sx, sy, ex, ey, upper_ramp, radius=1.40)
-    draw_3d_cyl_limb(canvas, ex, ey, hx, hy, bracer_ramp, radius=1.25)
+    """Render an articulated 3D upper arm (pauldron -> elbow), elbow guard, and forearm bracer (elbow -> hand)."""
+    draw_3d_cyl_limb(canvas, sx, sy, ex, ey, upper_ramp, radius=1.35, outline=True)
+    draw_3d_cyl_limb(canvas, ex, ey, hx, hy, bracer_ramp, radius=1.20, outline=True)
+    set_safe_pixel(canvas, ex, ey, IDX_GOLD_MID)
 
 
 def draw_two_handed_arms(
@@ -999,33 +1073,44 @@ def draw_two_handed_arms(
     d: int = 0,
 ) -> None:
     """
-    Direction-aware 3D articulated arms connecting the anatomical Left & Right Shoulders
-    via natural elbows to the two weapon grip points (hand1_xy, hand2_xy).
+    Direction-aware 3D 2-bone IK articulated arms connecting the anatomical Left & Right Shoulders
+    via natural flexing elbows to the two weapon grip points (hand1_xy, hand2_xy).
     """
     upper_ramp, bracer_ramp = get_arm_ramps(style)
     # Direction-specific shoulder anchors so side profiles (d=1 W, d=2 NW) never protrude behind the back
     shoulder_pairs = [
         ((cx - 4, cy - 8), (cx + 3, cy - 8), -1, 1),   # 0: SW
-        ((cx - 3, cy - 8), (cx + 1, cy - 8), -1, 0),   # 1: W (side profile facing left)
-        ((cx - 4, cy - 8), (cx + 2, cy - 8), -1, 0),   # 2: NW (three-quarter back-left)
+        ((cx - 3, cy - 8), (cx + 1, cy - 8), -1, 1),   # 1: W (side profile facing left)
+        ((cx - 4, cy - 8), (cx + 2, cy - 8), -1, 1),   # 2: NW (three-quarter back-left)
         ((cx - 4, cy - 8), (cx + 4, cy - 8), -1, 1),   # 3: N
         ((cx - 4, cy - 8), (cx + 4, cy - 8), -1, 1),   # 4: S
     ]
     sh_l, sh_r, bend_l, bend_r = shoulder_pairs[d]
 
-    if hand1_xy[0] <= hand2_xy[0]:
+    # Assign hands to (sh_l, sh_r) by minimizing total squared shoulder-to-hand distance (prevents arm crossing)
+    d_direct = (
+        (hand1_xy[0] - sh_l[0]) ** 2 + (hand1_xy[1] - sh_l[1]) ** 2
+        + (hand2_xy[0] - sh_r[0]) ** 2 + (hand2_xy[1] - sh_r[1]) ** 2
+    )
+    d_swapped = (
+        (hand2_xy[0] - sh_l[0]) ** 2 + (hand2_xy[1] - sh_l[1]) ** 2
+        + (hand1_xy[0] - sh_r[0]) ** 2 + (hand1_xy[1] - sh_r[1]) ** 2
+    )
+    if d_direct <= d_swapped:
         lh, rh = hand1_xy, hand2_xy
     else:
         lh, rh = hand2_xy, hand1_xy
 
-    # Raise elbows upward when hands are chambered high overhead (hy < sy)
-    bend_yl = -1 if lh[1] < sh_l[1] else 1
-    bend_yr = -1 if rh[1] < sh_r[1] else 1
-    el_l = ((sh_l[0] + lh[0]) // 2 + bend_l, (sh_l[1] + lh[1]) // 2 + bend_yl)
-    el_r = ((sh_r[0] + rh[0]) // 2 + bend_r, (sh_r[1] + rh[1]) // 2 + bend_yr)
+    el_l = solve_arm_elbow_ik(sh_l[0], sh_l[1], lh[0], lh[1], bend_l)
+    el_r = solve_arm_elbow_ik(sh_r[0], sh_r[1], rh[0], rh[1], bend_r)
 
-    draw_3d_arm_via_elbow(canvas, sh_l[0], sh_l[1], el_l[0], el_l[1], lh[0], lh[1], upper_ramp, bracer_ramp)
-    draw_3d_arm_via_elbow(canvas, sh_r[0], sh_r[1], el_r[0], el_r[1], rh[0], rh[1], upper_ramp, bracer_ramp)
+    # Draw far arm first, then near/lead arm on top
+    if d in (0, 1, 2):
+        draw_3d_arm_via_elbow(canvas, sh_l[0], sh_l[1], el_l[0], el_l[1], lh[0], lh[1], upper_ramp, bracer_ramp)
+        draw_3d_arm_via_elbow(canvas, sh_r[0], sh_r[1], el_r[0], el_r[1], rh[0], rh[1], upper_ramp, bracer_ramp)
+    else:
+        draw_3d_arm_via_elbow(canvas, sh_r[0], sh_r[1], el_r[0], el_r[1], rh[0], rh[1], upper_ramp, bracer_ramp)
+        draw_3d_arm_via_elbow(canvas, sh_l[0], sh_l[1], el_l[0], el_l[1], lh[0], lh[1], upper_ramp, bracer_ramp)
 
 
 def apply_back_view_body_occlusion(
@@ -1184,29 +1269,42 @@ def load_base_frames() -> List[bytes]:
 
 
 def get_polearm_pose(
-    state: str, d: int, step: int, cx: int, cy: int, rear_len: int, front_len: int
+    state: str,
+    d: int,
+    step: int,
+    cx: int,
+    cy: int,
+    rear_len: int,
+    front_len: int,
+    sway_scale: float = 1.0,
 ) -> Tuple[int, int, int, int, int, int, float, float]:
     """
-    Compute (butt_x, butt_y, grip_x, grip_y, tip_x, tip_y, ux, uy) for a two-handed polearm
-    so that it is held upright in Idle, sways naturally across the chest in Move, and
-    physically pulls back and thrusts forward with the hands/arms in Attack.
-    In back-facing directions (d=2 NW/NE, d=3 N), rear_len is tucked inside the chest silhouette
-    so no shaft butt pokes out behind the back or between the legs.
+    Compute (butt_x, butt_y, grip_x, grip_y, tip_x, tip_y, ux, uy) for a two-handed weapon
+    so that in Idle the forearms move the hands (팔끝/손끝) along a living 8-step poise wave while
+    the wrists pitch the blade/pole back and forth following the arm tip (팔끝을 따라서 검이 왔다갔다 함),
+    in Move it sways rhythmically with the walk stride, and in Attack it thrusts/cleaves with the arms.
     """
     if state == "idle":
         gx_off, gy_off = IDLE_GRIP_OFFSETS[d]
-        ux, uy = IDLE_DIR_VECTORS[d]
-        breathe = 1 if step in (3, 4, 5) else 0
-        gx, gy = cx + gx_off, cy + gy_off + breathe
+        ux_b, uy_b = IDLE_DIR_VECTORS[d]
+        dir_sign = 1.0 if d == 3 else -1.0
+        wrist_rad = math.radians(dir_sign * IDLE_WRIST_DEG[step] * sway_scale)
+        cw, sw = math.cos(wrist_rad), math.sin(wrist_rad)
+        ux = ux_b * cw - uy_b * sw
+        uy = ux_b * sw + uy_b * cw
+        arm_dx = int(round(dir_sign * IDLE_ARM_DX[step] * sway_scale))
+        arm_dy = int(round(IDLE_ARM_DY[step] * sway_scale))
+        gx = cx + gx_off + arm_dx
+        gy = cy + gy_off + arm_dy
     elif state == "move":
         gx_off, gy_off = MOVE_GRIP_OFFSETS[d]
         ux_b, uy_b = MOVE_DIR_VECTORS[d]
-        # Subtle 8-step walk-cycle angular sway and hand stride oscillation
-        sway_rad = math.radians((-3.5, -2.5, 0.0, 2.5, 3.5, 2.5, 0.0, -2.5)[step])
+        # 8-step walk-cycle arm-tip stride oscillation & wrist pitch sway
+        sway_rad = math.radians((-7.5, -4.5, 0.0, 4.5, 7.5, 4.5, 0.0, -4.5)[step] * sway_scale)
         cs, ss = math.cos(sway_rad), math.sin(sway_rad)
         ux = ux_b * cs - uy_b * ss
         uy = ux_b * ss + uy_b * cs
-        stride = (-1.0, -0.8, 0.0, 0.8, 1.0, 0.8, 0.0, -0.8)[step]
+        stride = (-2.0, -1.2, 0.0, 1.2, 2.0, 1.2, 0.0, -1.2)[step] * sway_scale
         bob = -1 if step in (1, 2, 5, 6) else 0
         gx = int(round(cx + gx_off + stride * ux))
         gy = int(round(cy + gy_off + bob + stride * uy))
@@ -1243,8 +1341,8 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     68x68, 168 frames for 등패수 (0x7A):
     - Blue dujeonggap with golden rivets
     - Angled isometric oval rattan shield (등패) on the shield arm with iron boss and dark rim
-    - Crisp steel Hwando blade held in right-hand guard in Idle/Move and slashing in a wide 3D circular arc in Attack,
-      with back-view torso occlusion in d=2 (NW/NE) and d=3 (N).
+    - Crisp steel Hwando blade swaying with the moving sword hand/forearm in Idle/Move and slashing
+      in a wide 2-bone IK arm-led 3D circular arc in Attack, with back-view torso occlusion in d=1,2,3.
     """
     spec = UNIT_SPECS["dengpaesu"]
     tw, th = spec["width"], spec["height"]  # 68x68
@@ -1278,7 +1376,7 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             draw_line_indices(c, cx + 2, cy + 8, cx + 14, cy + 12, IDX_STEEL_GLEAM, width=1)
             set_safe_pixel(c, cx + 2, cy + 8, IDX_GOLD_BRIGHT)
         else:
-            # Shield held on the shield forearm (in front of left shoulder in d=2,3 so torso occludes inner half)
+            # Shield held on the shield forearm (with subtle breathing poise in Idle and walk bob in Move)
             shield_pos = [
                 (cx - 6, cy - 1, 5.5, 6.8),  # 0: SW
                 (cx - 6, cy - 2, 5.0, 6.8),  # 1: W
@@ -1287,7 +1385,10 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 (cx + 6, cy - 1, 5.5, 6.8),  # 4: S
             ]
             sx, sy, rx, ry = shield_pos[d]
-            if state == "move" and step in (1, 2, 5, 6):
+            if state == "idle":
+                sx += (-1, 0, 0, 1, 1, 0, 0, -1)[step]
+                sy += (0, 0, -1, -1, 0, 1, 1, 0)[step]
+            elif state == "move" and step in (1, 2, 5, 6):
                 sy -= 1
             elif state == "attack":
                 brace_dx = 2 if d == 4 else -2
@@ -1322,10 +1423,11 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                             weave_mod = 0.04 if ((dx_s + dy_s) % 2 == 0) else -0.04
                             c[py, px] = _pick_ramp(RAMP_BRASS, s_lit, boost=ring_wave + weave_mod)
 
-        # 2. Render Hwando sword (환도) in sword hand ON TOP, with articulated 3D sword arm and clasping hand
+        # 2. Render Hwando sword (환도) in sword hand ON TOP, with 2-bone IK articulated 3D sword arm and clasping hand
         if state != "die":
             sh_sword_x = cx + b_dx + (-4 if d == 4 else (2 if d in (1, 2) else 4))
             sh_sword_y = cy + b_dy - 8
+            bend_side = -1 if d == 4 else 1
 
             if state == "attack":
                 h_dx, h_dy, ang_deg = SWORD_SLASH_KEYFRAMES[d][step]
@@ -1345,16 +1447,14 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 butt_x = int(round(hand_cx - butt_len * cos_a))
                 butt_y = int(round(hand_cy - butt_len * sin_a))
 
-                bend_y = -1 if hand_cy < sh_sword_y else 1
-                el_x = (sh_sword_x + hand_cx) // 2 + (-1 if d == 4 else (0 if d in (1, 2) else 1))
-                el_y = (sh_sword_y + hand_cy) // 2 + bend_y
+                el_x, el_y = solve_arm_elbow_ik(sh_sword_x, sh_sword_y, hand_cx, hand_cy, bend_side)
                 draw_3d_arm_via_elbow(c, sh_sword_x, sh_sword_y, el_x, el_y, hand_cx, hand_cy, upper_ramp, bracer_ramp)
 
                 # Hwando hilt + brass pommel + disc guard (코등이)
                 draw_line_indices(c, butt_x, butt_y, hx, hy, IDX_WOOD_DARK, width=1)
                 set_safe_pixel(c, butt_x, butt_y, IDX_GOLD_BRIGHT)
-                mid_x = int(round(hx + (blen * 0.55) * cos_a + 1.0 * px_a))
-                mid_y = int(round(hy + (blen * 0.55) * sin_a + 1.0 * py_a))
+                mid_x = int(round(hx + (blen * 0.55) * cos_a + 1.1 * px_a))
+                mid_y = int(round(hy + (blen * 0.55) * sin_a + 1.1 * py_a))
                 draw_line_indices(c, hx, hy, tx, ty, IDX_STEEL_MID, width=2)
                 draw_line_indices(c, hx, hy, mid_x, mid_y, IDX_STEEL_GLEAM, width=1)
                 draw_line_indices(c, mid_x, mid_y, tx, ty, IDX_STEEL_GLEAM, width=1)
@@ -1363,32 +1463,50 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 set_safe_pixel(c, hx, hy, IDX_GOLD_BRIGHT)
                 set_safe_pixel(c, tx, ty, IDX_STEEL_GLEAM)
             else:
-                # Held cleanly in poised sword-hand guard on the sword side, with walk stride sway in Move
-                bob = -1 if (state == "move" and step in (1, 2, 5, 6)) else 0
-                stride = (-1, -1, 0, 1, 1, 1, 0, -1)[step] if state == "move" else 0
-                sword_ready = [
-                    (cx + 5, cy - 3 + bob, cx + 9 + stride, cy - 17 + bob),   # 0: SW
-                    (cx + 4, cy - 4 + bob, cx + 7 + stride, cy - 18 + bob),   # 1: W
-                    (cx + 3, cy - 5 + bob, cx + 7 + stride, cy - 19 + bob),   # 2: NW (in front of chest)
-                    (cx + 3, cy - 5 + bob, cx + 7 + stride, cy - 19 + bob),   # 3: N  (in front of chest)
-                    (cx - 5, cy - 3 + bob, cx - 9 - stride, cy - 17 + bob),   # 4: S
+                # In Idle and Move, the sword forearm moves the hand tip (팔끝/손끝) back and forth
+                # and the wrist pitches the 17px Hwando blade along with the moving arm tip!
+                s_sign = -1.0 if d == 4 else 1.0
+                base_hand = [
+                    (cx + 5, cy - 3, -72.0),   # 0: SW
+                    (cx + 4, cy - 4, -75.0),   # 1: W
+                    (cx + 3, cy - 5, -72.0),   # 2: NW (in front of chest)
+                    (cx + 4, cy - 5, -70.0),   # 3: N  (in front of chest)
+                    (cx - 5, cy - 3, -108.0),  # 4: S
                 ]
-                hx, hy, tx, ty = sword_ready[d]
-                dx_s, dy_s = tx - hx, ty - hy
-                slen = max(1.0, math.hypot(dx_s, dy_s))
-                ux_s, uy_s = dx_s / slen, dy_s / slen
-                butt_x = int(round(hx - 3 * ux_s))
-                butt_y = int(round(hy - 3 * uy_s))
+                bhx, bhy, base_ang_deg = base_hand[d]
+                if state == "idle":
+                    arm_dx = int(round(s_sign * IDLE_ARM_DX[step]))
+                    arm_dy = int(round(IDLE_ARM_DY[step]))
+                    wrist_deg = s_sign * IDLE_WRIST_DEG[step] * 1.15
+                else:
+                    arm_dx = int(round(s_sign * (-2.0, -1.0, 0.0, 1.0, 2.0, 1.0, 0.0, -1.0)[step]))
+                    arm_dy = -1 if step in (1, 2, 5, 6) else 0
+                    wrist_deg = s_sign * (-9.0, -5.0, 0.0, 5.0, 9.0, 5.0, 0.0, -5.0)[step]
 
-                el_x = (sh_sword_x + hx) // 2 + (-1 if d == 4 else (0 if d in (1, 2) else 1))
-                el_y = (sh_sword_y + hy) // 2 + 1
-                draw_3d_arm_via_elbow(c, sh_sword_x, sh_sword_y, el_x, el_y, hx, hy, upper_ramp, bracer_ramp)
+                hand_cx = bhx + arm_dx
+                hand_cy = bhy + arm_dy
+                ang = math.radians(base_ang_deg + wrist_deg)
+                ux_s, uy_s = math.cos(ang), math.sin(ang)
+                px_a, py_a = -uy_s, ux_s
+                hx = int(round(hand_cx + 1.5 * ux_s))
+                hy = int(round(hand_cy + 1.5 * uy_s))
+                blen = 17
+                tx = int(round(hx + blen * ux_s))
+                ty = int(round(hy + blen * uy_s))
+                butt_x = int(round(hand_cx - 2.5 * ux_s))
+                butt_y = int(round(hand_cy - 2.5 * uy_s))
+
+                el_x, el_y = solve_arm_elbow_ik(sh_sword_x, sh_sword_y, hand_cx, hand_cy, bend_side)
+                draw_3d_arm_via_elbow(c, sh_sword_x, sh_sword_y, el_x, el_y, hand_cx, hand_cy, upper_ramp, bracer_ramp)
 
                 draw_line_indices(c, butt_x, butt_y, hx, hy, IDX_WOOD_DARK, width=1)
                 set_safe_pixel(c, butt_x, butt_y, IDX_GOLD_BRIGHT)
+                mid_x = int(round(hx + (blen * 0.55) * ux_s + 1.0 * px_a))
+                mid_y = int(round(hy + (blen * 0.55) * uy_s + 1.0 * py_a))
                 draw_line_indices(c, hx, hy, tx, ty, IDX_STEEL_MID, width=2)
-                draw_line_indices(c, (hx + tx) // 2, (hy + ty) // 2, tx, ty, IDX_STEEL_GLEAM, width=1)
-                draw_hand_wrapping_weapon(c, int(round(hx - 1.0 * ux_s)), int(round(hy - 1.0 * uy_s)), ux_s, uy_s)
+                draw_line_indices(c, hx, hy, mid_x, mid_y, IDX_STEEL_GLEAM, width=1)
+                draw_line_indices(c, mid_x, mid_y, tx, ty, IDX_STEEL_GLEAM, width=1)
+                draw_hand_wrapping_weapon(c, hand_cx, hand_cy, ux_s, uy_s)
                 set_safe_pixel(c, hx, hy, IDX_GOLD_BRIGHT)
                 set_safe_pixel(c, tx, ty, IDX_STEEL_GLEAM)
 
@@ -1410,9 +1528,9 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     """
     80x74, 168 frames for 쌍수도병 (0x7B):
     - Solid Team-Blue & Steel Gyeongbeongap lamellar armor
-    - Two-Handed Greatsword (쌍수도) held with BOTH hands on the 9px long hilt in Idle/Move,
-      and executing a wide 3D circular shoulder-arc two-handed cleave during Attack,
-      with full back-view torso occlusion in d=2 (NW/NE) and d=3 (N).
+    - Two-Handed Greatsword (쌍수도) swaying with both moving arm tips in Idle/Move,
+      and executing a wide 2-bone IK arm-led 3D elliptical cleave during Attack,
+      with full back-view torso occlusion in d=1,2,3.
     """
     spec = UNIT_SPECS["ssangsudo"]
     tw, th = spec["width"], spec["height"]  # 80x74
@@ -1444,20 +1562,20 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             set_safe_pixel(c, cx - 6, cy + 12, IDX_GOLD_BRIGHT)
             draw_line_indices(c, cx - 5, cy + 12, cx + 20, cy + 12, IDX_STEEL_GLEAM, width=2)
         elif state == "attack":
-            # Full two-handed 3D circular shoulder-arc greatsword cleave (1.2x scaled 양손 대도 회전 베기)
-            # (hand_cx, hand_cy) is the true midpoint between the warrior's two hands!
+            # Full two-handed 3D elliptical arm-led greatsword cleave (1.2x scaled 양손 대도 회전 베기)
+            # (hand_cx, hand_cy) is the true midpoint between the warrior's two hands at the tips of his arms!
             h_dx, h_dy, ang_deg = SWORD_SLASH_KEYFRAMES[d][step]
             hand_cx, hand_cy = cx + b_dx + h_dx, cy + b_dy + h_dy
             ang = math.radians(ang_deg)
             cos_a, sin_a = math.cos(ang), math.sin(ang)
             px_a, py_a = -sin_a, cos_a
 
-            # Two hands centered around (hand_cx, hand_cy); crossguard (gx, gy) is 3.5px ahead of hand center
-            r_off = 1.5 if (d in (2, 3) and step >= 2) else 2.2
+            # Two hands centered tightly around (hand_cx, hand_cy) so both arms extend fully with the swing
+            r_off = 1.4 if (d in (2, 3) and step >= 2) else 1.8
             f_off = 2.0
             r_hand = (int(round(hand_cx - r_off * cos_a)), int(round(hand_cy - r_off * sin_a)))
             f_hand = (int(round(hand_cx + f_off * cos_a)), int(round(hand_cy + f_off * sin_a)))
-            butt_off = 2.5 if (d in (2, 3) and step >= 2) else 4.5
+            butt_off = 2.5 if (d in (2, 3) and step >= 2) else 4.2
             butt_x = int(round(hand_cx - butt_off * cos_a))
             butt_y = int(round(hand_cy - butt_off * sin_a))
             gx = int(round(hand_cx + 3.5 * cos_a))
@@ -1466,7 +1584,7 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             tip_x = int(round(gx + blen * cos_a))
             tip_y = int(round(gy + blen * sin_a))
 
-            # Both 3D arms connecting shoulders to the two grip positions on the greatsword hilt
+            # Both 3D 2-bone IK arms connecting shoulders to the two grip positions on the greatsword hilt
             draw_two_handed_arms(c, cx + b_dx, cy + b_dy, f_hand, r_hand, "gyeongbeongap_steel", d=d)
 
             # Long two-handed wrapped hilt + brass ring pommel
@@ -1500,13 +1618,13 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                     is_overhead=(step in (0, 1)),
                 )
         else:
-            # High two-handed shoulder/chest guard stance (1.2x scaled: rear_len=9, front_len=27 -> 36px total)
+            # Living two-handed shoulder/chest guard stance (1.2x scaled: rear_len=9, front_len=27 -> 36px total)
             butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy = get_polearm_pose(
-                state, d, step, cx, cy, rear_len=9, front_len=27
+                state, d, step, cx, cy, rear_len=9, front_len=27, sway_scale=1.0
             )
             px_a, py_a = -uy, ux
             f_hand = (int(round(gx - 1.5 * ux)), int(round(gy - 1.5 * uy)))
-            r_hand = (int(round(gx - (3.5 if d in (1, 2, 3) else 6.0) * ux)), int(round(gy - (3.5 if d in (1, 2, 3) else 6.0) * uy)))
+            r_hand = (int(round(gx - (3.5 if d in (1, 2, 3) else 5.5) * ux)), int(round(gy - (3.5 if d in (1, 2, 3) else 5.5) * uy)))
 
             draw_two_handed_arms(c, cx + b_dx, cy + b_dy, f_hand, r_hand, "gyeongbeongap_steel", d=d)
             draw_line_indices(c, butt_x, butt_y, gx, gy, IDX_WOOD_DARK, width=2)
@@ -1537,7 +1655,7 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     - Crimson & Team-Blue Dujeonggap with golden rivets
     - Full 2x-length (70px~78px) 15-foot Joseon long spear (장창) held upright in Idle,
       diagonally across chest in Move, and physically pulled back & thrust deep by the hands/arms in Attack,
-      with full back-view torso occlusion in d=2 (NW/NE) and d=3 (N).
+      with full back-view torso occlusion in d=1,2,3.
     """
     spec = UNIT_SPECS["jangchangsu"]
     tw, th = spec["width"], spec["height"]  # 144x140
@@ -1587,7 +1705,7 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 rear_len = 18
 
             butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy = get_polearm_pose(
-                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len
+                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len, sway_scale=0.50
             )
             perp_x, perp_y = -uy, ux
 
@@ -1643,9 +1761,9 @@ def build_woldo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     """
     78x74, 168 frames for 월도병 (0x7D):
     - Heavy Gyeongbeongap with gold & steel lamellar rows
-    - Authentic Joseon Crescent Halberd (월도) gripped with both hands on the wooden pole
-      in Idle, Move, and wide 3D circular shoulder-arc sweeping Attack,
-      with full back-view torso occlusion in d=2 (NW/NE) and d=3 (N).
+    - Authentic Joseon Crescent Halberd (월도) swaying with both moving arm tips in Idle/Move,
+      and executing a wide 2-bone IK arm-led 3D elliptical sweep in Attack,
+      with full back-view torso occlusion in d=1,2,3.
     """
     spec = UNIT_SPECS["woldo"]
     tw, th = spec["width"], spec["height"]  # 78x74
@@ -1691,17 +1809,19 @@ def build_woldo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 butt_y = int(round(gy - rear_len * uy))
                 collar_x = int(round(gx + shaft_len * ux))
                 collar_y = int(round(gy + shaft_len * uy))
+                r_hand = (int(round(gx - 2.0 * ux)), int(round(gy - 2.0 * uy)))
+                f_hand = (int(round(gx + 3.0 * ux)), int(round(gy + 3.0 * uy)))
             else:
-                # 1.2x scaled Idle/Move polearm pose (rear_len=10, front_len=18)
+                # 1.2x scaled Idle/Move polearm pose (rear_len=10, front_len=18) with full arm-tip sway
                 butt_x, butt_y, gx, gy, collar_x, collar_y, ux, uy = get_polearm_pose(
-                    state, d, step, cx + b_dx, cy + b_dy, rear_len=10, front_len=18
+                    state, d, step, cx + b_dx, cy + b_dy, rear_len=10, front_len=18, sway_scale=1.0
                 )
+                r_hand = (int(round(gx - 3.2 * ux)), int(round(gy - 3.2 * uy)))
+                f_hand = (int(round(gx + 4.2 * ux)), int(round(gy + 4.2 * uy)))
 
             perp_x, perp_y = -uy, ux
-            r_hand = (int(round(gx - 3.5 * ux)), int(round(gy - 3.5 * uy)))
-            f_hand = (int(round(gx + 4.5 * ux)), int(round(gy + 4.5 * uy)))
 
-            # 0. Draw both 3D articulated arms connecting shoulders to the two grip points on the Woldo pole
+            # 0. Draw both 3D 2-bone IK articulated arms connecting shoulders to the two grip points on the Woldo pole
             draw_two_handed_arms(c, cx + b_dx, cy + b_dy, f_hand, r_hand, "gyeongbeongap_heavy", d=d)
 
             # 1. Wooden pole from rear butt through hands to dragon collar
@@ -1767,7 +1887,7 @@ def build_nangseon_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     - Agile vanguard soldier in steel-shouldered Dujeonggap
     - Full 2x-length (66px~74px) multi-tier bamboo branch spear (낭선) held upright in Idle,
       diagonally across chest in Move, and physically pulled back & thrust deep by the hands/arms in Attack,
-      with full back-view torso occlusion in d=2 (NW/NE) and d=3 (N).
+      with full back-view torso occlusion in d=1,2,3.
     """
     spec = UNIT_SPECS["nangseon"]
     tw, th = spec["width"], spec["height"]  # 144x140
@@ -1829,7 +1949,7 @@ def build_nangseon_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             )
 
             butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy = get_polearm_pose(
-                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len
+                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len, sway_scale=0.50
             )
             perp_x, perp_y = -uy, ux
 
