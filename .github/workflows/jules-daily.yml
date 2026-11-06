@@ -1,0 +1,166 @@
+name: Jules Daily Check
+
+on:
+  schedule:
+    # INFO : GitHub evaluates cron in UTC, not KST
+    - cron: '55 21 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  jules:
+    runs-on: ubuntu-latest
+    steps:
+      # INFO : the agent cannot see earlier runs' branches, so the open Jules PRs are handed to it in the prompt
+      #   and it is told to pick a different defect; the run itself is never skipped
+      - name: List open Jules PRs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr list --repo "$GITHUB_REPOSITORY" --state open --search '"[Jules daily]" in:title' \
+             --json number,title,headRefName \
+             --jq '.[] | select(.title | startswith("[Jules daily]")) | "- #\(.number) \(.title[14:]) (branch \(.headRefName))"' \
+             > open-prs.txt
+          echo "open Jules PRs: $(grep -c . open-prs.txt || true)"
+
+      - uses: actions/checkout@v5
+        with:
+          # INFO : checkout wipes the workspace, so the list is kept outside it and copied back
+          clean: false
+          fetch-depth: 30
+
+      - name: Build prompt
+        env:
+          PROMPT: |
+            You are the daily health checker for this repository.
+
+            ## This run is unattended
+            - Nobody reads this session until it is over. A question or a request for confirmation
+              is never answered, and the run is wasted.
+            - Never ask whether your approach looks good, which issue to pick, or whether to continue.
+              Never call `request_user_input` or any similar tool; make the call yourself using the
+              priority order below and keep going to the end.
+            - When you feel the need to ask something, do not send it. Write the question and the
+              answer you chose under "Assumptions" in the pull request body, then continue.
+            - When several candidates qualify, any one is fine. Pick one and go;
+              the next daily run picks up the others.
+            - Earlier daily runs may already be fixing something: their open pull requests are listed
+              under "Already being fixed" at the end of this prompt. Skip every defect one of them
+              already addresses and pick something different. If everything you find is on that
+              list, finish without changes and without a pull request. Do not run `git fetch` or
+              `git pull`: this environment has no GitHub credentials and the command fails.
+            - If you cannot settle on a safe fix, finish without changes and without a pull request.
+              Never open a pull request that changes no files: "no defects found" is a session that
+              simply ends, not a pull request.
+
+            ## This repository
+            No repository-specific notes. Read README.md and AGENTS.md first.
+
+            ## Goal
+            Find ONE real defect and fix it in a small, safe pull request.
+            If nothing qualifies, make no changes and open no pull request.
+
+            ## Today's lens
+            __LENS__
+            Start your search there. If nothing under today's lens qualifies, fall back to the
+            priority order below. The lens changes what you look at first, not the rules.
+
+            ## What to look for, in priority order
+            1. Build or test failures. Install the project's dependencies first
+               (for example `npm ci`, `bun install`, `pip install -r requirements.txt`),
+               then run the project's build and test commands.
+               If they fail for several reasons, fix ONE of them; do not try to make everything pass.
+            2. Bugs: null/undefined dereference, off-by-one, unhandled errors, resource leaks, race conditions.
+            3. Security: hard-coded secrets, injection, unsafe deserialization, vulnerable dependency usage.
+            4. Regressions introduced by the recent commits listed below.
+
+            ## Not defects
+            - Failures caused only by missing secrets or environment variables
+              (for example an unset database URL or API key in this environment).
+            - Code whose intent is stated in a commit message. Read the commit messages
+              (the log below and `git log`) before calling something a bug.
+
+            ## Rules
+            - Fix bugs only. Do not change intended behavior, public APIs, or design.
+            - Do not refactor, reformat, rename, or update dependencies unless that is the fix itself.
+              Never commit lockfile changes (`package-lock.json`, `bun.lockb`, `uv.lock`, `poetry.lock`,
+              `Cargo.lock`) that installing dependencies produced; revert them before the pull request.
+            - Keep the change under 100 lines and run the tests before opening the pull request.
+            - Test failures that already exist on the base branch and are unrelated to your change do not
+              block the pull request: open it anyway and list them under "Not fixed".
+            - A problem that needs a design decision is not yours to fix: leave the code alone and
+              list it under "Not fixed" in the pull request body.
+
+            ## Pull request format
+            Title: "[Jules daily] <one-line summary>"
+            Body, in English, one fact per line:
+            - What was wrong (file and line)
+            - The fix
+            - How it was verified (build/test command and result)
+            - Not fixed (problems that need a decision), or "none"
+            - Assumptions (questions you would have asked, with the answer you chose), or "none"
+            - Prompt feedback (instructions above that were wrong, missing or unclear for this
+              repository, e.g. a build command that does not exist), or "none"
+
+            Reminder: do not ask questions. Decide, finish, and open the pull request or stop.
+        run: |
+          # INFO : the lens rotates by weekday in the owner's time zone so each day looks at the code from a
+          #   different angle instead of re-finding the same first defect
+          case "$(TZ=Asia/Seoul date +%u)" in
+            1) lens="Monday, security: hard-coded secrets, injection, unsafe deserialization, missing authorization checks, secrets or personal data written to logs." ;;
+            2) lens="Tuesday, resources and performance: unbounded growth (lists, caches, log files), handles never closed, N+1 queries, missing pagination or timeouts, work repeated inside loops." ;;
+            3) lens="Wednesday, untested paths: find a code path no test covers, write the test, and fix the bug it exposes; the pull request is the test plus the fix. A test alone, with no bug found, is not a pull request." ;;
+            4) lens="Thursday, error handling: swallowed exceptions, errors that return success, missing retries or timeouts on network calls, failure paths that leave state half-written." ;;
+            5) lens="Friday, configuration and dependencies: pinned versions that no longer install, config parsing and defaults, environment variable handling, build scripts and CI definitions that do not match the code." ;;
+            6) lens="Saturday, documentation versus code: README commands that do not exist, comments and docstrings that describe behavior the code no longer has, examples that do not run." ;;
+            *) lens="Sunday, free choice: follow the priority order below." ;;
+          esac
+          printf '%s\n' "$PROMPT" | sed "s|__LENS__|$lens|" > prompt.txt
+          {
+            printf '\n\n## Already being fixed (open pull requests from earlier runs)\n'
+            if [ -s open-prs.txt ]; then cat open-prs.txt; else printf '(none)\n'; fi
+            printf '\n\nLog of the last 20 commits (in the format of `git log --stat`):\n```\n'
+            git log -20 --stat
+            printf '```\n'
+          } >> prompt.txt
+
+      - name: Start Jules session
+        env:
+          JULES_API_KEY: ${{ secrets.JULES_API_KEY }}
+          # INFO : scheduled runs start from the default branch, manual runs from the branch picked in the Run dialog
+          STARTING_BRANCH: ${{ github.ref_name }}
+        run: |
+          if [ -z "$JULES_API_KEY" ]; then
+            echo "::error::JULES_API_KEY secret is not set"
+            exit 1
+          fi
+
+          # INFO : --rawfile reads the prompt from disk, so a long commit log cannot hit the argument size limit
+          jq -n --rawfile prompt prompt.txt \
+                --arg source "sources/github/$GITHUB_REPOSITORY" \
+                --arg branch "$STARTING_BRANCH" \
+                '{prompt: $prompt,
+                  sourceContext: {source: $source, githubRepoContext: {startingBranch: $branch}},
+                  requirePlanApproval: false,
+                  automationMode: "AUTO_CREATE_PR"}' > payload.json
+
+          # INFO : --fail-with-body makes an HTTP error fail the step while keeping the API's error message
+          if ! curl -sS --fail-with-body https://jules.googleapis.com/v1alpha/sessions \
+                 -H "Content-Type: application/json" \
+                 -H "X-Goog-Api-Key: $JULES_API_KEY" \
+                 -d @payload.json -o response.json; then
+            echo "::error::Jules API rejected the request"
+            cat response.json
+            exit 1
+          fi
+
+          url="$(jq -r '.url // empty' response.json)"
+          if [ -z "$url" ]; then
+            echo "::error::Jules API response has no session URL"
+            cat response.json
+            exit 1
+          fi
+          echo "Jules session: $url"
