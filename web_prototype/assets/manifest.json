@@ -1,0 +1,2102 @@
+{
+  "version": "1.0.0",
+  "name": "Imjinrok 2+ Dawn Web RTS Asset Bundle",
+  "generated_at": "2026-10-23T01:02:29.757333+00:00",
+  "palette": {
+    "json": "palette/palette.json",
+    "swatch": "palette/palette_swatch.png"
+  },
+  "units": {
+    "chosun_farmer": {
+      "id": "chosun_farmer",
+      "name": "조선 농부",
+      "faction": "chosun",
+      "category": "unit",
+      "sprite_file": "farmerk.spr",
+      "atlas": "units/farmerk_atlas.png",
+      "meta": "units/farmerk_meta.json",
+      "frame_width": 80,
+      "frame_height": 60,
+      "frame_count": 288,
+      "directions": 8,
+      "stats": {
+        "move_speed": 4,
+        "hp": 1500,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 0,
+        "attack_delay": 15,
+        "cost_crop": 50,
+        "cost_tree": 0
+      }
+    },
+    "chosun_spearman": {
+      "id": "chosun_spearman",
+      "name": "조선 창병",
+      "faction": "chosun",
+      "category": "unit",
+      "sprite_file": "swordk.spr",
+      "atlas": "units/swordk_atlas.png",
+      "meta": "units/swordk_meta.json",
+      "frame_width": 60,
+      "frame_height": 60,
+      "frame_count": 192,
+      "directions": 8,
+      "stats": {
+        "move_speed": 4,
+        "hp": 700,
+        "mp": 0,
+        "attack_power": 12,
+        "attack_range": 1,
+        "attack_delay": 15,
+        "cost_crop": 70,
+        "cost_tree": 10
+      }
+    },
+    "chosun_archer": {
+      "id": "chosun_archer",
+      "name": "조선 궁수",
+      "faction": "chosun",
+      "category": "unit",
+      "sprite_file": "archerk.spr",
+      "atlas": "units/archerk_atlas.png",
+      "meta": "units/archerk_meta.json",
+      "frame_width": 56,
+      "frame_height": 46,
+      "frame_count": 176,
+      "directions": 8,
+      "stats": {
+        "move_speed": 4,
+        "hp": 500,
+        "mp": 0,
+        "attack_power": 10,
+        "attack_range": 7,
+        "attack_delay": 15,
+        "cost_crop": 80,
+        "cost_tree": 20
+      }
+    },
+    "chosun_turtleship": {
+      "id": "chosun_turtleship",
+      "name": "조선 거북선",
+      "faction": "chosun",
+      "category": "naval",
+      "sprite_file": "ashipk.spr",
+      "atlas": "units/ashipk_atlas.png",
+      "meta": "units/ashipk_meta.json",
+      "frame_width": 150,
+      "frame_height": 150,
+      "frame_count": 108,
+      "directions": 4,
+      "stats": {
+        "move_speed": 2,
+        "hp": 3500,
+        "mp": 0,
+        "attack_power": 15,
+        "attack_range": 9,
+        "attack_delay": 80,
+        "cost_crop": 4000,
+        "cost_tree": 120
+      }
+    },
+    "chosun_yisunsin": {
+      "id": "chosun_yisunsin",
+      "name": "조선 이순신",
+      "faction": "chosun",
+      "category": "hero",
+      "sprite_file": "generalk12.spr",
+      "atlas": "units/generalk12_atlas.png",
+      "meta": "units/generalk12_meta.json",
+      "frame_width": 128,
+      "frame_height": 108,
+      "frame_count": 56,
+      "directions": 8,
+      "stats": {
+        "move_speed": 7,
+        "hp": 800,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 7,
+        "attack_delay": 90,
+        "cost_crop": 3400,
+        "cost_tree": 0
+      }
+    },
+    "chosun_gwakjaeu": {
+      "id": "chosun_gwakjaeu",
+      "name": "조선 곽재우",
+      "faction": "chosun",
+      "category": "hero",
+      "sprite_file": "generalk31.spr",
+      "atlas": "units/generalk31_atlas.png",
+      "meta": "units/generalk31_meta.json",
+      "frame_width": 88,
+      "frame_height": 76,
+      "frame_count": 80,
+      "directions": 8,
+      "stats": {
+        "move_speed": 4,
+        "hp": 2000,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 7,
+        "attack_delay": 90,
+        "cost_crop": 2400,
+        "cost_tree": 0
+      }
+    },
+    "chosun_hq": {
+      "id": "chosun_hq",
+      "name": "조선 본영",
+      "faction": "chosun",
+      "category": "building",
+      "sprite_file": "hqk_plus.spr",
+      "atlas": "units/hqk_plus_atlas.png",
+      "meta": "units/hqk_plus_meta.json",
+      "frame_width": 176,
+      "frame_height": 169,
+      "frame_count": 10,
+      "directions": 1,
+      "stats": {
+        "move_speed": 0,
+        "hp": 6000,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 0,
+        "attack_delay": 90,
+        "cost_crop": 600,
+        "cost_tree": 400
+      }
+    },
+    "chosun_barracks": {
+      "id": "chosun_barracks",
+      "name": "조선 훈련소",
+      "faction": "chosun",
+      "category": "building",
+      "sprite_file": "barrackk.spr",
+      "atlas": "units/barrackk_atlas.png",
+      "meta": "units/barrackk_meta.json",
+      "frame_width": 128,
+      "frame_height": 117,
+      "frame_count": 24,
+      "directions": 8,
+      "stats": {
+        "move_speed": 0,
+        "hp": 3000,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 0,
+        "attack_delay": 0,
+        "cost_crop": 150,
+        "cost_tree": 50
+      }
+    },
+    "japan_farmer": {
+      "id": "japan_farmer",
+      "name": "일본 농부",
+      "faction": "japan",
+      "category": "unit",
+      "sprite_file": "farmerj.spr",
+      "atlas": "units/farmerj_atlas.png",
+      "meta": "units/farmerj_meta.json",
+      "frame_width": 110,
+      "frame_height": 80,
+      "frame_count": 288,
+      "directions": 8,
+      "stats": {
+        "move_speed": 4,
+        "hp": 2500,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 7,
+        "attack_delay": 90,
+        "cost_crop": 3600,
+        "cost_tree": 0
+      }
+    },
+    "japan_samurai": {
+      "id": "japan_samurai",
+      "name": "일본 사무라이",
+      "faction": "japan",
+      "category": "unit",
+      "sprite_file": "swordj.spr",
+      "atlas": "units/swordj_atlas.png",
+      "meta": "units/swordj_meta.json",
+      "frame_width": 60,
+      "frame_height": 50,
+      "frame_count": 192,
+      "directions": 8,
+      "stats": {
+        "move_speed": 4,
+        "hp": 800,
+        "mp": 0,
+        "attack_power": 14,
+        "attack_range": 1,
+        "attack_delay": 14,
+        "cost_crop": 80,
+        "cost_tree": 10
+      }
+    },
+    "japan_ashigaru": {
+      "id": "japan_ashigaru",
+      "name": "일본 뎃뽀 아시가루",
+      "faction": "japan",
+      "category": "unit",
+      "sprite_file": "gunj1.spr",
+      "atlas": "units/gunj1_atlas.png",
+      "meta": "units/gunj1_meta.json",
+      "frame_width": 60,
+      "frame_height": 60,
+      "frame_count": 80,
+      "directions": 8,
+      "stats": {
+        "move_speed": 3,
+        "hp": 450,
+        "mp": 0,
+        "attack_power": 16,
+        "attack_range": 8,
+        "attack_delay": 20,
+        "cost_crop": 90,
+        "cost_tree": 30
+      }
+    },
+    "japan_flametank": {
+      "id": "japan_flametank",
+      "name": "일본 귀갑차",
+      "faction": "japan",
+      "category": "siege",
+      "sprite_file": "flametankj.spr",
+      "atlas": "units/flametankj_atlas.png",
+      "meta": "units/flametankj_meta.json",
+      "frame_width": 50,
+      "frame_height": 50,
+      "frame_count": 180,
+      "directions": 4,
+      "stats": {
+        "move_speed": 2,
+        "hp": 400,
+        "mp": 0,
+        "attack_power": 2,
+        "attack_range": 8,
+        "attack_delay": 90,
+        "cost_crop": 1400,
+        "cost_tree": 60
+      }
+    },
+    "japan_hq": {
+      "id": "japan_hq",
+      "name": "일본 본영",
+      "faction": "japan",
+      "category": "building",
+      "sprite_file": "jhq.spr",
+      "atlas": "units/jhq_atlas.png",
+      "meta": "units/jhq_meta.json",
+      "frame_width": 120,
+      "frame_height": 133,
+      "frame_count": 16,
+      "directions": 8,
+      "stats": {
+        "move_speed": 0,
+        "hp": 6000,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 0,
+        "attack_delay": 0,
+        "cost_crop": 400,
+        "cost_tree": 200
+      }
+    },
+    "japan_barracks": {
+      "id": "japan_barracks",
+      "name": "일본 훈련소",
+      "faction": "japan",
+      "category": "building",
+      "sprite_file": "barrackj.spr",
+      "atlas": "units/barrackj_atlas.png",
+      "meta": "units/barrackj_meta.json",
+      "frame_width": 125,
+      "frame_height": 110,
+      "frame_count": 24,
+      "directions": 8,
+      "stats": {
+        "move_speed": 0,
+        "hp": 3000,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 0,
+        "attack_delay": 0,
+        "cost_crop": 150,
+        "cost_tree": 50
+      }
+    },
+    "ming_farmer": {
+      "id": "ming_farmer",
+      "name": "명 농부",
+      "faction": "ming",
+      "category": "unit",
+      "sprite_file": "farmerc.spr",
+      "atlas": "units/farmerc_atlas.png",
+      "meta": "units/farmerc_meta.json",
+      "frame_width": 80,
+      "frame_height": 60,
+      "frame_count": 288,
+      "directions": 8,
+      "stats": {
+        "move_speed": 4,
+        "hp": 1500,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 7,
+        "attack_delay": 90,
+        "cost_crop": 3600,
+        "cost_tree": 0
+      }
+    },
+    "ming_spearman": {
+      "id": "ming_spearman",
+      "name": "명 창기병",
+      "faction": "ming",
+      "category": "unit",
+      "sprite_file": "swordc1.spr",
+      "atlas": "units/swordc1_atlas.png",
+      "meta": "units/swordc1_meta.json",
+      "frame_width": 86,
+      "frame_height": 70,
+      "frame_count": 90,
+      "directions": 4,
+      "stats": {
+        "move_speed": 5,
+        "hp": 1000,
+        "mp": 0,
+        "attack_power": 15,
+        "attack_range": 2,
+        "attack_delay": 16,
+        "cost_crop": 100,
+        "cost_tree": 30
+      }
+    },
+    "ming_gunner": {
+      "id": "ming_gunner",
+      "name": "명 화승총병",
+      "faction": "ming",
+      "category": "unit",
+      "sprite_file": "gunc.spr",
+      "atlas": "units/gunc_atlas.png",
+      "meta": "units/gunc_meta.json",
+      "frame_width": 70,
+      "frame_height": 55,
+      "frame_count": 182,
+      "directions": 4,
+      "stats": {
+        "move_speed": 7,
+        "hp": 1200,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 7,
+        "attack_delay": 90,
+        "cost_crop": 3400,
+        "cost_tree": 0
+      }
+    },
+    "ming_elephant": {
+      "id": "ming_elephant",
+      "name": "명 코끼리",
+      "faction": "ming",
+      "category": "siege",
+      "sprite_file": "elephantc1.spr",
+      "atlas": "units/elephantc1_atlas.png",
+      "meta": "units/elephantc1_meta.json",
+      "frame_width": 125,
+      "frame_height": 96,
+      "frame_count": 56,
+      "directions": 8,
+      "stats": {
+        "move_speed": 3,
+        "hp": 400,
+        "mp": 0,
+        "attack_power": 2,
+        "attack_range": 8,
+        "attack_delay": 100,
+        "cost_crop": 2800,
+        "cost_tree": 120
+      }
+    },
+    "ming_hq": {
+      "id": "ming_hq",
+      "name": "명 본영",
+      "faction": "ming",
+      "category": "building",
+      "sprite_file": "hqc.spr",
+      "atlas": "units/hqc_atlas.png",
+      "meta": "units/hqc_meta.json",
+      "frame_width": 104,
+      "frame_height": 109,
+      "frame_count": 18,
+      "directions": 4,
+      "stats": {
+        "move_speed": 0,
+        "hp": 6000,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 0,
+        "attack_delay": 0,
+        "cost_crop": 400,
+        "cost_tree": 200
+      }
+    },
+    "ming_barracks": {
+      "id": "ming_barracks",
+      "name": "명 병부성",
+      "faction": "ming",
+      "category": "building",
+      "sprite_file": "barrackc.spr",
+      "atlas": "units/barrackc_atlas.png",
+      "meta": "units/barrackc_meta.json",
+      "frame_width": 100,
+      "frame_height": 100,
+      "frame_count": 10,
+      "directions": 4,
+      "stats": {
+        "move_speed": 4,
+        "hp": 5000,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 8,
+        "attack_delay": 90,
+        "cost_crop": 9900,
+        "cost_tree": 0
+      }
+    },
+    "chosun_mill": {
+      "id": "chosun_mill",
+      "name": "조선 방앗간",
+      "faction": "chosun",
+      "category": "building",
+      "sprite_file": "millk_plus.spr",
+      "atlas": "units/millk_plus_atlas.png",
+      "meta": "units/millk_plus_meta.json",
+      "frame_width": 114,
+      "frame_height": 107,
+      "frame_count": 16,
+      "directions": 1,
+      "stats": {
+        "move_speed": 0,
+        "hp": 2800,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 0,
+        "attack_delay": 90,
+        "cost_crop": 200,
+        "cost_tree": 150
+      }
+    },
+    "chosun_stable": {
+      "id": "chosun_stable",
+      "name": "조선 마구간",
+      "faction": "chosun",
+      "category": "building",
+      "sprite_file": "stablek.spr",
+      "atlas": "units/stablek_atlas.png",
+      "meta": "units/stablek_meta.json",
+      "frame_width": 137,
+      "frame_height": 117,
+      "frame_count": 14,
+      "directions": 1,
+      "stats": {
+        "move_speed": 0,
+        "hp": 3200,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 0,
+        "attack_delay": 90,
+        "cost_crop": 250,
+        "cost_tree": 200
+      }
+    },
+    "chosun_storage": {
+      "id": "chosun_storage",
+      "name": "조선 군기시",
+      "faction": "chosun",
+      "category": "building",
+      "sprite_file": "storagek.spr",
+      "atlas": "units/storagek_atlas.png",
+      "meta": "units/storagek_meta.json",
+      "frame_width": 152,
+      "frame_height": 120,
+      "frame_count": 10,
+      "directions": 1,
+      "stats": {
+        "move_speed": 0,
+        "hp": 3800,
+        "mp": 0,
+        "attack_power": 0,
+        "attack_range": 0,
+        "attack_delay": 90,
+        "cost_crop": 300,
+        "cost_tree": 250
+      }
+    },
+    "chosun_horsearcher": {
+      "id": "chosun_horsearcher",
+      "name": "조선 기마궁수",
+      "faction": "chosun",
+      "category": "unit",
+      "sprite_file": "horsearcherk.spr",
+      "atlas": "units/horsearcherk_atlas.png",
+      "meta": "units/horsearcherk_meta.json",
+      "frame_width": 70,
+      "frame_height": 70,
+      "frame_count": 140,
+      "directions": 8,
+      "stats": {
+        "move_speed": 16,
+        "hp": 1200,
+        "mp": 0,
+        "attack_power": 38,
+        "attack_range": 5,
+        "attack_delay": 20,
+        "cost_crop": 120,
+        "cost_tree": 60
+      }
+    },
+    "chosun_cannon": {
+      "id": "chosun_cannon",
+      "name": "조선 화차",
+      "faction": "chosun",
+      "category": "unit",
+      "sprite_file": "cannonk.spr",
+      "atlas": "units/cannonk_atlas.png",
+      "meta": "units/cannonk_meta.json",
+      "frame_width": 54,
+      "frame_height": 54,
+      "frame_count": 160,
+      "directions": 8,
+      "stats": {
+        "move_speed": 9,
+        "hp": 1600,
+        "mp": 0,
+        "attack_power": 65,
+        "attack_range": 7,
+        "attack_delay": 35,
+        "cost_crop": 150,
+        "cost_tree": 180
+      }
+    },
+    "chosun_yusaeng": {
+      "id": "chosun_yusaeng",
+      "name": "조선 유생",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 112,
+      "sprite_file": "keon_1hs.Spr",
+      "atlas": "units/keon_1hs_atlas.png",
+      "meta": "units/keon_1hs_meta.json",
+      "frame_width": 106,
+      "frame_height": 97,
+      "frame_count": 176,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 18,
+        "hp": 450,
+        "mp": 100,
+        "attack_power": 18,
+        "attack_range": 4.5,
+        "attack_delay": 26,
+        "cost_crop": 250,
+        "cost_tree": 0
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "die": {
+          "start": 60,
+          "total": 12,
+          "corpse": 71
+        },
+        "idle": {
+          "start": 72,
+          "fDir": 12,
+          "dirs": 5,
+          "total": 60
+        },
+        "move": {
+          "start": 132,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        }
+      }
+    },
+    "keon_1hs": {
+      "id": "chosun_yusaeng",
+      "name": "조선 유생",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 112,
+      "sprite_file": "keon_1hs.Spr",
+      "atlas": "units/keon_1hs_atlas.png",
+      "meta": "units/keon_1hs_meta.json",
+      "frame_width": 106,
+      "frame_height": 97,
+      "frame_count": 176,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 18,
+        "hp": 450,
+        "mp": 100,
+        "attack_power": 18,
+        "attack_range": 4.5,
+        "attack_delay": 26,
+        "cost_crop": 250,
+        "cost_tree": 0
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "die": {
+          "start": 60,
+          "total": 12,
+          "corpse": 71
+        },
+        "idle": {
+          "start": 72,
+          "fDir": 12,
+          "dirs": 5,
+          "total": 60
+        },
+        "move": {
+          "start": 132,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        }
+      }
+    },
+    "chosun_geomsul_nangin": {
+      "id": "chosun_geomsul_nangin",
+      "name": "검술 낭인",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 113,
+      "sprite_file": "SwordPirate_online.spr",
+      "atlas": "units/SwordPirate_online_atlas.png",
+      "meta": "units/SwordPirate_online_meta.json",
+      "frame_width": 94,
+      "frame_height": 100,
+      "frame_count": 136,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 21,
+        "hp": 600,
+        "mp": 0,
+        "attack_power": 25,
+        "attack_range": 1.5,
+        "attack_delay": 22,
+        "cost_crop": 180,
+        "cost_tree": 0
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "idle": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 80,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 120,
+          "total": 9,
+          "corpse": 128
+        }
+      }
+    },
+    "SwordPirate_online": {
+      "id": "chosun_geomsul_nangin",
+      "name": "검술 낭인",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 113,
+      "sprite_file": "SwordPirate_online.spr",
+      "atlas": "units/SwordPirate_online_atlas.png",
+      "meta": "units/SwordPirate_online_meta.json",
+      "frame_width": 94,
+      "frame_height": 100,
+      "frame_count": 136,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 21,
+        "hp": 600,
+        "mp": 0,
+        "attack_power": 25,
+        "attack_range": 1.5,
+        "attack_delay": 22,
+        "cost_crop": 180,
+        "cost_tree": 0
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "idle": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 80,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 120,
+          "total": 9,
+          "corpse": 128
+        }
+      }
+    },
+    "chosun_jochong_nangin": {
+      "id": "chosun_jochong_nangin",
+      "name": "조총 낭인",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 114,
+      "sprite_file": "GunPirate_online.spr",
+      "atlas": "units/GunPirate_online_atlas.png",
+      "meta": "units/GunPirate_online_meta.json",
+      "frame_width": 102,
+      "frame_height": 103,
+      "frame_count": 136,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 18,
+        "hp": 480,
+        "mp": 0,
+        "attack_power": 14,
+        "attack_range": 6.5,
+        "attack_delay": 32,
+        "cost_crop": 240,
+        "cost_tree": 0
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "idle": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 80,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 120,
+          "total": 9,
+          "corpse": 128
+        }
+      }
+    },
+    "GunPirate_online": {
+      "id": "chosun_jochong_nangin",
+      "name": "조총 낭인",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 114,
+      "sprite_file": "GunPirate_online.spr",
+      "atlas": "units/GunPirate_online_atlas.png",
+      "meta": "units/GunPirate_online_meta.json",
+      "frame_width": 102,
+      "frame_height": 103,
+      "frame_count": 136,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 18,
+        "hp": 480,
+        "mp": 0,
+        "attack_power": 14,
+        "attack_range": 6.5,
+        "attack_delay": 32,
+        "cost_crop": 240,
+        "cost_tree": 0
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "idle": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 80,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 120,
+          "total": 9,
+          "corpse": 128
+        }
+      }
+    },
+    "chosun_gumiho": {
+      "id": "chosun_gumiho",
+      "name": "구미호",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 115,
+      "sprite_file": "fox.spr",
+      "atlas": "units/fox_atlas.png",
+      "meta": "units/fox_meta.json",
+      "frame_width": 250,
+      "frame_height": 187,
+      "frame_count": 144,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 22,
+        "hp": 750,
+        "mp": 150,
+        "attack_power": 31,
+        "attack_range": 1.8,
+        "attack_delay": 24,
+        "cost_crop": 280,
+        "cost_tree": 50
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "idle": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 80,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 120,
+          "total": 17,
+          "corpse": 136
+        }
+      }
+    },
+    "fox": {
+      "id": "chosun_gumiho",
+      "name": "구미호",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 115,
+      "sprite_file": "fox.spr",
+      "atlas": "units/fox_atlas.png",
+      "meta": "units/fox_meta.json",
+      "frame_width": 250,
+      "frame_height": 187,
+      "frame_count": 144,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 22,
+        "hp": 750,
+        "mp": 150,
+        "attack_power": 31,
+        "attack_range": 1.8,
+        "attack_delay": 24,
+        "cost_crop": 280,
+        "cost_tree": 50
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "idle": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 80,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 120,
+          "total": 17,
+          "corpse": 136
+        }
+      }
+    },
+    "chosun_wangbeol": {
+      "id": "chosun_wangbeol",
+      "name": "조선왕벌",
+      "faction": "chosun",
+      "category": "air",
+      "kind_id": 116,
+      "sprite_file": "bat_online.spr",
+      "atlas": "units/bat_online_atlas.png",
+      "meta": "units/bat_online_meta.json",
+      "frame_width": 92,
+      "frame_height": 146,
+      "frame_count": 160,
+      "directions": 8,
+      "is_air": true,
+      "isAirUnit": true,
+      "flightAltitude": 36,
+      "hasGroundCorpse": false,
+      "corpseDuration": 0.0,
+      "stats": {
+        "move_speed": 25,
+        "hp": 500,
+        "mp": 0,
+        "attack_power": 26,
+        "attack_range": 1.5,
+        "attack_delay": 25,
+        "cost_crop": 200,
+        "cost_tree": 50
+      },
+      "anim_spec": {
+        "idle": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "atk": {
+          "start": 72,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "die": {
+          "start": 144,
+          "total": 11,
+          "corpse": null
+        }
+      }
+    },
+    "bat_online": {
+      "id": "chosun_wangbeol",
+      "name": "조선왕벌",
+      "faction": "chosun",
+      "category": "air",
+      "kind_id": 116,
+      "sprite_file": "bat_online.spr",
+      "atlas": "units/bat_online_atlas.png",
+      "meta": "units/bat_online_meta.json",
+      "frame_width": 92,
+      "frame_height": 146,
+      "frame_count": 160,
+      "directions": 8,
+      "is_air": true,
+      "isAirUnit": true,
+      "flightAltitude": 36,
+      "hasGroundCorpse": false,
+      "corpseDuration": 0.0,
+      "stats": {
+        "move_speed": 25,
+        "hp": 500,
+        "mp": 0,
+        "attack_power": 26,
+        "attack_range": 1.5,
+        "attack_delay": 25,
+        "cost_crop": 200,
+        "cost_tree": 50
+      },
+      "anim_spec": {
+        "idle": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "atk": {
+          "start": 72,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "die": {
+          "start": 144,
+          "total": 11,
+          "corpse": null
+        }
+      }
+    },
+    "chosun_horangi": {
+      "id": "chosun_horangi",
+      "name": "조선 호랑이",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 117,
+      "sprite_file": "Tiger.Spr",
+      "atlas": "units/Tiger_atlas.png",
+      "meta": "units/Tiger_meta.json",
+      "frame_width": 114,
+      "frame_height": 87,
+      "frame_count": 136,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 24,
+        "hp": 950,
+        "mp": 0,
+        "attack_power": 42,
+        "attack_range": 1.6,
+        "attack_delay": 24,
+        "cost_crop": 300,
+        "cost_tree": 0
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "idle": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 80,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 120,
+          "total": 10,
+          "corpse": 129
+        }
+      }
+    },
+    "Tiger": {
+      "id": "chosun_horangi",
+      "name": "조선 호랑이",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 117,
+      "sprite_file": "Tiger.Spr",
+      "atlas": "units/Tiger_atlas.png",
+      "meta": "units/Tiger_meta.json",
+      "frame_width": 114,
+      "frame_height": 87,
+      "frame_count": 136,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 24,
+        "hp": 950,
+        "mp": 0,
+        "attack_power": 42,
+        "attack_range": 1.6,
+        "attack_delay": 24,
+        "cost_crop": 300,
+        "cost_tree": 0
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "idle": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 80,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 120,
+          "total": 10,
+          "corpse": 129
+        }
+      }
+    },
+    "chosun_teolgamyeon": {
+      "id": "chosun_teolgamyeon",
+      "name": "털가면",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 118,
+      "sprite_file": "furheaddemon_online.spr",
+      "atlas": "units/furheaddemon_online_atlas.png",
+      "meta": "units/furheaddemon_online_meta.json",
+      "frame_width": 78,
+      "frame_height": 76,
+      "frame_count": 130,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 19,
+        "hp": 700,
+        "mp": 80,
+        "attack_power": 28,
+        "attack_range": 1.5,
+        "attack_delay": 26,
+        "cost_crop": 220,
+        "cost_tree": 40
+      },
+      "anim_spec": {
+        "idle": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "atk": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "move": {
+          "start": 80,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 120,
+          "total": 10,
+          "corpse": 129
+        }
+      }
+    },
+    "furheaddemon_online": {
+      "id": "chosun_teolgamyeon",
+      "name": "털가면",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 118,
+      "sprite_file": "furheaddemon_online.spr",
+      "atlas": "units/furheaddemon_online_atlas.png",
+      "meta": "units/furheaddemon_online_meta.json",
+      "frame_width": 78,
+      "frame_height": 76,
+      "frame_count": 130,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 19,
+        "hp": 700,
+        "mp": 80,
+        "attack_power": 28,
+        "attack_range": 1.5,
+        "attack_delay": 26,
+        "cost_crop": 220,
+        "cost_tree": 40
+      },
+      "anim_spec": {
+        "idle": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "atk": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40,
+          "instant": 4
+        },
+        "move": {
+          "start": 80,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 120,
+          "total": 10,
+          "corpse": 129
+        }
+      }
+    },
+    "chosun_seolnyeo": {
+      "id": "chosun_seolnyeo",
+      "name": "설녀",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 119,
+      "sprite_file": "snowwoman_online.spr",
+      "atlas": "units/snowwoman_online_atlas.png",
+      "meta": "units/snowwoman_online_meta.json",
+      "frame_width": 130,
+      "frame_height": 164,
+      "frame_count": 192,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 20,
+        "hp": 850,
+        "mp": 200,
+        "attack_power": 36,
+        "attack_range": 5.5,
+        "attack_delay": 28,
+        "cost_crop": 280,
+        "cost_tree": 60
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 13,
+          "dirs": 5,
+          "total": 65,
+          "instant": 6
+        },
+        "die": {
+          "start": 65,
+          "total": 19,
+          "corpse": 83
+        },
+        "idle": {
+          "start": 84,
+          "fDir": 10,
+          "dirs": 5,
+          "total": 50
+        },
+        "move": {
+          "start": 134,
+          "fDir": 10,
+          "dirs": 5,
+          "total": 50
+        }
+      }
+    },
+    "snowwoman_online": {
+      "id": "chosun_seolnyeo",
+      "name": "설녀",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 119,
+      "sprite_file": "snowwoman_online.spr",
+      "atlas": "units/snowwoman_online_atlas.png",
+      "meta": "units/snowwoman_online_meta.json",
+      "frame_width": 130,
+      "frame_height": 164,
+      "frame_count": 192,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 20,
+        "hp": 850,
+        "mp": 200,
+        "attack_power": 36,
+        "attack_range": 5.5,
+        "attack_delay": 28,
+        "cost_crop": 280,
+        "cost_tree": 60
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 13,
+          "dirs": 5,
+          "total": 65,
+          "instant": 6
+        },
+        "die": {
+          "start": 65,
+          "total": 19,
+          "corpse": 83
+        },
+        "idle": {
+          "start": 84,
+          "fDir": 10,
+          "dirs": 5,
+          "total": 50
+        },
+        "move": {
+          "start": 134,
+          "fDir": 10,
+          "dirs": 5,
+          "total": 50
+        }
+      }
+    },
+    "chosun_dokkaebi": {
+      "id": "chosun_dokkaebi",
+      "name": "조선 도깨비",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 120,
+      "sprite_file": "oni_online.spr",
+      "atlas": "units/oni_online_atlas.png",
+      "meta": "units/oni_online_meta.json",
+      "frame_width": 268,
+      "frame_height": 206,
+      "frame_count": 180,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 17,
+        "hp": 1100,
+        "mp": 120,
+        "attack_power": 40,
+        "attack_range": 1.8,
+        "attack_delay": 28,
+        "cost_crop": 320,
+        "cost_tree": 0
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 12,
+          "dirs": 5,
+          "total": 60,
+          "instant": 6
+        },
+        "idle": {
+          "start": 60,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 100,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 140,
+          "total": 11,
+          "corpse": 150
+        }
+      }
+    },
+    "oni_online": {
+      "id": "chosun_dokkaebi",
+      "name": "조선 도깨비",
+      "faction": "chosun",
+      "category": "unit",
+      "kind_id": 120,
+      "sprite_file": "oni_online.spr",
+      "atlas": "units/oni_online_atlas.png",
+      "meta": "units/oni_online_meta.json",
+      "frame_width": 268,
+      "frame_height": 206,
+      "frame_count": 180,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 17,
+        "hp": 1100,
+        "mp": 120,
+        "attack_power": 40,
+        "attack_range": 1.8,
+        "attack_delay": 28,
+        "cost_crop": 320,
+        "cost_tree": 0
+      },
+      "anim_spec": {
+        "atk": {
+          "start": 0,
+          "fDir": 12,
+          "dirs": 5,
+          "total": 60,
+          "instant": 6
+        },
+        "idle": {
+          "start": 60,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 100,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "die": {
+          "start": 140,
+          "total": 11,
+          "corpse": 150
+        }
+      }
+    },
+    "chosun_bulgasari": {
+      "id": "chosun_bulgasari",
+      "name": "불가살이",
+      "faction": "chosun",
+      "category": "siege",
+      "kind_id": 121,
+      "sprite_file": "starfish.spr",
+      "atlas": "units/starfish_atlas.png",
+      "meta": "units/starfish_meta.json",
+      "frame_width": 272,
+      "frame_height": 188,
+      "frame_count": 216,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 15,
+        "hp": 1400,
+        "mp": 0,
+        "attack_power": 46,
+        "attack_range": 2.2,
+        "attack_delay": 34,
+        "cost_crop": 380,
+        "cost_tree": 100
+      },
+      "anim_spec": {
+        "idle": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "atk": {
+          "start": 80,
+          "fDir": 16,
+          "dirs": 5,
+          "total": 80,
+          "instant": 8
+        },
+        "die": {
+          "start": 160,
+          "total": 20,
+          "corpse": 179
+        }
+      }
+    },
+    "starfish": {
+      "id": "chosun_bulgasari",
+      "name": "불가살이",
+      "faction": "chosun",
+      "category": "siege",
+      "kind_id": 121,
+      "sprite_file": "starfish.spr",
+      "atlas": "units/starfish_atlas.png",
+      "meta": "units/starfish_meta.json",
+      "frame_width": 272,
+      "frame_height": 188,
+      "frame_count": 216,
+      "directions": 8,
+      "is_air": false,
+      "isAirUnit": false,
+      "flightAltitude": 0,
+      "hasGroundCorpse": true,
+      "corpseDuration": 4.0,
+      "stats": {
+        "move_speed": 15,
+        "hp": 1400,
+        "mp": 0,
+        "attack_power": 46,
+        "attack_range": 2.2,
+        "attack_delay": 34,
+        "cost_crop": 380,
+        "cost_tree": 100
+      },
+      "anim_spec": {
+        "idle": {
+          "start": 0,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "move": {
+          "start": 40,
+          "fDir": 8,
+          "dirs": 5,
+          "total": 40
+        },
+        "atk": {
+          "start": 80,
+          "fDir": 16,
+          "dirs": 5,
+          "total": 80,
+          "instant": 8
+        },
+        "die": {
+          "start": 160,
+          "total": 20,
+          "corpse": 179
+        }
+      }
+    }
+  },
+  "tilesets": {
+    "normal": {
+      "theme": "normal",
+      "tiles": [
+        {
+          "name": "grss1",
+          "type": "ytl",
+          "atlas": "tiles/normal_grss1_atlas.png",
+          "meta": "tiles/normal_grss1_meta.json",
+          "width": 64,
+          "height": 48,
+          "frame_count": 28
+        },
+        {
+          "name": "diff1",
+          "type": "ytl",
+          "atlas": "tiles/normal_diff1_atlas.png",
+          "meta": "tiles/normal_diff1_meta.json",
+          "width": 64,
+          "height": 48,
+          "frame_count": 28
+        },
+        {
+          "name": "castle0",
+          "type": "ytl",
+          "atlas": "tiles/normal_castle0_atlas.png",
+          "meta": "tiles/normal_castle0_meta.json",
+          "width": 64,
+          "height": 48,
+          "frame_count": 48
+        },
+        {
+          "name": "hill0",
+          "type": "ypr",
+          "atlas": "tiles/normal_hill0_atlas.png",
+          "meta": "tiles/normal_hill0_meta.json",
+          "width": 80,
+          "height": 60,
+          "frame_count": 44
+        },
+        {
+          "name": "newblk0",
+          "type": "ytl",
+          "atlas": "tiles/normal_newblk0_atlas.png",
+          "meta": "tiles/normal_newblk0_meta.json",
+          "width": 64,
+          "height": 48,
+          "frame_count": 48
+        },
+        {
+          "name": "diff2",
+          "type": "ytl",
+          "atlas": "tiles/normal_diff2_atlas.png",
+          "meta": "tiles/normal_diff2_meta.json",
+          "width": 64,
+          "height": 48,
+          "frame_count": 28
+        },
+        {
+          "name": "newblk1",
+          "type": "ytl",
+          "atlas": "tiles/normal_newblk1_atlas.png",
+          "meta": "tiles/normal_newblk1_meta.json",
+          "width": 64,
+          "height": 48,
+          "frame_count": 48
+        },
+        {
+          "name": "diff13",
+          "type": "ytl",
+          "atlas": "tiles/normal_diff13_atlas.png",
+          "meta": "tiles/normal_diff13_meta.json",
+          "width": 64,
+          "height": 48,
+          "frame_count": 28
+        }
+      ]
+    }
+  },
+  "resources": {
+    "crop0": {
+      "id": "crop0",
+      "name": "potato",
+      "korean": "감자",
+      "atlas": "resources/crop0_atlas.png",
+      "meta": "resources/crop0_meta.json",
+      "width": 64,
+      "height": 32,
+      "frame_count": 100
+    },
+    "crop1": {
+      "id": "crop1",
+      "name": "rice",
+      "korean": "벼/논",
+      "atlas": "resources/crop1_atlas.png",
+      "meta": "resources/crop1_meta.json",
+      "width": 64,
+      "height": 48,
+      "frame_count": 40
+    },
+    "tree0": {
+      "id": "tree0",
+      "name": "tree",
+      "korean": "나무",
+      "atlas": "resources/tree0_atlas.png",
+      "meta": "resources/tree0_meta.json",
+      "width": 70,
+      "height": 90,
+      "frame_count": 70
+    },
+    "tree_plus": {
+      "id": "tree_plus",
+      "name": "tree_plus",
+      "korean": "소나무/대나무",
+      "atlas": "resources/tree_plus_atlas.png",
+      "meta": "resources/tree_plus_meta.json",
+      "width": 124,
+      "height": 134,
+      "frame_count": 40
+    }
+  },
+  "maps": {
+    "sea_of_cries": {
+      "slug": "sea_of_cries",
+      "name": "(2인,70X70)함성이그치지않는바다",
+      "file": "maps/sea_of_cries.json",
+      "minimap": "maps/sea_of_cries_minimap.png",
+      "width": 70,
+      "height": 70,
+      "players": 2,
+      "theme": "normal",
+      "total_resources": 940,
+      "total_buildings": 33
+    },
+    "taegeuk": {
+      "slug": "taegeuk",
+      "name": "(2인,100x100)태극",
+      "file": "maps/taegeuk.json",
+      "minimap": "maps/taegeuk_minimap.png",
+      "width": 100,
+      "height": 100,
+      "players": 2,
+      "theme": "normal",
+      "total_resources": 1402,
+      "total_buildings": 271
+    },
+    "gyeongju_bibimbap": {
+      "slug": "gyeongju_bibimbap",
+      "name": "(4인,120X120)경주비빔밥",
+      "file": "maps/gyeongju_bibimbap.json",
+      "minimap": "maps/gyeongju_bibimbap_minimap.png",
+      "width": 120,
+      "height": 120,
+      "players": 4,
+      "theme": "dark",
+      "total_resources": 1949,
+      "total_buildings": 752
+    },
+    "mugeuk": {
+      "slug": "mugeuk",
+      "name": "(4인,140x140)무극",
+      "file": "maps/mugeuk.json",
+      "minimap": "maps/mugeuk_minimap.png",
+      "width": 140,
+      "height": 140,
+      "players": 4,
+      "theme": "bright",
+      "total_resources": 3161,
+      "total_buildings": 200
+    }
+  },
+  "audio": {
+    "sfx": {
+      "click": {
+        "key": "click",
+        "file": "audio/click.wav",
+        "channels": 1,
+        "sample_rate": 11025,
+        "bits_per_sample": 8,
+        "duration_seconds": 0.12,
+        "data_size": 1336
+      },
+      "decidebuild": {
+        "key": "decidebuild",
+        "file": "audio/decidebuild.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 8,
+        "duration_seconds": 0.46,
+        "data_size": 10251
+      },
+      "arrow1": {
+        "key": "arrow1",
+        "file": "audio/arrow1.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 8,
+        "duration_seconds": 0.14,
+        "data_size": 3000
+      },
+      "cannon1": {
+        "key": "cannon1",
+        "file": "audio/cannon1.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 8,
+        "duration_seconds": 0.78,
+        "data_size": 17216
+      },
+      "gun1": {
+        "key": "gun1",
+        "file": "audio/gun1.wav",
+        "channels": 2,
+        "sample_rate": 44100,
+        "bits_per_sample": 16,
+        "duration_seconds": 0.37,
+        "data_size": 65572
+      },
+      "bigsword1": {
+        "key": "bigsword1",
+        "file": "audio/bigsword1.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 8,
+        "duration_seconds": 0.2,
+        "data_size": 4414
+      },
+      "fire1": {
+        "key": "fire1",
+        "file": "audio/fire1.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 8,
+        "duration_seconds": 0.96,
+        "data_size": 21152
+      },
+      "heal": {
+        "key": "heal",
+        "file": "audio/heal.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 8,
+        "duration_seconds": 0.78,
+        "data_size": 17248
+      },
+      "horsedie1": {
+        "key": "horsedie1",
+        "file": "audio/horsedie1.wav",
+        "channels": 1,
+        "sample_rate": 11025,
+        "bits_per_sample": 8,
+        "duration_seconds": 0.92,
+        "data_size": 10088
+      },
+      "farmerjwork1": {
+        "key": "farmerjwork1",
+        "file": "audio/farmerjwork1.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 8,
+        "duration_seconds": 0.04,
+        "data_size": 860
+      }
+    },
+    "voice": {
+      "select_swordk0": {
+        "key": "select_swordk0",
+        "file": "audio/select_swordk0.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 16,
+        "duration_seconds": 2.77,
+        "data_size": 122366
+      },
+      "move_swordk0": {
+        "key": "move_swordk0",
+        "file": "audio/move_swordk0.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 8,
+        "duration_seconds": 1.56,
+        "data_size": 34481
+      },
+      "attack_swordk0": {
+        "key": "attack_swordk0",
+        "file": "audio/attack_swordk0.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 16,
+        "duration_seconds": 3.04,
+        "data_size": 133886
+      },
+      "die_swordk0": {
+        "key": "die_swordk0",
+        "file": "audio/die_swordk0.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 16,
+        "duration_seconds": 2.26,
+        "data_size": 99838
+      }
+    },
+    "music": {
+      "startgame": {
+        "key": "startgame",
+        "file": "audio/startgame.wav",
+        "channels": 1,
+        "sample_rate": 22050,
+        "bits_per_sample": 8,
+        "duration_seconds": 5.69,
+        "data_size": 125456
+      },
+      "win": {
+        "key": "win",
+        "file": "audio/win.wav",
+        "channels": 2,
+        "sample_rate": 22050,
+        "bits_per_sample": 16,
+        "duration_seconds": 7.73,
+        "data_size": 681468
+      },
+      "lose": {
+        "key": "lose",
+        "file": "audio/lose.wav",
+        "channels": 2,
+        "sample_rate": 22050,
+        "bits_per_sample": 16,
+        "duration_seconds": 13.63,
+        "data_size": 1201952
+      }
+    }
+  },
+  "ui": {
+    "mouse": {
+      "atlas": "ui/mouse_atlas.png",
+      "meta": "ui/mouse_meta.json",
+      "width": 32,
+      "height": 32,
+      "frame_count": 200
+    },
+    "selectbox": {
+      "atlas": "ui/selectbox_atlas.png",
+      "meta": "ui/selectbox_meta.json",
+      "width": 32,
+      "height": 32,
+      "frame_count": 20
+    },
+    "movemark": {
+      "atlas": "ui/movemark_atlas.png",
+      "meta": "ui/movemark_meta.json",
+      "width": 64,
+      "height": 64,
+      "frame_count": 10
+    },
+    "button_plus": {
+      "atlas": "ui/button_plus_atlas.png",
+      "meta": "ui/button_plus_meta.json",
+      "width": 34,
+      "height": 34,
+      "frame_count": 289
+    },
+    "Back": {
+      "file": "ui/Back.png",
+      "width": 800,
+      "height": 600
+    },
+    "BattleButton": {
+      "atlas": "ui/BattleButton_atlas.png",
+      "meta": "ui/BattleButton_meta.json",
+      "width": 100,
+      "height": 36,
+      "frame_count": 33
+    },
+    "pannelc": {
+      "atlas": "ui/pannelc_atlas.png",
+      "meta": "ui/pannelc_meta.json",
+      "width": 831,
+      "height": 160,
+      "frame_count": 1
+    },
+    "portrait_plus": {
+      "atlas": "ui/portrait_plus_atlas.png",
+      "meta": "ui/portrait_plus_meta.json",
+      "width": 68,
+      "height": 68,
+      "frame_count": 195
+    },
+    "resource": {
+      "atlas": "ui/resource_atlas.png",
+      "meta": "ui/resource_meta.json",
+      "width": 20,
+      "height": 24,
+      "frame_count": 10
+    },
+    "pannelk": {
+      "atlas": "ui/pannelk_atlas.png",
+      "meta": "ui/pannelk_meta.json",
+      "width": 831,
+      "height": 160,
+      "frame_count": 1
+    },
+    "groundfire": {
+      "atlas": "ui/groundfire_atlas.png",
+      "meta": "ui/groundfire_meta.json",
+      "width": 96,
+      "height": 96,
+      "frame_count": 66
+    },
+    "exp0": {
+      "atlas": "ui/exp0_atlas.png",
+      "meta": "ui/exp0_meta.json",
+      "width": 110,
+      "height": 110,
+      "frame_count": 30
+    }
+  }
+}

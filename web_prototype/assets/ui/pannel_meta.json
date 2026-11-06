@@ -1,0 +1,24 @@
+{
+  "name": "pannel",
+  "version": 9,
+  "width": 640,
+  "height": 163,
+  "frame_count": 1,
+  "atlas_file": "pannel_atlas.png",
+  "atlas_width": 640,
+  "atlas_height": 163,
+  "cols": 1,
+  "rows": 1,
+  "frames": [
+    {
+      "index": 0,
+      "width": 640,
+      "height": 163,
+      "hotspot_x": 320,
+      "hotspot_y": 81,
+      "file": "pannel_frame_000.png",
+      "u": 0,
+      "v": 0
+    }
+  ]
+}

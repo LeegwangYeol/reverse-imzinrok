@@ -1,0 +1,41 @@
+# Python virtual environments & caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Agent scratch & large unmodded game archives
+.agents/
+YM.zip
+release/
+output/
+
+# Ignore 1.17 GB original YM game directory except modded expansion files
+YM/*
+!YM/dawn/
+YM/dawn/*
+!YM/dawn/dawn.exe
+!YM/dawn/dxwrapper.dll
+!YM/dawn/char/
+YM/dawn/char/*
+!YM/dawn/char/dengpaesu.spr
+!YM/dawn/char/ssangsudo.spr
+!YM/dawn/char/jangchangsu.spr
+!YM/dawn/char/woldo.spr
+!YM/dawn/char/nangseon.spr
+!YM/dawn/char/Gangsi1_online.spr
+!YM/dawn/char/Gangsi2_online.spr
+!YM/dawn/char/Gangsi3_online.spr
+!YM/dawn/char/RaccoonDog_online.spr
+!YM/dawn/char/Deer_online.spr
+!YM/dawn/char/bat_online.spr
+!YM/dawn/fnt/
+YM/dawn/fnt/*
+!YM/dawn/fnt/Portrait_Online.spr
+!YM/dawn/fnt/Portrait_Plus.spr
+!YM/dawn/fnt/Button_Plus.spr
+!YM/dawn/YGsfx/
+YM/dawn/YGsfx/*
+!YM/dawn/YGsfx/info/
+YM/dawn/YGsfx/info/*
+!YM/dawn/YGsfx/info/EffectSound.dat

@@ -1,0 +1,15 @@
+{
+  "profile_name": "test_e2e_profile",
+  "stat_overrides": {
+    "50": {
+      "move_speed": 12
+    }
+  },
+  "custom_units": [
+    {
+      "name": "조선 초인검사",
+      "speed": 14
+    }
+  ],
+  "saved_at": "2026-11-06T10:22:35Z"
+}

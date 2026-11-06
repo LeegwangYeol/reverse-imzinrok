@@ -1,0 +1,23 @@
+{
+  "profile_name": "test_custom_unit_mod",
+  "stat_overrides": {
+    "50": {
+      "move_speed": 12,
+      "hp": 100
+    },
+    "13": {
+      "move_speed": 10,
+      "attack_power": 45
+    }
+  },
+  "custom_units": [
+    {
+      "name": "조선 초인검사",
+      "base_unit_id": 50,
+      "move_speed": 14,
+      "hp": 200,
+      "attack_power": 35
+    }
+  ],
+  "saved_at": "2026-11-06T10:22:27Z"
+}

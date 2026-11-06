@@ -1,0 +1,254 @@
+{
+  "name": "barrackk",
+  "version": 9,
+  "width": 128,
+  "height": 117,
+  "frame_count": 24,
+  "atlas_file": "barrackk_atlas.png",
+  "atlas_width": 1024,
+  "atlas_height": 351,
+  "cols": 8,
+  "rows": 3,
+  "frames": [
+    {
+      "index": 0,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 118,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 0,
+      "v": 0
+    },
+    {
+      "index": 1,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 71,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 128,
+      "v": 0
+    },
+    {
+      "index": 2,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 97,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 256,
+      "v": 0
+    },
+    {
+      "index": 3,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 64,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 384,
+      "v": 0
+    },
+    {
+      "index": 4,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 61,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 512,
+      "v": 0
+    },
+    {
+      "index": 5,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 100,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 640,
+      "v": 0
+    },
+    {
+      "index": 6,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 64,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 768,
+      "v": 0
+    },
+    {
+      "index": 7,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 77,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 896,
+      "v": 0
+    },
+    {
+      "index": 8,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 64,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 0,
+      "v": 117
+    },
+    {
+      "index": 9,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 28,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 128,
+      "v": 117
+    },
+    {
+      "index": 10,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 39,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 256,
+      "v": 117
+    },
+    {
+      "index": 11,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 75,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 384,
+      "v": 117
+    },
+    {
+      "index": 12,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 12,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 512,
+      "v": 117
+    },
+    {
+      "index": 13,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 11,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 640,
+      "v": 117
+    },
+    {
+      "index": 14,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 72,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 768,
+      "v": 117
+    },
+    {
+      "index": 15,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 92,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 896,
+      "v": 117
+    },
+    {
+      "index": 16,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 82,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 0,
+      "v": 234
+    },
+    {
+      "index": 17,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 64,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 128,
+      "v": 234
+    },
+    {
+      "index": 18,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 64,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 256,
+      "v": 234
+    },
+    {
+      "index": 19,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 64,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 384,
+      "v": 234
+    },
+    {
+      "index": 20,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 64,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 512,
+      "v": 234
+    },
+    {
+      "index": 21,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 64,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 640,
+      "v": 234
+    },
+    {
+      "index": 22,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 64,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 768,
+      "v": 234
+    },
+    {
+      "index": 23,
+      "width": 128,
+      "height": 117,
+      "hotspot_x": 64,
+      "hotspot_y": 58,
+      "file": null,
+      "u": 896,
+      "v": 234
+    }
+  ]
+}

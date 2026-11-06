@@ -1,0 +1,238 @@
+{
+  "name": "normal_grss2",
+  "tile_type": "ytl",
+  "version": 9,
+  "width": 64,
+  "height": 48,
+  "frame_count": 28,
+  "atlas_width": 896,
+  "atlas_height": 96,
+  "data_size": 33408,
+  "frames": [
+    {
+      "index": 0,
+      "offset": 0,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 1,
+      "offset": 1632,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 2,
+      "offset": 3264,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 3,
+      "offset": 4896,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 4,
+      "offset": 6528,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 5,
+      "offset": 8160,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 6,
+      "offset": 9792,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 7,
+      "offset": 11424,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 8,
+      "offset": 13056,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 9,
+      "offset": 14688,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 10,
+      "offset": 16320,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 11,
+      "offset": 17952,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 12,
+      "offset": 19584,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 13,
+      "offset": 21216,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 14,
+      "offset": 22848,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 15,
+      "offset": 24480,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 16,
+      "offset": 26112,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 17,
+      "offset": 27744,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 18,
+      "offset": 29376,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 19,
+      "offset": 31008,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 20,
+      "offset": 32640,
+      "data_length": 96,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 21,
+      "offset": 32736,
+      "data_length": 96,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 22,
+      "offset": 32832,
+      "data_length": 96,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 23,
+      "offset": 32928,
+      "data_length": 96,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 24,
+      "offset": 33024,
+      "data_length": 96,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 25,
+      "offset": 33120,
+      "data_length": 96,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 26,
+      "offset": 33216,
+      "data_length": 96,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 27,
+      "offset": 33312,
+      "data_length": 96,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    }
+  ],
+  "atlas_file": "normal_grss2_atlas.png"
+}

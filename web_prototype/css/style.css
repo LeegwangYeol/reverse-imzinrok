@@ -1,0 +1,1318 @@
+/* ==========================================================================
+   임진록 2+: 조선의 반격: 여명 (Imjinrok 2+: Dawn) - Web RTS & Modding Studio
+   Authentic 2000s Korean RTS Dark-Steel & Gold-Trim Styling
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Global CSS Reset & Korean Typography
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+:root {
+    /* Color Palette: Dark Steel, Gunmetal, Gold Trim */
+    --bg-dark-0: #0a0d10;
+    --bg-dark-1: #12161b;
+    --bg-steel-1: #1a2027;
+    --bg-steel-2: #242c36;
+    --bg-steel-3: #2f3a47;
+    --border-bevel-light: #526377;
+    --border-bevel-shadow: #0d1116;
+    --border-gold-dark: #6e5220;
+    --border-gold-mid: #b88a32;
+    --border-gold-bright: #ffd700;
+    --gold-gradient: linear-gradient(180deg, #ffd700 0%, #c89b3c 60%, #855f1a 100%);
+    --steel-gradient: linear-gradient(180deg, #333f4d 0%, #1e2630 50%, #141a21 100%);
+    --steel-gradient-active: linear-gradient(180deg, #141a21 0%, #1e2630 50%, #2f3a47 100%);
+    --steel-gradient-hover: linear-gradient(180deg, #415061 0%, #293442 50%, #1d2530 100%);
+
+    /* Authentic Health & Mana Bar Colors */
+    --hp-high: #00e600;
+    --hp-mid: #e6b800;
+    --hp-low: #e61919;
+    --mp-blue: #0077ff;
+    --mp-glow: #3399ff;
+
+    /* Text Colors */
+    --text-primary: #e6edf5;
+    --text-secondary: #9cb0c5;
+    --text-gold: #ffdf73;
+    --text-muted: #677b90;
+
+    /* Fonts: Korean Classical UI Stack */
+    --font-rts: "Malgun Gothic", "Dotum", "Apple SD Gothic Neo", "Segoe UI", Arial, sans-serif;
+    --font-mono: "Consolas", "Courier New", monospace;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--bg-dark-0);
+    color: var(--text-primary);
+    font-family: var(--font-rts);
+    font-size: 13px;
+    line-height: 1.4;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+/* --------------------------------------------------------------------------
+   2. Top Status Bar (Resources, Timer, FPS, Tools)
+   -------------------------------------------------------------------------- */
+#top-bar {
+    position: fixed;
+    top: 4px;
+    right: 8px;
+    left: auto;
+    height: 30px;
+    background: rgba(18, 14, 10, 0.88);
+    border: 1px solid #967834;
+    border-radius: 3px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 8px;
+    z-index: 100;
+}
+
+.top-bar-left {
+    display: none;
+}
+
+.top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.game-logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-right: 8px;
+    border-right: 1px solid var(--border-bevel-light);
+}
+
+.logo-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--text-gold);
+    letter-spacing: -0.5px;
+}
+
+.logo-badge {
+    font-size: 9px;
+    font-weight: 800;
+    background: #c89b3c;
+    color: #0a0d10;
+    padding: 1px 4px;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+}
+
+.resource-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.res-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(10, 13, 16, 0.6);
+    padding: 2px 8px;
+    border: 1px solid var(--border-bevel-shadow);
+    border-top: 1px solid var(--border-bevel-light);
+    border-radius: 3px;
+}
+
+.res-icon {
+    font-size: 14px;
+}
+
+.res-label {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.res-val {
+    color: #ffffff;
+    font-weight: bold;
+    font-family: var(--font-mono);
+    min-width: 32px;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    color: var(--text-primary);
+    background: rgba(10, 13, 16, 0.6);
+    padding: 2px 6px;
+    border-radius: 2px;
+    border: 1px solid var(--border-bevel-shadow);
+}
+
+.status-val {
+    color: #a4e588;
+}
+
+.fps-item .status-val {
+    color: #ffdf73;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border-bevel-light);
+}
+
+.toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.toolbar-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--steel-gradient);
+    color: var(--text-primary);
+    border: 1px solid;
+    border-color: var(--border-bevel-light) var(--border-bevel-shadow) var(--border-bevel-shadow) var(--border-bevel-light);
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s ease;
+}
+
+.toolbar-btn:hover {
+    background: var(--steel-gradient-hover);
+    border-color: var(--border-gold-bright) var(--border-gold-dark) var(--border-gold-dark) var(--border-gold-bright);
+    color: var(--text-gold);
+}
+
+.toolbar-btn:active, .toolbar-btn.active {
+    background: var(--steel-gradient-active);
+    border-color: var(--border-gold-dark) var(--border-gold-bright) var(--border-gold-bright) var(--border-gold-dark);
+    color: var(--text-gold);
+}
+
+/* --------------------------------------------------------------------------
+   3. Main RTS Viewport & Canvas
+   -------------------------------------------------------------------------- */
+#game-viewport {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: #554f3f;
+    cursor: crosshair;
+}
+
+#rts-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+/* --------------------------------------------------------------------------
+   4. Map Editor Mode Toolbar
+   -------------------------------------------------------------------------- */
+.editor-toolbar {
+    position: fixed;
+    top: 44px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 38px;
+    background: var(--steel-gradient);
+    border: 2px solid var(--border-gold-bright);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+    z-index: 120;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.editor-toolbar.hidden {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.editor-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+}
+
+.editor-group label {
+    color: var(--text-gold);
+    font-weight: bold;
+}
+
+.editor-group select {
+    background: var(--bg-dark-1);
+    color: var(--text-primary);
+    border: 1px solid var(--border-bevel-light);
+    padding: 2px 6px;
+    font-size: 11px;
+    border-radius: 2px;
+    outline: none;
+}
+
+.editor-divider {
+    width: 1px;
+    height: 22px;
+    background: var(--border-gold-dark);
+}
+
+.editor-tool-btn, .editor-action-btn {
+    background: var(--steel-gradient);
+    border: 1px solid;
+    border-color: var(--border-bevel-light) var(--border-bevel-shadow) var(--border-bevel-shadow) var(--border-bevel-light);
+    color: var(--text-primary);
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.editor-tool-btn:hover, .editor-action-btn:hover {
+    color: var(--text-gold);
+    border-color: var(--border-gold-bright);
+}
+
+.editor-tool-btn.active {
+    background: #3e2e0e;
+    border-color: var(--border-gold-bright);
+    color: var(--text-gold);
+}
+
+.editor-action-btn.accent {
+    background: linear-gradient(180deg, #8a481c 0%, #4a2008 100%);
+    border-color: #e66a28 #3a1505 #3a1505 #e66a28;
+    color: #ffdfa0;
+}
+
+/* --------------------------------------------------------------------------
+   5. Bottom RTS HUD Panel (Authentic Original pannelc_atlas.png Skin)
+   -------------------------------------------------------------------------- */
+#bottom-hud {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 192px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    display: block;
+    z-index: 100;
+    pointer-events: none;
+}
+
+/* The exact original Imjinrok 2+ Chosun HUD bitmap (831x160) with transparent roof sky,
+   transparent diamond minimap cutout, and transparent octagonal portrait cutout! */
+#bottom-hud::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('../assets/ui/pannelc_atlas.png') no-repeat 0 0 / 100% 100%;
+    image-rendering: pixelated;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.hud-panel {
+    position: static;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.hud-roof-trim,
+.minimap-status {
+    display: none;
+}
+
+/* Live Interactive Stone Compass & Wind-Vane Dial (풍향계 + 기상 구슬, x: 196..268/800, y: 84..156/160) */
+.hud-compass-dial {
+    position: absolute;
+    left: 24.5%;
+    top: 52.5%;
+    width: 9.0%;
+    height: 45.0%;
+    border-radius: 50%;
+    z-index: 3;
+    pointer-events: auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Live Interactive F1..F11 Hero & Control Group Bar (ShortCutMenu, x: 272..644/800, y: 54..85/160) */
+.f-key-bar {
+    position: absolute;
+    left: 34.0%;
+    top: 33.75%;
+    width: 46.5%;
+    height: 19.4%;
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 2px;
+    z-index: 3;
+    pointer-events: auto;
+}
+
+.f-slot {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.f-slot span {
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    font-size: 9px;
+    font-weight: 900;
+    color: #f0e6c8;
+    text-shadow: 1px 1px 0 #000;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.f-slot .f-slot-portrait {
+    position: absolute;
+    inset: 2px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    image-rendering: pixelated;
+    opacity: 0.92;
+}
+
+.f-slot .f-slot-hp {
+    position: relative;
+    width: 86%;
+    height: 3px;
+    background: #220000;
+    border: 1px solid #000;
+    margin-bottom: 2px;
+    z-index: 2;
+}
+
+.f-slot .f-slot-hp-fill {
+    height: 100%;
+    background: #3be854;
+}
+
+/* 5.1 Diamond Minimap inside the exact transparent diamond cutout (x: 0..180/800, y: 81..160/160) */
+.minimap-bezel {
+    position: absolute;
+    left: 0.1%;
+    top: 50.6%;
+    width: 22.3%;
+    height: 49.2%;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    background: #142214;
+    z-index: 1;
+    pointer-events: auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#minimap-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: #162418;
+    cursor: pointer;
+}
+
+/* Octagonal Portrait inside the exact transparent octagon cutout (x: 111..199/800, y: 19..91/160) */
+.unit-portrait-octagon {
+    position: absolute;
+    left: 13.88%;
+    top: 11.88%;
+    width: 11.0%;
+    height: 45.0%;
+    background: radial-gradient(circle, #33291d 0%, #16110a 100%);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    pointer-events: auto;
+    overflow: hidden;
+}
+
+.portrait-sprite-inner {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    image-rendering: pixelated;
+}
+
+/* "설 정" Stone Plaque Label (x: 200..265/800, y: 58..80/160) */
+.hud-settings-btn {
+    position: absolute;
+    left: 25.0%;
+    top: 36.25%;
+    width: 8.1%;
+    height: 14.2%;
+    background: linear-gradient(180deg, rgba(165, 158, 145, 0.85) 0%, rgba(96, 90, 80, 0.85) 100%);
+    border: 1px solid #3a2610;
+    color: #1a1208;
+    font-size: 13px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 4px;
+    z-index: 3;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* Unit/Building Name in Green above F1..F11 bar (matches yt_maxres1.jpg "조선 훈련소") */
+.selection-title-strip {
+    position: absolute;
+    left: 38.2%;
+    top: 16.0%;
+    width: 30.0%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.unit-name-green {
+    font-size: 14px;
+    font-weight: 900;
+    color: #55d848;
+    text-shadow: 1px 1px 1px #000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000;
+    letter-spacing: 0.5px;
+}
+
+.unit-faction {
+    display: none;
+}
+
+/* Authentic Warm Parchment (한지) Telemetry Overlay (x: 274..645/800, y: 90..157/160) */
+.parchment-panel {
+    position: absolute;
+    left: 34.25%;
+    top: 56.25%;
+    width: 46.3%;
+    height: 41.5%;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 4px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #1c1309;
+    z-index: 3;
+    pointer-events: auto;
+}
+
+.parchment-stats-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.parchment-stat-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 900;
+    color: #1a1106;
+    text-shadow: 0 1px 0 rgba(255, 245, 220, 0.55);
+    font-family: "Gulim", "Batang", "Malgun Gothic", sans-serif;
+    line-height: 1.22;
+}
+
+.p-label {
+    width: 52px;
+    display: inline-block;
+    color: #1e1206;
+}
+
+.p-val, .p-val b {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 900;
+    color: #140c04;
+    letter-spacing: 0.5px;
+}
+
+.p-sub {
+    display: none;
+}
+
+.parchment-prod-col {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-right: 12px;
+}
+
+.target-brackets-box {
+    min-width: 118px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #2b1d0c;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.hanji-slot-btn {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #3c2810;
+    background: rgba(24, 18, 10, 0.85);
+    color: #ffdfa0;
+    font-size: 10px;
+    font-weight: 900;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    padding: 1px;
+    text-align: center;
+    line-height: 1.05;
+}
+
+.hanji-slot-btn:hover {
+    border-color: #ffd700;
+    background: rgba(54, 38, 18, 0.95);
+}
+
+.hanji-slot-badge {
+    position: absolute;
+    top: -1px;
+    right: 1px;
+    font-size: 9px;
+    color: #55ff55;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.hud-prod-widget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 96px;
+}
+
+.prod-icon-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hud-prod-icon {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #2b1c08;
+    background-color: #141414;
+    background-image: url('../assets/ui/button_plus_atlas.png');
+    background-repeat: no-repeat;
+    background-position: -102px -102px; /* row 3, col 3 = 조선 창병 */
+    image-rendering: pixelated;
+}
+
+.hud-prod-pct {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 900;
+    color: #1a1106;
+}
+
+.hud-prod-label {
+    font-size: 12px;
+    font-weight: 900;
+    color: #1a1106;
+}
+
+/* 5.3 Bottom-Right: 4x3 Command Card Overlay aligned directly to pannelc_atlas.png (x: 653..791/800, y: 47..150/160) */
+.command-card-panel {
+    position: absolute;
+    left: 81.625%;
+    top: 29.375%;
+    width: 17.25%;
+    height: 64.375%;
+    z-index: 3;
+    pointer-events: auto;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    background: transparent;
+}
+
+.command-grid-4x3 {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    column-gap: 4.3%;
+    row-gap: 5.8%;
+    background: transparent;
+    padding: 0;
+    border: none;
+}
+
+.cmd-slot {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(14, 12, 10, 0.78);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    overflow: hidden;
+    transition: all 0.1s ease;
+}
+
+.cmd-slot:hover:not(:disabled) {
+    background: linear-gradient(180deg, #423526 0%, #241b12 100%);
+    border-color: var(--border-gold-bright);
+    color: var(--text-gold);
+}
+
+.cmd-slot:active:not(:disabled) {
+    background: #120d08;
+    border-color: var(--border-gold-dark) var(--border-gold-bright) var(--border-gold-bright) var(--border-gold-dark);
+    transform: translateY(1px);
+}
+
+.cmd-slot:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    filter: grayscale(80%);
+}
+
+.cmd-slot .hotkey,
+.cmd-slot .cmd-hotkey {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 9px;
+    font-weight: bold;
+    font-family: var(--font-mono);
+    color: var(--border-gold-bright);
+    background: rgba(0, 0, 0, 0.78);
+    padding: 0 3px;
+    border-radius: 2px;
+    line-height: 1.2;
+    z-index: 2;
+}
+
+.cmd-slot .cmd-icon {
+    width: 34px;
+    height: 34px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    image-rendering: pixelated;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.1;
+    pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   6. Right Collapsible Sidebar: Live Modding Studio
+   -------------------------------------------------------------------------- */
+.sidebar-panel {
+    position: fixed;
+    top: 36px;
+    right: 0;
+    bottom: 188px;
+    width: 330px;
+    background: var(--bg-steel-2);
+    border-left: 2px solid var(--border-gold-mid);
+    box-shadow: -4px 0 16px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 110;
+    transition: transform 0.25s ease-in-out;
+}
+
+.sidebar-panel.collapsed {
+    transform: translateX(100%);
+}
+
+.mod-studio-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.sidebar-header, .mod-studio-header {
+    height: 36px;
+    flex-shrink: 0;
+    background: var(--steel-gradient);
+    border-bottom: 1px solid var(--border-gold-dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sidebar-header h3, .mod-studio-header h3 {
+    font-size: 13px;
+    color: var(--text-gold);
+    font-weight: bold;
+}
+
+.close-sidebar-btn, .toggle-btn {
+    background: var(--bg-dark-1);
+    border: 1px solid var(--border-bevel-light);
+    border-radius: 3px;
+    color: var(--text-gold);
+    font-size: 14px;
+    font-weight: bold;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-sidebar-btn:hover, .toggle-btn:hover {
+    color: #ffffff;
+    border-color: var(--border-gold-bright);
+}
+
+.sidebar-content, .mod-studio-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.target-indicator {
+    background: linear-gradient(180deg, #16222f 0%, #0d141d 100%);
+    border: 1px solid #355475;
+    border-left: 3px solid #4da6ff;
+    border-radius: 3px;
+    padding: 6px 8px;
+}
+
+.indicator-badge {
+    font-size: 9px;
+    font-weight: 800;
+    color: #4da6ff;
+    letter-spacing: 0.6px;
+}
+
+.target-name {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--text-gold);
+    margin-top: 1px;
+}
+
+.target-meta {
+    font-size: 10px;
+    color: var(--text-secondary);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.form-group label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: bold;
+}
+
+.form-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.flex-1 { flex: 1; }
+.flex-2 { flex: 2; }
+
+.mod-select, .mod-input, .stat-num {
+    background: var(--bg-dark-1);
+    color: var(--text-primary);
+    border: 1px solid var(--border-bevel-light);
+    border-radius: 2px;
+    padding: 4px 6px;
+    font-size: 11px;
+    font-family: var(--font-rts);
+    outline: none;
+    width: 100%;
+}
+
+.mod-select:focus, .mod-input:focus, .stat-num:focus {
+    border-color: var(--border-gold-bright);
+}
+
+.stat-control {
+    background: rgba(10, 14, 18, 0.55);
+    border: 1px solid rgba(82, 99, 119, 0.35);
+    border-radius: 3px;
+    padding: 5px 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.stat-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.val-display {
+    font-family: var(--font-mono);
+    color: var(--border-gold-bright);
+    font-weight: bold;
+    background: #080b0e;
+    padding: 0 5px;
+    border-radius: 2px;
+    border: 1px solid #3c4856;
+}
+
+.stat-inputs-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.stat-inputs-row .stat-slider {
+    flex: 1;
+}
+
+.stat-inputs-row .stat-num {
+    width: 54px;
+    text-align: right;
+    font-family: var(--font-mono);
+}
+
+.stat-limits {
+    font-size: 9px;
+    color: var(--text-muted);
+}
+
+.stats-grid-mini {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.mod-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    border: 1px solid;
+    border-color: var(--border-bevel-light) var(--border-bevel-shadow) var(--border-bevel-shadow) var(--border-bevel-light);
+    background: var(--steel-gradient);
+    color: var(--text-primary);
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 2px;
+}
+
+.mod-btn:hover {
+    background: var(--steel-gradient-hover);
+    color: var(--text-gold);
+    border-color: var(--border-gold-bright);
+}
+
+.mod-btn.primary-btn, .mod-btn.spawn-btn {
+    background: linear-gradient(180deg, #2b6199 0%, #15375c 100%);
+    border-color: #4f8fd4 #0a1f33 #0a1f33 #4f8fd4;
+    color: #ffffff;
+}
+
+.mod-btn.accent-btn, .mod-btn.patch-btn {
+    background: linear-gradient(180deg, #995220 0%, #52270a 100%);
+    border-color: #d97d38 #261103 #261103 #d97d38;
+    color: #ffdfa0;
+}
+
+.mod-studio-body::-webkit-scrollbar {
+    width: 6px;
+}
+.mod-studio-body::-webkit-scrollbar-track {
+    background: var(--bg-dark-1);
+}
+.mod-studio-body::-webkit-scrollbar-thumb {
+    background: var(--border-bevel-light);
+    border-radius: 3px;
+}
+
+/* Scrollbar styling */
+.sidebar-content::-webkit-scrollbar {
+    width: 6px;
+}
+.sidebar-content::-webkit-scrollbar-track {
+    background: var(--bg-dark-1);
+}
+.sidebar-content::-webkit-scrollbar-thumb {
+    background: var(--border-bevel-light);
+    border-radius: 3px;
+}
+
+.mod-section {
+    background: rgba(15, 20, 26, 0.6);
+    border: 1px solid var(--border-bevel-light);
+    border-radius: 4px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.section-title h4 {
+    font-size: 12px;
+    color: var(--text-gold);
+    font-weight: bold;
+}
+
+.section-desc {
+    display: block;
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-top: 1px;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.field-group label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: bold;
+}
+
+.form-control {
+    background: var(--bg-dark-1);
+    color: var(--text-primary);
+    border: 1px solid var(--border-bevel-light);
+    border-radius: 2px;
+    padding: 5px 8px;
+    font-size: 12px;
+    font-family: var(--font-rts);
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: var(--border-gold-bright);
+}
+
+.slider-row {
+    margin-bottom: 2px;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.val-pill {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: bold;
+    color: #4da6ff;
+    background: #080b0e;
+    padding: 1px 6px;
+    border-radius: 2px;
+    border: 1px solid #23303d;
+}
+
+/* Authentic Range Slider Styling */
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #0c1015;
+    border: 1px solid #3c4856;
+    border-radius: 3px;
+    outline: none;
+    margin: 4px 0;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold-gradient);
+    border: 1px solid #ffd700;
+    cursor: pointer;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--gold-gradient);
+    border: 1px solid #ffd700;
+    cursor: pointer;
+}
+
+.button-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Button Classes */
+.btn {
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    border: 2px solid;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: center;
+}
+
+.btn.full-width {
+    width: 100%;
+}
+
+.btn-primary {
+    background: linear-gradient(180deg, #2b6199 0%, #15375c 100%);
+    border-color: #4f8fd4 #0a1f33 #0a1f33 #4f8fd4;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(180deg, #3775b8 0%, #1e4875 100%);
+    border-color: #ffd700;
+}
+
+.btn-secondary {
+    background: var(--steel-gradient);
+    border-color: var(--border-bevel-light) var(--border-bevel-shadow) var(--border-bevel-shadow) var(--border-bevel-light);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--steel-gradient-hover);
+    color: var(--text-gold);
+}
+
+.btn-accent {
+    background: linear-gradient(180deg, #995220 0%, #52270a 100%);
+    border-color: #d97d38 #261103 #261103 #d97d38;
+    color: #ffdfa0;
+}
+
+.btn-accent:hover {
+    background: linear-gradient(180deg, #b86226 0%, #66310d 100%);
+    border-color: #ffd700;
+}
+
+.status-box {
+    background: #080b0e;
+    border: 1px solid #23303d;
+    padding: 6px 8px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    min-height: 28px;
+    word-break: break-all;
+}
+
+/* --------------------------------------------------------------------------
+   7. Help & Hotkeys Modal Dialog
+   -------------------------------------------------------------------------- */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    transition: opacity 0.2s ease;
+}
+
+.modal-backdrop.hidden {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-card {
+    width: 620px;
+    max-width: 90vw;
+    background: var(--bg-steel-2);
+    border: 2px solid var(--border-gold-mid);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    height: 42px;
+    background: var(--steel-gradient);
+    border-bottom: 2px solid var(--border-gold-dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+}
+
+.modal-header h3 {
+    font-size: 14px;
+    color: var(--text-gold);
+    font-weight: bold;
+}
+
+.modal-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close-btn:hover {
+    color: #ff5555;
+}
+
+.modal-body {
+    padding: 16px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.hotkey-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.hotkey-table th {
+    background: var(--bg-steel-3);
+    color: var(--text-gold);
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-gold-dark);
+}
+
+.hotkey-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid rgba(82, 99, 119, 0.2);
+}
+
+.hotkey-table tr:hover td {
+    background: rgba(255, 215, 0, 0.05);
+}
+
+kbd {
+    background: #080b0e;
+    border: 1px solid var(--border-bevel-light);
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    color: var(--text-gold);
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px 6px;
+    margin: 0 2px;
+}
+
+.modal-footer {
+    height: 48px;
+    background: var(--bg-steel-1);
+    border-top: 1px solid var(--border-bevel-light);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 16px;
+}

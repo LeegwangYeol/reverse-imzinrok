@@ -1,0 +1,7550 @@
+[
+  {
+    "index": 1,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049bf26",
+    "call_file_offset": "0x09bf26",
+    "speed_field": {
+      "va": "0x0049bee5",
+      "file_offset": "0x09bee5",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049bf15",
+      "file_offset": "0x09bf15",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049bf13",
+      "file_offset": "0x09bf13",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049beeb",
+      "file_offset": "0x09beeb",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 2,
+    "korean_name": "명 천린",
+    "sprite_id": 164,
+    "sprite_name": "FILE_CHAR_GENERALC2",
+    "sprite_path": "char\\\\generalc2.spr",
+    "call_va": "0x0049bfb2",
+    "call_file_offset": "0x09bfb2",
+    "speed_field": {
+      "va": "0x0049bf71",
+      "file_offset": "0x09bf71",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049bf9e",
+      "file_offset": "0x09bf9e",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049bf9c",
+      "file_offset": "0x09bf9c",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049bf75",
+      "file_offset": "0x09bf75",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 65,
+      "dawn_val": 65,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 500,
+        "dawn": 500
+      },
+      "potato": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 3,
+    "korean_name": "FILE_CHAR_GENERALC43",
+    "sprite_id": 170,
+    "sprite_name": "FILE_CHAR_GENERALC43",
+    "sprite_path": "char\\\\generalc43.spr",
+    "call_va": "0x0049c0ca",
+    "call_file_offset": "0x09c0ca",
+    "speed_field": {
+      "va": "0x0049c085",
+      "file_offset": "0x09c085",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049c0b6",
+      "file_offset": "0x09c0b6",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049c0b1",
+      "file_offset": "0x09c0b1",
+      "usemap_val": 160,
+      "dawn_val": 160,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049c089",
+      "file_offset": "0x09c089",
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 400,
+        "dawn": 400
+      },
+      "potato": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 4,
+    "korean_name": "명 리루쑹",
+    "sprite_id": 161,
+    "sprite_name": "FILE_CHAR_GENERALC11",
+    "sprite_path": "char\\\\generalc11.spr",
+    "call_va": "0x0049c1e4",
+    "call_file_offset": "0x09c1e4",
+    "speed_field": {
+      "va": "0x0049c19c",
+      "file_offset": "0x09c19c",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049c1cd",
+      "file_offset": "0x09c1cd",
+      "usemap_val": 300,
+      "dawn_val": 300,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049c1cb",
+      "file_offset": "0x09c1cb",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049c1a1",
+      "file_offset": "0x09c1a1",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 55,
+      "dawn_val": 55,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 11,
+      "dawn_val": 11,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 9,
+      "dawn_val": 10,
+      "patched": true
+    },
+    "cost": {
+      "rice": {
+        "usemap": 400,
+        "dawn": 400
+      },
+      "potato": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "money": {
+        "usemap": 25,
+        "dawn": 30
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 4
+  },
+  {
+    "index": 5,
+    "korean_name": "조선 신기전망루",
+    "sprite_id": 174,
+    "sprite_name": "FILE_CHAR_ADVTOWERK",
+    "sprite_path": "char\\\\advtowerk.spr",
+    "call_va": "0x0049c2fa",
+    "call_file_offset": "0x09c2fa",
+    "speed_field": {
+      "va": "0x0049c2b5",
+      "file_offset": "0x09c2b5",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049c2e6",
+      "file_offset": "0x09c2e6",
+      "usemap_val": 700,
+      "dawn_val": 700,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049c2e1",
+      "file_offset": "0x09c2e1",
+      "usemap_val": 200,
+      "dawn_val": 200,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049c2b9",
+      "file_offset": "0x09c2b9",
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 75,
+      "dawn_val": 75,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 9,
+      "dawn_val": 9,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 13,
+      "dawn_val": 13,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 800,
+        "dawn": 800
+      },
+      "potato": {
+        "usemap": 40,
+        "dawn": 40
+      },
+      "money": {
+        "usemap": 32,
+        "dawn": 32
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 6,
+    "korean_name": "명 뚜쒸종",
+    "sprite_id": 165,
+    "sprite_name": "FILE_CHAR_GENERALC31",
+    "sprite_path": "char\\\\generalc31.spr",
+    "call_va": "0x0049c3f0",
+    "call_file_offset": "0x09c3f0",
+    "speed_field": {
+      "va": "0x0049c3ae",
+      "file_offset": "0x09c3ae",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049c3dc",
+      "file_offset": "0x09c3dc",
+      "usemap_val": 500,
+      "dawn_val": 500,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049c3da",
+      "file_offset": "0x09c3da",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049c3b2",
+      "file_offset": "0x09c3b2",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 75,
+      "dawn_val": 75,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 500,
+        "dawn": 600
+      },
+      "potato": {
+        "usemap": 45,
+        "dawn": 45
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 7,
+    "korean_name": "FILE_CHAR_GENERALC32",
+    "sprite_id": 166,
+    "sprite_name": "FILE_CHAR_GENERALC32",
+    "sprite_path": "char\\\\generalc32.spr",
+    "call_va": "0x0049c503",
+    "call_file_offset": "0x09c503",
+    "speed_field": {
+      "va": "0x0049c4c1",
+      "file_offset": "0x09c4c1",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049c4ef",
+      "file_offset": "0x09c4ef",
+      "usemap_val": 600,
+      "dawn_val": 600,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049c4ed",
+      "file_offset": "0x09c4ed",
+      "usemap_val": 100,
+      "dawn_val": 0,
+      "patched": true
+    },
+    "attack_field": {
+      "va": "0x0049c4c5",
+      "file_offset": "0x09c4c5",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 57,
+      "dawn_val": 57,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 600,
+        "dawn": 600
+      },
+      "potato": {
+        "usemap": 50,
+        "dawn": 50
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 8,
+    "korean_name": "명 불랑기포",
+    "sprite_id": 173,
+    "sprite_name": "FILE_CHAR_TANKC",
+    "sprite_path": "char\\\\tankc.spr",
+    "call_va": "0x0049c620",
+    "call_file_offset": "0x09c620",
+    "speed_field": {
+      "va": "0x0049c5d4",
+      "file_offset": "0x09c5d4",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049c609",
+      "file_offset": "0x09c609",
+      "usemap_val": 600,
+      "dawn_val": 600,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049c604",
+      "file_offset": "0x09c604",
+      "usemap_val": 200,
+      "dawn_val": 200,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049c5d8",
+      "file_offset": "0x09c5d8",
+      "usemap_val": 5,
+      "dawn_val": 8,
+      "patched": true
+    },
+    "attack_delay": {
+      "usemap_val": 70,
+      "dawn_val": 70,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 700,
+        "dawn": 700
+      },
+      "potato": {
+        "usemap": 45,
+        "dawn": 80
+      },
+      "money": {
+        "usemap": 40,
+        "dawn": 40
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 5
+  },
+  {
+    "index": 9,
+    "korean_name": "FILE_CHAR_GENERALC33",
+    "sprite_id": 167,
+    "sprite_name": "FILE_CHAR_GENERALC33",
+    "sprite_path": "char\\\\generalc33.spr",
+    "call_va": "0x0049c794",
+    "call_file_offset": "0x09c794",
+    "speed_field": {
+      "va": "0x0049c751",
+      "file_offset": "0x09c751",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049c780",
+      "file_offset": "0x09c780",
+      "usemap_val": 700,
+      "dawn_val": 700,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049c77e",
+      "file_offset": "0x09c77e",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049c756",
+      "file_offset": "0x09c756",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 400,
+        "dawn": 400
+      },
+      "potato": {
+        "usemap": 25,
+        "dawn": 30
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 10,
+    "korean_name": "FILE_CHAR_GENERALC42",
+    "sprite_id": 169,
+    "sprite_name": "FILE_CHAR_GENERALC42",
+    "sprite_path": "char\\\\generalc42.spr",
+    "call_va": "0x0049c8a8",
+    "call_file_offset": "0x09c8a8",
+    "speed_field": {
+      "va": "0x0049c862",
+      "file_offset": "0x09c862",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049c894",
+      "file_offset": "0x09c894",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049c88f",
+      "file_offset": "0x09c88f",
+      "usemap_val": 200,
+      "dawn_val": 200,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049c866",
+      "file_offset": "0x09c866",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 400,
+        "dawn": 400
+      },
+      "potato": {
+        "usemap": 25,
+        "dawn": 25
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 11,
+    "korean_name": "FILE_CHAR_GENERALC41",
+    "sprite_id": 168,
+    "sprite_name": "FILE_CHAR_GENERALC41",
+    "sprite_path": "char\\\\generalc41.spr",
+    "call_va": "0x0049c9be",
+    "call_file_offset": "0x09c9be",
+    "speed_field": {
+      "va": "0x0049c97b",
+      "file_offset": "0x09c97b",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049c9aa",
+      "file_offset": "0x09c9aa",
+      "usemap_val": 700,
+      "dawn_val": 700,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049c9a8",
+      "file_offset": "0x09c9a8",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049c97f",
+      "file_offset": "0x09c97f",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 400,
+        "dawn": 400
+      },
+      "potato": {
+        "usemap": 25,
+        "dawn": 25
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 12,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049cad1",
+    "call_file_offset": "0x09cad1",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 13,
+    "korean_name": "조선 화차",
+    "sprite_id": 172,
+    "sprite_name": "FILE_CHAR_FIRETANKK",
+    "sprite_path": "char\\\\firetankk.spr",
+    "call_va": "0x0049cc00",
+    "call_file_offset": "0x09cc00",
+    "speed_field": {
+      "va": "0x0049cbba",
+      "file_offset": "0x09cbba",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049cbec",
+      "file_offset": "0x09cbec",
+      "usemap_val": 600,
+      "dawn_val": 600,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049cbe7",
+      "file_offset": "0x09cbe7",
+      "usemap_val": 200,
+      "dawn_val": 200,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049cbbe",
+      "file_offset": "0x09cbbe",
+      "usemap_val": 5,
+      "dawn_val": 8,
+      "patched": true
+    },
+    "attack_delay": {
+      "usemap_val": 75,
+      "dawn_val": 75,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 400,
+        "dawn": 400
+      },
+      "potato": {
+        "usemap": 35,
+        "dawn": 80
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 4
+  },
+  {
+    "index": 14,
+    "korean_name": "FILE_CHAR_ATTACKERC",
+    "sprite_id": 175,
+    "sprite_name": "FILE_CHAR_ATTACKERC",
+    "sprite_path": "char\\\\attackerc.spr",
+    "call_va": "0x0049cd29",
+    "call_file_offset": "0x09cd29",
+    "speed_field": {
+      "va": "0x0049cce7",
+      "file_offset": "0x09cce7",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049cd15",
+      "file_offset": "0x09cd15",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049cd13",
+      "file_offset": "0x09cd13",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049cceb",
+      "file_offset": "0x09cceb",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 67,
+      "dawn_val": 67,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 9,
+      "dawn_val": 9,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 13,
+      "dawn_val": 13,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 800,
+        "dawn": 800
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 15,
+    "korean_name": "FILE_CHAR_CANNON2C1",
+    "sprite_id": 176,
+    "sprite_name": "FILE_CHAR_CANNON2C1",
+    "sprite_path": "char\\\\cannon2c1.spr",
+    "call_va": "0x0049ce21",
+    "call_file_offset": "0x09ce21",
+    "speed_field": {
+      "va": "0x0049cde0",
+      "file_offset": "0x09cde0",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049ce0e",
+      "file_offset": "0x09ce0e",
+      "usemap_val": 500,
+      "dawn_val": 1100,
+      "patched": true
+    },
+    "mp_field": {
+      "va": "0x0049ce0c",
+      "file_offset": "0x09ce0c",
+      "usemap_val": 0,
+      "dawn_val": 100,
+      "patched": true
+    },
+    "attack_field": {
+      "va": "0x0049cde4",
+      "file_offset": "0x09cde4",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 75,
+      "dawn_val": 67,
+      "patched": true
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 9,
+      "patched": true
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 13,
+      "patched": true
+    },
+    "cost": {
+      "rice": {
+        "usemap": 700,
+        "dawn": 900
+      },
+      "potato": {
+        "usemap": 35,
+        "dawn": 70
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 17
+  },
+  {
+    "index": 16,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049cf20",
+    "call_file_offset": "0x09cf20",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 17,
+    "korean_name": "FILE_CHAR_CANNON2C2",
+    "sprite_id": 177,
+    "sprite_name": "FILE_CHAR_CANNON2C2",
+    "sprite_path": "char\\\\cannon2c2.spr",
+    "call_va": "0x0049d019",
+    "call_file_offset": "0x09d019",
+    "speed_field": {
+      "va": "0x0049cfcf",
+      "file_offset": "0x09cfcf",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d005",
+      "file_offset": "0x09d005",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d000",
+      "file_offset": "0x09d000",
+      "usemap_val": 900,
+      "dawn_val": 900,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049cfd4",
+      "file_offset": "0x09cfd4",
+      "usemap_val": 3,
+      "dawn_val": 3,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1000
+      },
+      "potato": {
+        "usemap": 150,
+        "dawn": 130
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 3
+  },
+  {
+    "index": 18,
+    "korean_name": "FILE_CHAR_CANNON2C2",
+    "sprite_id": 177,
+    "sprite_name": "FILE_CHAR_CANNON2C2",
+    "sprite_path": "char\\\\cannon2c2.spr",
+    "call_va": "0x0049d10b",
+    "call_file_offset": "0x09d10b",
+    "speed_field": {
+      "va": "0x0049d0c5",
+      "file_offset": "0x09d0c5",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d0f7",
+      "file_offset": "0x09d0f7",
+      "usemap_val": 700,
+      "dawn_val": 700,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d0f2",
+      "file_offset": "0x09d0f2",
+      "usemap_val": 640,
+      "dawn_val": 640,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049d0ca",
+      "file_offset": "0x09d0ca",
+      "usemap_val": 18,
+      "dawn_val": 18,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 7,
+      "patched": true
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1200,
+        "dawn": 1200
+      },
+      "potato": {
+        "usemap": 90,
+        "dawn": 120
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 5
+  },
+  {
+    "index": 19,
+    "korean_name": "FILE_CHAR_CANNON2C2",
+    "sprite_id": 177,
+    "sprite_name": "FILE_CHAR_CANNON2C2",
+    "sprite_path": "char\\\\cannon2c2.spr",
+    "call_va": "0x0049d218",
+    "call_file_offset": "0x09d218",
+    "speed_field": {
+      "va": "0x0049d1d1",
+      "file_offset": "0x09d1d1",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d204",
+      "file_offset": "0x09d204",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d1ff",
+      "file_offset": "0x09d1ff",
+      "usemap_val": 900,
+      "dawn_val": 900,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049d1d6",
+      "file_offset": "0x09d1d6",
+      "usemap_val": 15,
+      "dawn_val": 15,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 75,
+      "dawn_val": 75,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1100,
+        "dawn": 1100
+      },
+      "potato": {
+        "usemap": 110,
+        "dawn": 110
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 3
+  },
+  {
+    "index": 20,
+    "korean_name": "FILE_CHAR_CANNON2C2",
+    "sprite_id": 177,
+    "sprite_name": "FILE_CHAR_CANNON2C2",
+    "sprite_path": "char\\\\cannon2c2.spr",
+    "call_va": "0x0049d2f6",
+    "call_file_offset": "0x09d2f6",
+    "speed_field": {
+      "va": "0x0049d2ac",
+      "file_offset": "0x09d2ac",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d2e2",
+      "file_offset": "0x09d2e2",
+      "usemap_val": 1700,
+      "dawn_val": 1700,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d2dd",
+      "file_offset": "0x09d2dd",
+      "usemap_val": 2000,
+      "dawn_val": 2000,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049d2b1",
+      "file_offset": "0x09d2b1",
+      "usemap_val": 25,
+      "dawn_val": 25,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 55,
+      "dawn_val": 55,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 6,
+      "dawn_val": 6,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 6,
+      "dawn_val": 6,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2000,
+        "dawn": 2000
+      },
+      "potato": {
+        "usemap": 280,
+        "dawn": 280
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 21,
+    "korean_name": "FILE_CHAR_CANNON2C2",
+    "sprite_id": 177,
+    "sprite_name": "FILE_CHAR_CANNON2C2",
+    "sprite_path": "char\\\\cannon2c2.spr",
+    "call_va": "0x0049d3d9",
+    "call_file_offset": "0x09d3d9",
+    "speed_field": {
+      "va": "0x0049d38d",
+      "file_offset": "0x09d38d",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d3c2",
+      "file_offset": "0x09d3c2",
+      "usemap_val": 2500,
+      "dawn_val": 2500,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d3bd",
+      "file_offset": "0x09d3bd",
+      "usemap_val": 2500,
+      "dawn_val": 2500,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049d392",
+      "file_offset": "0x09d392",
+      "usemap_val": 56,
+      "dawn_val": 56,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 60,
+      "dawn_val": 60,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 6,
+      "patched": true
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2000,
+        "dawn": 2000
+      },
+      "potato": {
+        "usemap": 800,
+        "dawn": 1000
+      },
+      "money": {
+        "usemap": 40,
+        "dawn": 50
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 5
+  },
+  {
+    "index": 22,
+    "korean_name": "FILE_CHAR_CANNON2C2",
+    "sprite_id": 177,
+    "sprite_name": "FILE_CHAR_CANNON2C2",
+    "sprite_path": "char\\\\cannon2c2.spr",
+    "call_va": "0x0049d4b6",
+    "call_file_offset": "0x09d4b6",
+    "speed_field": {
+      "va": "0x0049d46b",
+      "file_offset": "0x09d46b",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d49f",
+      "file_offset": "0x09d49f",
+      "usemap_val": 1700,
+      "dawn_val": 1700,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d49a",
+      "file_offset": "0x09d49a",
+      "usemap_val": 2000,
+      "dawn_val": 2000,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049d46f",
+      "file_offset": "0x09d46f",
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 40,
+      "dawn_val": 40,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3000,
+        "dawn": 3000
+      },
+      "potato": {
+        "usemap": 150,
+        "dawn": 150
+      },
+      "money": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 23,
+    "korean_name": "FILE_CHAR_CANNON2C2",
+    "sprite_id": 177,
+    "sprite_name": "FILE_CHAR_CANNON2C2",
+    "sprite_path": "char\\\\cannon2c2.spr",
+    "call_va": "0x0049d590",
+    "call_file_offset": "0x09d590",
+    "speed_field": {
+      "va": "0x0049d549",
+      "file_offset": "0x09d549",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d57c",
+      "file_offset": "0x09d57c",
+      "usemap_val": 750,
+      "dawn_val": 750,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d577",
+      "file_offset": "0x09d577",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049d54e",
+      "file_offset": "0x09d54e",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 85,
+      "dawn_val": 85,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 900,
+        "dawn": 900
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 24,
+    "korean_name": "FILE_CHAR_CANNON2C2",
+    "sprite_id": 177,
+    "sprite_name": "FILE_CHAR_CANNON2C2",
+    "sprite_path": "char\\\\cannon2c2.spr",
+    "call_va": "0x0049d667",
+    "call_file_offset": "0x09d667",
+    "speed_field": {
+      "va": "0x0049d620",
+      "file_offset": "0x09d620",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d653",
+      "file_offset": "0x09d653",
+      "usemap_val": 700,
+      "dawn_val": 700,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d64e",
+      "file_offset": "0x09d64e",
+      "usemap_val": 560,
+      "dawn_val": 560,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049d625",
+      "file_offset": "0x09d625",
+      "usemap_val": 15,
+      "dawn_val": 15,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 100,
+      "dawn_val": 100,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 8,
+      "patched": true
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 100,
+        "dawn": 100
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 25,
+    "korean_name": "FILE_CHAR_CANNON2C2",
+    "sprite_id": 177,
+    "sprite_name": "FILE_CHAR_CANNON2C2",
+    "sprite_path": "char\\\\cannon2c2.spr",
+    "call_va": "0x0049d73d",
+    "call_file_offset": "0x09d73d",
+    "speed_field": {
+      "va": "0x0049d6f6",
+      "file_offset": "0x09d6f6",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d729",
+      "file_offset": "0x09d729",
+      "usemap_val": 1100,
+      "dawn_val": 1100,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d724",
+      "file_offset": "0x09d724",
+      "usemap_val": 1300,
+      "dawn_val": 1300,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049d6fc",
+      "file_offset": "0x09d6fc",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1100,
+        "dawn": 1100
+      },
+      "potato": {
+        "usemap": 80,
+        "dawn": 80
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 26,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049d82d",
+    "call_file_offset": "0x09d82d",
+    "speed_field": {
+      "va": "0x0049d7e7",
+      "file_offset": "0x09d7e7",
+      "usemap_val": 3,
+      "dawn_val": 3,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d819",
+      "file_offset": "0x09d819",
+      "usemap_val": 1800,
+      "dawn_val": 1800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d814",
+      "file_offset": "0x09d814",
+      "usemap_val": 900,
+      "dawn_val": 900,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049d7ec",
+      "file_offset": "0x09d7ec",
+      "usemap_val": 12,
+      "dawn_val": 12,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 65,
+      "dawn_val": 65,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 9,
+      "dawn_val": 9,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 700,
+        "dawn": 900
+      },
+      "potato": {
+        "usemap": 50,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 28,
+        "dawn": 28
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 3
+  },
+  {
+    "index": 27,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049d8e8",
+    "call_file_offset": "0x09d8e8",
+    "speed_field": {
+      "va": "0x0049d8a2",
+      "file_offset": "0x09d8a2",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d8d4",
+      "file_offset": "0x09d8d4",
+      "usemap_val": 2000,
+      "dawn_val": 2000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d8cf",
+      "file_offset": "0x09d8cf",
+      "usemap_val": 1000,
+      "dawn_val": 1000,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049d8a7",
+      "file_offset": "0x09d8a7",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 70,
+      "dawn_val": 70,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 9,
+      "dawn_val": 9,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 900,
+        "dawn": 1000
+      },
+      "potato": {
+        "usemap": 40,
+        "dawn": 40
+      },
+      "money": {
+        "usemap": 28,
+        "dawn": 28
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 28,
+    "korean_name": "FILE_CHAR_ASHIPK",
+    "sprite_id": 178,
+    "sprite_name": "FILE_CHAR_ASHIPK",
+    "sprite_path": "char\\\\ashipk.spr",
+    "call_va": "0x0049d9c0",
+    "call_file_offset": "0x09d9c0",
+    "speed_field": {
+      "va": "0x0049d979",
+      "file_offset": "0x09d979",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049d9ac",
+      "file_offset": "0x09d9ac",
+      "usemap_val": 3500,
+      "dawn_val": 3500,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049d9a7",
+      "file_offset": "0x09d9a7",
+      "usemap_val": 3000,
+      "dawn_val": 3000,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049d97e",
+      "file_offset": "0x09d97e",
+      "usemap_val": 15,
+      "dawn_val": 15,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 9,
+      "dawn_val": 9,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 4000,
+        "dawn": 4000
+      },
+      "potato": {
+        "usemap": 120,
+        "dawn": 120
+      },
+      "money": {
+        "usemap": 40,
+        "dawn": 40
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 29,
+    "korean_name": "FILE_ON_GAGEBAR",
+    "sprite_id": 292,
+    "sprite_name": "FILE_ON_GAGEBAR",
+    "sprite_path": "fnt\\\\GageBar_online.spr",
+    "call_va": "0x0049dac0",
+    "call_file_offset": "0x09dac0",
+    "speed_field": {
+      "va": "0x0049da77",
+      "file_offset": "0x09da77",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049daa9",
+      "file_offset": "0x09daa9",
+      "usemap_val": 3800,
+      "dawn_val": 3800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049daa4",
+      "file_offset": "0x09daa4",
+      "usemap_val": 3300,
+      "dawn_val": 3300,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049da7c",
+      "file_offset": "0x09da7c",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 45,
+      "dawn_val": 45,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 9,
+      "dawn_val": 9,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3000,
+        "dawn": 3000
+      },
+      "potato": {
+        "usemap": 120,
+        "dawn": 120
+      },
+      "money": {
+        "usemap": 40,
+        "dawn": 40
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 30,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049dbb6",
+    "call_file_offset": "0x09dbb6",
+    "speed_field": {
+      "va": "0x0049db6b",
+      "file_offset": "0x09db6b",
+      "usemap_val": 3,
+      "dawn_val": 3,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049dba2",
+      "file_offset": "0x09dba2",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049db9d",
+      "file_offset": "0x09db9d",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049db71",
+      "file_offset": "0x09db71",
+      "usemap_val": 3,
+      "dawn_val": 3,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 9,
+      "dawn_val": 9,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 500,
+        "dawn": 500
+      },
+      "potato": {
+        "usemap": 1500,
+        "dawn": 1500
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 31,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049dc89",
+    "call_file_offset": "0x09dc89",
+    "speed_field": {
+      "va": "0x0049dc43",
+      "file_offset": "0x09dc43",
+      "usemap_val": 3,
+      "dawn_val": 3,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049dc75",
+      "file_offset": "0x09dc75",
+      "usemap_val": 1000,
+      "dawn_val": 1000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049dc70",
+      "file_offset": "0x09dc70",
+      "usemap_val": 1200,
+      "dawn_val": 1200,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049dc48",
+      "file_offset": "0x09dc48",
+      "usemap_val": 15,
+      "dawn_val": 15,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 9,
+      "dawn_val": 9,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 6,
+      "dawn_val": 6,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 600,
+        "dawn": 600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 32,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049dd40",
+    "call_file_offset": "0x09dd40",
+    "speed_field": {
+      "va": "0x0049dcf8",
+      "file_offset": "0x09dcf8",
+      "usemap_val": 3,
+      "dawn_val": 3,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049dd2c",
+      "file_offset": "0x09dd2c",
+      "usemap_val": 1000,
+      "dawn_val": 1000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049dd27",
+      "file_offset": "0x09dd27",
+      "usemap_val": 1200,
+      "dawn_val": 1200,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049dcfe",
+      "file_offset": "0x09dcfe",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 85,
+      "dawn_val": 85,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1000,
+        "dawn": 1000
+      },
+      "potato": {
+        "usemap": 90,
+        "dawn": 90
+      },
+      "money": {
+        "usemap": 45,
+        "dawn": 45
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 33,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049ddf7",
+    "call_file_offset": "0x09ddf7",
+    "speed_field": {
+      "va": "0x0049ddb1",
+      "file_offset": "0x09ddb1",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049dde3",
+      "file_offset": "0x09dde3",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049ddde",
+      "file_offset": "0x09ddde",
+      "usemap_val": 1300,
+      "dawn_val": 1300,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049ddb5",
+      "file_offset": "0x09ddb5",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 60,
+      "dawn_val": 60,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 6,
+      "dawn_val": 6,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 600,
+        "dawn": 600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 34,
+    "korean_name": "FILE_CHAR_GENERALJ5",
+    "sprite_id": 160,
+    "sprite_name": "FILE_CHAR_GENERALJ5",
+    "sprite_path": "char\\\\general5j.spr",
+    "call_va": "0x0049ded3",
+    "call_file_offset": "0x09ded3",
+    "speed_field": {
+      "va": "0x0049de91",
+      "file_offset": "0x09de91",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049debf",
+      "file_offset": "0x09debf",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049debd",
+      "file_offset": "0x09debd",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049de95",
+      "file_offset": "0x09de95",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 65,
+      "dawn_val": 65,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 6,
+      "dawn_val": 6,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 400,
+        "dawn": 400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 35,
+    "korean_name": "명 쭈청쉰",
+    "sprite_id": 162,
+    "sprite_name": "FILE_CHAR_GENERALC12",
+    "sprite_path": "char\\\\generalc12.spr",
+    "call_va": "0x0049e0a1",
+    "call_file_offset": "0x09e0a1",
+    "speed_field": {
+      "va": "0x0049e05b",
+      "file_offset": "0x09e05b",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049e08d",
+      "file_offset": "0x09e08d",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049e088",
+      "file_offset": "0x09e088",
+      "usemap_val": 300,
+      "dawn_val": 300,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049e05f",
+      "file_offset": "0x09e05f",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 60,
+      "dawn_val": 60,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 6,
+      "dawn_val": 6,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 500,
+        "dawn": 500
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 36,
+    "korean_name": "FILE_CHAR_GENERALJ5",
+    "sprite_id": 160,
+    "sprite_name": "FILE_CHAR_GENERALJ5",
+    "sprite_path": "char\\\\general5j.spr",
+    "call_va": "0x0049e26e",
+    "call_file_offset": "0x09e26e",
+    "speed_field": {
+      "va": "0x0049e229",
+      "file_offset": "0x09e229",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049e25a",
+      "file_offset": "0x09e25a",
+      "usemap_val": 1200,
+      "dawn_val": 1200,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049e255",
+      "file_offset": "0x09e255",
+      "usemap_val": 600,
+      "dawn_val": 600,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049e22d",
+      "file_offset": "0x09e22d",
+      "usemap_val": 2,
+      "dawn_val": 10,
+      "patched": true
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 6,
+      "dawn_val": 6,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 500,
+        "dawn": 800
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 70
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 7
+  },
+  {
+    "index": 37,
+    "korean_name": "명 션웨이징",
+    "sprite_id": 163,
+    "sprite_name": "FILE_CHAR_GENERALC13",
+    "sprite_path": "char\\\\generalc13.spr",
+    "call_va": "0x0049e425",
+    "call_file_offset": "0x09e425",
+    "speed_field": {
+      "va": "0x0049e3e2",
+      "file_offset": "0x09e3e2",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049e411",
+      "file_offset": "0x09e411",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049e40f",
+      "file_offset": "0x09e40f",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049e3e6",
+      "file_offset": "0x09e3e6",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 70,
+      "dawn_val": 70,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 6,
+      "dawn_val": 6,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 400,
+        "dawn": 400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 38,
+    "korean_name": "FILE_GAME_GENERAL7K_BOMB",
+    "sprite_id": 234,
+    "sprite_name": "FILE_GAME_GENERAL7K_BOMB",
+    "sprite_path": "fnt\\\\kimbomb1.spr",
+    "call_va": "0x0049e5f9",
+    "call_file_offset": "0x09e5f9",
+    "speed_field": {
+      "va": "0x0049e5b1",
+      "file_offset": "0x09e5b1",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049e5e5",
+      "file_offset": "0x09e5e5",
+      "usemap_val": 300,
+      "dawn_val": 1000,
+      "patched": true
+    },
+    "mp_field": {
+      "va": "0x0049e5e0",
+      "file_offset": "0x09e5e0",
+      "usemap_val": 300,
+      "dawn_val": 1000,
+      "patched": true
+    },
+    "attack_field": {
+      "va": "0x0049e5b5",
+      "file_offset": "0x09e5b5",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 70,
+      "dawn_val": 70,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 4000,
+        "dawn": 4000
+      },
+      "potato": {
+        "usemap": 150,
+        "dawn": 150
+      },
+      "money": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 3
+  },
+  {
+    "index": 39,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049e77f",
+    "call_file_offset": "0x09e77f",
+    "speed_field": {
+      "va": "0x0049e736",
+      "file_offset": "0x09e736",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049e76b",
+      "file_offset": "0x09e76b",
+      "usemap_val": 1800,
+      "dawn_val": 2500,
+      "patched": true
+    },
+    "mp_field": {
+      "va": "0x0049e766",
+      "file_offset": "0x09e766",
+      "usemap_val": 2500,
+      "dawn_val": 3000,
+      "patched": true
+    },
+    "attack_field": {
+      "va": "0x0049e73c",
+      "file_offset": "0x09e73c",
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 9,
+      "dawn_val": 7,
+      "patched": true
+    },
+    "defense": {
+      "usemap_val": 9,
+      "dawn_val": 9,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 4400,
+        "dawn": 4400
+      },
+      "potato": {
+        "usemap": 110,
+        "dawn": 125
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 55
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 13
+  },
+  {
+    "index": 40,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049e83c",
+    "call_file_offset": "0x09e83c",
+    "speed_field": {
+      "va": "0x0049e7f3",
+      "file_offset": "0x09e7f3",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049e828",
+      "file_offset": "0x09e828",
+      "usemap_val": 1200,
+      "dawn_val": 1800,
+      "patched": true
+    },
+    "mp_field": {
+      "va": "0x0049e823",
+      "file_offset": "0x09e823",
+      "usemap_val": 1600,
+      "dawn_val": 2300,
+      "patched": true
+    },
+    "attack_field": {
+      "va": "0x0049e7f9",
+      "file_offset": "0x09e7f9",
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 9,
+      "patched": true
+    },
+    "defense": {
+      "usemap_val": 12,
+      "dawn_val": 12,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2200,
+        "dawn": 3500
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 110
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 45
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 14
+  },
+  {
+    "index": 41,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049e8fb",
+    "call_file_offset": "0x09e8fb",
+    "speed_field": {
+      "va": "0x0049e8b1",
+      "file_offset": "0x09e8b1",
+      "usemap_val": 3,
+      "dawn_val": 3,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049e8e7",
+      "file_offset": "0x09e8e7",
+      "usemap_val": 1000,
+      "dawn_val": 1000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049e8e2",
+      "file_offset": "0x09e8e2",
+      "usemap_val": 1700,
+      "dawn_val": 1700,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049e8b7",
+      "file_offset": "0x09e8b7",
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 9,
+      "dawn_val": 9,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3600,
+        "dawn": 3600
+      },
+      "potato": {
+        "usemap": 100,
+        "dawn": 100
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 3
+  },
+  {
+    "index": 42,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049e9ba",
+    "call_file_offset": "0x09e9ba",
+    "speed_field": {
+      "va": "0x0049e970",
+      "file_offset": "0x09e970",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049e9a6",
+      "file_offset": "0x09e9a6",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049e9a1",
+      "file_offset": "0x09e9a1",
+      "usemap_val": 1600,
+      "dawn_val": 1600,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049e976",
+      "file_offset": "0x09e976",
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 12,
+      "dawn_val": 13,
+      "patched": true
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2000,
+        "dawn": 2000
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 5
+  },
+  {
+    "index": 43,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049ea78",
+    "call_file_offset": "0x09ea78",
+    "speed_field": {
+      "va": "0x0049ea2e",
+      "file_offset": "0x09ea2e",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049ea64",
+      "file_offset": "0x09ea64",
+      "usemap_val": 1100,
+      "dawn_val": 1100,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049ea5f",
+      "file_offset": "0x09ea5f",
+      "usemap_val": 1200,
+      "dawn_val": 1200,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049ea34",
+      "file_offset": "0x09ea34",
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 70,
+      "dawn_val": 70,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 12,
+      "dawn_val": 13,
+      "patched": true
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2200,
+        "dawn": 2200
+      },
+      "potato": {
+        "usemap": 70,
+        "dawn": 70
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 3
+  },
+  {
+    "index": 44,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049eb37",
+    "call_file_offset": "0x09eb37",
+    "speed_field": {
+      "va": "0x0049eaed",
+      "file_offset": "0x09eaed",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049eb23",
+      "file_offset": "0x09eb23",
+      "usemap_val": 1400,
+      "dawn_val": 1400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049eb1e",
+      "file_offset": "0x09eb1e",
+      "usemap_val": 1460,
+      "dawn_val": 1460,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049eaf3",
+      "file_offset": "0x09eaf3",
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 9,
+      "dawn_val": 9,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3400,
+        "dawn": 3400
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 70
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 5
+  },
+  {
+    "index": 45,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049ebf3",
+    "call_file_offset": "0x09ebf3",
+    "speed_field": {
+      "va": "0x0049ebac",
+      "file_offset": "0x09ebac",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049ebdf",
+      "file_offset": "0x09ebdf",
+      "usemap_val": 1000,
+      "dawn_val": 1000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049ebda",
+      "file_offset": "0x09ebda",
+      "usemap_val": 1400,
+      "dawn_val": 1400,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049ebb2",
+      "file_offset": "0x09ebb2",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 12,
+      "dawn_val": 12,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1800,
+        "dawn": 1800
+      },
+      "potato": {
+        "usemap": 70,
+        "dawn": 70
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 46,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049ecaa",
+    "call_file_offset": "0x09ecaa",
+    "speed_field": {
+      "va": "0x0049ec65",
+      "file_offset": "0x09ec65",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049ec96",
+      "file_offset": "0x09ec96",
+      "usemap_val": 500,
+      "dawn_val": 500,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049ec91",
+      "file_offset": "0x09ec91",
+      "usemap_val": 500,
+      "dawn_val": 500,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049ec6a",
+      "file_offset": "0x09ec6a",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 7,
+      "patched": true
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1200,
+        "dawn": 1200
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 47,
+    "korean_name": "FILE_CHAR_FIREHOUSEC",
+    "sprite_id": 121,
+    "sprite_name": "FILE_CHAR_FIREHOUSEC",
+    "sprite_path": "char\\\\firehousec.spr",
+    "call_va": "0x0049ed7f",
+    "call_file_offset": "0x09ed7f",
+    "speed_field": {
+      "va": "0x0049ed37",
+      "file_offset": "0x09ed37",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049ed6b",
+      "file_offset": "0x09ed6b",
+      "usemap_val": 1000,
+      "dawn_val": 4000,
+      "patched": true
+    },
+    "mp_field": {
+      "va": "0x0049ed66",
+      "file_offset": "0x09ed66",
+      "usemap_val": 800,
+      "dawn_val": 4000,
+      "patched": true
+    },
+    "attack_field": {
+      "va": "0x0049ed3c",
+      "file_offset": "0x09ed3c",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3600,
+        "dawn": 9000
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 38,
+        "dawn": 38
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 4
+  },
+  {
+    "index": 48,
+    "korean_name": "명 화승총병",
+    "sprite_id": 134,
+    "sprite_name": "FILE_CHAR_GUNC2",
+    "sprite_path": "char\\\\gunc2.spr",
+    "call_va": "0x0049ee73",
+    "call_file_offset": "0x09ee73",
+    "speed_field": {
+      "va": "0x0049ee2b",
+      "file_offset": "0x09ee2b",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049ee5f",
+      "file_offset": "0x09ee5f",
+      "usemap_val": 500,
+      "dawn_val": 500,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049ee5a",
+      "file_offset": "0x09ee5a",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049ee30",
+      "file_offset": "0x09ee30",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2000,
+        "dawn": 2600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 49,
+    "korean_name": "조선 이순신",
+    "sprite_id": 137,
+    "sprite_name": "FILE_CHAR_GENERALK12",
+    "sprite_path": "char\\\\generalk12.spr",
+    "call_va": "0x0049ef67",
+    "call_file_offset": "0x09ef67",
+    "speed_field": {
+      "va": "0x0049ef1f",
+      "file_offset": "0x09ef1f",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049ef53",
+      "file_offset": "0x09ef53",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049ef4e",
+      "file_offset": "0x09ef4e",
+      "usemap_val": 500,
+      "dawn_val": 700,
+      "patched": true
+    },
+    "attack_field": {
+      "va": "0x0049ef24",
+      "file_offset": "0x09ef24",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2800,
+        "dawn": 3400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 3
+  },
+  {
+    "index": 50,
+    "korean_name": "일본 농부",
+    "sprite_id": 128,
+    "sprite_name": "FILE_CHAR_FARMERJ",
+    "sprite_path": "char\\\\farmerj.spr",
+    "call_va": "0x0049f073",
+    "call_file_offset": "0x09f073",
+    "speed_field": {
+      "va": "0x0049f02c",
+      "file_offset": "0x09f02c",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049f05f",
+      "file_offset": "0x09f05f",
+      "usemap_val": 1000,
+      "dawn_val": 1000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049f05a",
+      "file_offset": "0x09f05a",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049f031",
+      "file_offset": "0x09f031",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2800,
+        "dawn": 3400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 51,
+    "korean_name": "일본 수송기",
+    "sprite_id": 132,
+    "sprite_name": "FILE_CHAR_TFLYJ",
+    "sprite_path": "char\\\\tflyj.spr",
+    "call_va": "0x0049f16d",
+    "call_file_offset": "0x09f16d",
+    "speed_field": {
+      "va": "0x0049f126",
+      "file_offset": "0x09f126",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049f159",
+      "file_offset": "0x09f159",
+      "usemap_val": 1000,
+      "dawn_val": 1000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049f154",
+      "file_offset": "0x09f154",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049f12b",
+      "file_offset": "0x09f12b",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2800,
+        "dawn": 3400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 52,
+    "korean_name": "명 화승총병",
+    "sprite_id": 133,
+    "sprite_name": "FILE_CHAR_GUNC",
+    "sprite_path": "char\\\\gunc.spr",
+    "call_va": "0x0049f272",
+    "call_file_offset": "0x09f272",
+    "speed_field": {
+      "va": "0x0049f22b",
+      "file_offset": "0x09f22b",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049f25e",
+      "file_offset": "0x09f25e",
+      "usemap_val": 1200,
+      "dawn_val": 1200,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049f259",
+      "file_offset": "0x09f259",
+      "usemap_val": 900,
+      "dawn_val": 900,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049f230",
+      "file_offset": "0x09f230",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2800,
+        "dawn": 3400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 53,
+    "korean_name": "FILE_CHAR_MILLC",
+    "sprite_id": 127,
+    "sprite_name": "FILE_CHAR_MILLC",
+    "sprite_path": "char\\\\millc.spr",
+    "call_va": "0x0049f3a4",
+    "call_file_offset": "0x09f3a4",
+    "speed_field": {
+      "va": "0x0049f35c",
+      "file_offset": "0x09f35c",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049f390",
+      "file_offset": "0x09f390",
+      "usemap_val": 1500,
+      "dawn_val": 1500,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049f38b",
+      "file_offset": "0x09f38b",
+      "usemap_val": 1000,
+      "dawn_val": 1000,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049f361",
+      "file_offset": "0x09f361",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2800,
+        "dawn": 3400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 54,
+    "korean_name": "조선 황소",
+    "sprite_id": 135,
+    "sprite_name": "FILE_CHAR_BULLK",
+    "sprite_path": "char\\\\bullk.spr",
+    "call_va": "0x0049f4b1",
+    "call_file_offset": "0x09f4b1",
+    "speed_field": {
+      "va": "0x0049f469",
+      "file_offset": "0x09f469",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049f49d",
+      "file_offset": "0x09f49d",
+      "usemap_val": 2000,
+      "dawn_val": 2000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049f498",
+      "file_offset": "0x09f498",
+      "usemap_val": 1200,
+      "dawn_val": 1200,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049f46e",
+      "file_offset": "0x09f46e",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2800,
+        "dawn": 3400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 55,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049f5cf",
+    "call_file_offset": "0x09f5cf",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 56,
+    "korean_name": "명 조선소",
+    "sprite_id": 123,
+    "sprite_name": "FILE_CHAR_SHIPYARDC",
+    "sprite_path": "char\\\\shipyardc.spr",
+    "call_va": "0x0049f6c0",
+    "call_file_offset": "0x09f6c0",
+    "speed_field": {
+      "va": "0x0049f679",
+      "file_offset": "0x09f679",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049f6ac",
+      "file_offset": "0x09f6ac",
+      "usemap_val": 600,
+      "dawn_val": 600,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049f6a7",
+      "file_offset": "0x09f6a7",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049f67e",
+      "file_offset": "0x09f67e",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2000,
+        "dawn": 2600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 57,
+    "korean_name": "조선 허준",
+    "sprite_id": 142,
+    "sprite_name": "FILE_CHAR_GENERALK4",
+    "sprite_path": "char\\\\generalk4.spr",
+    "call_va": "0x0049f7dc",
+    "call_file_offset": "0x09f7dc",
+    "speed_field": {
+      "va": "0x0049f78f",
+      "file_offset": "0x09f78f",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049f7c5",
+      "file_offset": "0x09f7c5",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049f7c0",
+      "file_offset": "0x09f7c0",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049f794",
+      "file_offset": "0x09f794",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 5,
+      "dawn_val": 5,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2000,
+        "dawn": 2600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 58,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049f8cd",
+    "call_file_offset": "0x09f8cd",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 59,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049fa02",
+    "call_file_offset": "0x09fa02",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 60,
+    "korean_name": "일본 귀갑차",
+    "sprite_id": 180,
+    "sprite_name": "FILE_CHAR_FLAMETANKJ",
+    "sprite_path": "char\\\\flametankj.spr",
+    "call_va": "0x0049fb03",
+    "call_file_offset": "0x09fb03",
+    "speed_field": {
+      "va": "0x0049fabe",
+      "file_offset": "0x09fabe",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049faef",
+      "file_offset": "0x09faef",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049faed",
+      "file_offset": "0x09faed",
+      "usemap_val": 100,
+      "dawn_val": 100,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049fac2",
+      "file_offset": "0x09fac2",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 61,
+    "korean_name": "FILE_CHAR_SAMC",
+    "sprite_id": 181,
+    "sprite_name": "FILE_CHAR_SAMC",
+    "sprite_path": "char\\\\samc.spr",
+    "call_va": "0x0049fc26",
+    "call_file_offset": "0x09fc26",
+    "speed_field": {
+      "va": "0x0049fbde",
+      "file_offset": "0x09fbde",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049fc12",
+      "file_offset": "0x09fc12",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049fc10",
+      "file_offset": "0x09fc10",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049fbe2",
+      "file_offset": "0x09fbe2",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 75,
+      "dawn_val": 75,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 62,
+    "korean_name": "FILE_CHAR_ADVTEMPLEJ",
+    "sprite_id": 182,
+    "sprite_name": "FILE_CHAR_ADVTEMPLEJ",
+    "sprite_path": "char\\\\advtemplej.spr",
+    "call_va": "0x0049fd2b",
+    "call_file_offset": "0x09fd2b",
+    "speed_field": {
+      "va": "0x0049fce3",
+      "file_offset": "0x09fce3",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049fd17",
+      "file_offset": "0x09fd17",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049fd15",
+      "file_offset": "0x09fd15",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049fce7",
+      "file_offset": "0x09fce7",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 70,
+      "dawn_val": 70,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 63,
+    "korean_name": "조선 판옥선",
+    "sprite_id": 183,
+    "sprite_name": "FILE_CHAR_PSHIPK",
+    "sprite_path": "char\\\\pshipk.spr",
+    "call_va": "0x0049fe6a",
+    "call_file_offset": "0x09fe6a",
+    "speed_field": {
+      "va": "0x0049fe23",
+      "file_offset": "0x09fe23",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x0049fe56",
+      "file_offset": "0x09fe56",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x0049fe54",
+      "file_offset": "0x09fe54",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x0049fe27",
+      "file_offset": "0x09fe27",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 70,
+      "dawn_val": 70,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 13,
+      "dawn_val": 13,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 100,
+        "dawn": 100
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 64,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x0049ff53",
+    "call_file_offset": "0x09ff53",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 65,
+    "korean_name": "FILE_CHAR_TFLYC",
+    "sprite_id": 184,
+    "sprite_name": "FILE_CHAR_TFLYC",
+    "sprite_path": "char\\\\tflyc.spr",
+    "call_va": "0x004a0054",
+    "call_file_offset": "0x0a0054",
+    "speed_field": {
+      "va": "0x004a000c",
+      "file_offset": "0x0a000c",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0040",
+      "file_offset": "0x0a0040",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a003e",
+      "file_offset": "0x0a003e",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a0010",
+      "file_offset": "0x0a0010",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 66,
+    "korean_name": "조선 수송선",
+    "sprite_id": 185,
+    "sprite_name": "FILE_CHAR_TSHIPK",
+    "sprite_path": "char\\\\tshipk.spr",
+    "call_va": "0x004a016f",
+    "call_file_offset": "0x0a016f",
+    "speed_field": {
+      "va": "0x004a0128",
+      "file_offset": "0x0a0128",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0158",
+      "file_offset": "0x0a0158",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0156",
+      "file_offset": "0x0a0156",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a012c",
+      "file_offset": "0x0a012c",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 50,
+      "dawn_val": 50,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 100,
+        "dawn": 110
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 67,
+    "korean_name": "일본 건설수레",
+    "sprite_id": 186,
+    "sprite_name": "FILE_CHAR_CARJ",
+    "sprite_path": "char\\\\carj.spr",
+    "call_va": "0x004a0270",
+    "call_file_offset": "0x0a0270",
+    "speed_field": {
+      "va": "0x004a0229",
+      "file_offset": "0x0a0229",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0259",
+      "file_offset": "0x0a0259",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0257",
+      "file_offset": "0x0a0257",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a022d",
+      "file_offset": "0x0a022d",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 60,
+      "dawn_val": 60,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 100,
+        "dawn": 100
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 45
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 68,
+    "korean_name": "명 소환소",
+    "sprite_id": 187,
+    "sprite_name": "FILE_CHAR_TEMPLEC",
+    "sprite_path": "char\\\\templec.spr",
+    "call_va": "0x004a0371",
+    "call_file_offset": "0x0a0371",
+    "speed_field": {
+      "va": "0x004a032c",
+      "file_offset": "0x0a032c",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a035d",
+      "file_offset": "0x0a035d",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a035b",
+      "file_offset": "0x0a035b",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a0330",
+      "file_offset": "0x0a0330",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 55,
+      "dawn_val": 55,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 100,
+        "dawn": 100
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 69,
+    "korean_name": "조선 수송비거",
+    "sprite_id": 188,
+    "sprite_name": "FILE_CHAR_TFLYK",
+    "sprite_path": "char\\\\tflyk.spr",
+    "call_va": "0x004a046e",
+    "call_file_offset": "0x0a046e",
+    "speed_field": {
+      "va": "0x004a042a",
+      "file_offset": "0x0a042a",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a045b",
+      "file_offset": "0x0a045b",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0459",
+      "file_offset": "0x0a0459",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a042e",
+      "file_offset": "0x0a042e",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 60,
+      "dawn_val": 60,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 100,
+        "dawn": 120
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 45
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 2
+  },
+  {
+    "index": 70,
+    "korean_name": "FILE_CHAR_BUDAC",
+    "sprite_id": 189,
+    "sprite_name": "FILE_CHAR_BUDAC",
+    "sprite_path": "char\\\\budac.spr",
+    "call_va": "0x004a056e",
+    "call_file_offset": "0x0a056e",
+    "speed_field": {
+      "va": "0x004a0528",
+      "file_offset": "0x0a0528",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a055a",
+      "file_offset": "0x0a055a",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0558",
+      "file_offset": "0x0a0558",
+      "usemap_val": 100,
+      "dawn_val": 100,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a052c",
+      "file_offset": "0x0a052c",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 65,
+      "dawn_val": 65,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 71,
+    "korean_name": "일본 세키부네",
+    "sprite_id": 190,
+    "sprite_name": "FILE_CHAR_ASHIPJ",
+    "sprite_path": "char\\\\ashipj.spr",
+    "call_va": "0x004a0673",
+    "call_file_offset": "0x0a0673",
+    "speed_field": {
+      "va": "0x004a062a",
+      "file_offset": "0x0a062a",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a065f",
+      "file_offset": "0x0a065f",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a065d",
+      "file_offset": "0x0a065d",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a062e",
+      "file_offset": "0x0a062e",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 50,
+      "dawn_val": 50,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 72,
+    "korean_name": "명 사선",
+    "sprite_id": 191,
+    "sprite_name": "FILE_CHAR_ASHIPC",
+    "sprite_path": "char\\\\ashipc.spr",
+    "call_va": "0x004a07ab",
+    "call_file_offset": "0x0a07ab",
+    "speed_field": {
+      "va": "0x004a0766",
+      "file_offset": "0x0a0766",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0797",
+      "file_offset": "0x0a0797",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0795",
+      "file_offset": "0x0a0795",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a076a",
+      "file_offset": "0x0a076a",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 13,
+      "dawn_val": 13,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 100,
+        "dawn": 100
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 73,
+    "korean_name": "일본 신사",
+    "sprite_id": 192,
+    "sprite_name": "FILE_CHAR_TEMPLEJ",
+    "sprite_path": "char\\\\templej.spr",
+    "call_va": "0x004a08ad",
+    "call_file_offset": "0x0a08ad",
+    "speed_field": {
+      "va": "0x004a0865",
+      "file_offset": "0x0a0865",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0896",
+      "file_offset": "0x0a0896",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0894",
+      "file_offset": "0x0a0894",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a0869",
+      "file_offset": "0x0a0869",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 60,
+      "dawn_val": 60,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 13,
+      "dawn_val": 13,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 100,
+        "dawn": 100
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 74,
+    "korean_name": "FILE_CHAR_ADVTEMPLEK",
+    "sprite_id": 193,
+    "sprite_name": "FILE_CHAR_ADVTEMPLEK",
+    "sprite_path": "char\\\\advtemplek.spr",
+    "call_va": "0x004a09af",
+    "call_file_offset": "0x0a09af",
+    "speed_field": {
+      "va": "0x004a0966",
+      "file_offset": "0x0a0966",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0998",
+      "file_offset": "0x0a0998",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0996",
+      "file_offset": "0x0a0996",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a096a",
+      "file_offset": "0x0a096a",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 70,
+      "dawn_val": 70,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 13,
+      "dawn_val": 13,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 75,
+    "korean_name": "명 호선",
+    "sprite_id": 194,
+    "sprite_name": "FILE_CHAR_PSHIPC",
+    "sprite_path": "char\\\\pshipc.spr",
+    "call_va": "0x004a0ab2",
+    "call_file_offset": "0x0a0ab2",
+    "speed_field": {
+      "va": "0x004a0a6a",
+      "file_offset": "0x0a0a6a",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0a9b",
+      "file_offset": "0x0a0a9b",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0a99",
+      "file_offset": "0x0a0a99",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a0a6e",
+      "file_offset": "0x0a0a6e",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 100,
+        "dawn": 100
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 76,
+    "korean_name": "조선 훈련도감",
+    "sprite_id": 195,
+    "sprite_name": "FILE_CHAR_ADVBARRACKK",
+    "sprite_path": "char\\\\advbarrackk.spr",
+    "call_va": "0x004a0bb4",
+    "call_file_offset": "0x0a0bb4",
+    "speed_field": {
+      "va": "0x004a0b6f",
+      "file_offset": "0x0a0b6f",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0ba0",
+      "file_offset": "0x0a0ba0",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0b9e",
+      "file_offset": "0x0a0b9e",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a0b73",
+      "file_offset": "0x0a0b73",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 60,
+      "dawn_val": 60,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 13,
+      "dawn_val": 13,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 100,
+        "dawn": 100
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 77,
+    "korean_name": "명 코끼리",
+    "sprite_id": 196,
+    "sprite_name": "FILE_CHAR_ELEPHANTC1",
+    "sprite_path": "char\\\\elephantc1.spr",
+    "call_va": "0x004a0cb2",
+    "call_file_offset": "0x0a0cb2",
+    "speed_field": {
+      "va": "0x004a0c6d",
+      "file_offset": "0x0a0c6d",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0c9e",
+      "file_offset": "0x0a0c9e",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0c9c",
+      "file_offset": "0x0a0c9c",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a0c71",
+      "file_offset": "0x0a0c71",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 100,
+      "dawn_val": 100,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2800,
+        "dawn": 2800
+      },
+      "potato": {
+        "usemap": 120,
+        "dawn": 120
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 78,
+    "korean_name": "FILE_CHAR_ELEPHANTC2",
+    "sprite_id": 197,
+    "sprite_name": "FILE_CHAR_ELEPHANTC2",
+    "sprite_path": "char\\\\elephantc2.spr",
+    "call_va": "0x004a0db7",
+    "call_file_offset": "0x0a0db7",
+    "speed_field": {
+      "va": "0x004a0d6e",
+      "file_offset": "0x0a0d6e",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0da3",
+      "file_offset": "0x0a0da3",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0da1",
+      "file_offset": "0x0a0da1",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a0d72",
+      "file_offset": "0x0a0d72",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 65,
+      "dawn_val": 65,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 79,
+    "korean_name": "FILE_CHAR_ELEPHANTC3",
+    "sprite_id": 198,
+    "sprite_name": "FILE_CHAR_ELEPHANTC3",
+    "sprite_path": "char\\\\elephantc3.spr",
+    "call_va": "0x004a0eb7",
+    "call_file_offset": "0x0a0eb7",
+    "speed_field": {
+      "va": "0x004a0e71",
+      "file_offset": "0x0a0e71",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0ea3",
+      "file_offset": "0x0a0ea3",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a0ea1",
+      "file_offset": "0x0a0ea1",
+      "usemap_val": 100,
+      "dawn_val": 100,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a0e75",
+      "file_offset": "0x0a0e75",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 80,
+      "dawn_val": 80,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 80,
+    "korean_name": "FILE_CHAR_ELEPHANTC4",
+    "sprite_id": 199,
+    "sprite_name": "FILE_CHAR_ELEPHANTC4",
+    "sprite_path": "char\\\\elephantc4.spr",
+    "call_va": "0x004a0fb9",
+    "call_file_offset": "0x0a0fb9",
+    "speed_field": {
+      "va": "0x004a0f73",
+      "file_offset": "0x0a0f73",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a0fb0",
+      "file_offset": "0x0a0fb0",
+      "usemap_val": 400,
+      "dawn_val": 0,
+      "patched": true
+    },
+    "mp_field": {
+      "va": "0x004a0fae",
+      "file_offset": "0x0a0fae",
+      "usemap_val": 0,
+      "dawn_val": 8,
+      "patched": true
+    },
+    "attack_field": {
+      "va": "0x004a0f77",
+      "file_offset": "0x0a0f77",
+      "usemap_val": 20,
+      "dawn_val": 10,
+      "patched": true
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": "esi",
+      "patched": true
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 150,
+        "dawn": 150
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 12
+  },
+  {
+    "index": 81,
+    "korean_name": "FILE_CHAR_ELEPHANTC5",
+    "sprite_id": 200,
+    "sprite_name": "FILE_CHAR_ELEPHANTC5",
+    "sprite_path": "char\\\\elephantc5.spr",
+    "call_va": "0x004a10dc",
+    "call_file_offset": "0x0a10dc",
+    "speed_field": {
+      "va": "0x004a1090",
+      "file_offset": "0x0a1090",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a10c5",
+      "file_offset": "0x0a10c5",
+      "usemap_val": 400,
+      "dawn_val": 400,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a10c3",
+      "file_offset": "0x0a10c3",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a1094",
+      "file_offset": "0x0a1094",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 65,
+      "dawn_val": 65,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1400,
+        "dawn": 1400
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 82,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a11fe",
+    "call_file_offset": "0x0a11fe",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 83,
+    "korean_name": "명 병부성",
+    "sprite_id": 120,
+    "sprite_name": "FILE_CHAR_BARRACKC",
+    "sprite_path": "char\\\\barrackc.spr",
+    "call_va": "0x004a12f5",
+    "call_file_offset": "0x0a12f5",
+    "speed_field": {
+      "va": "0x004a12af",
+      "file_offset": "0x0a12af",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a12e1",
+      "file_offset": "0x0a12e1",
+      "usemap_val": 1500,
+      "dawn_val": 5000,
+      "patched": true
+    },
+    "mp_field": {
+      "va": "0x004a12dc",
+      "file_offset": "0x0a12dc",
+      "usemap_val": 1500,
+      "dawn_val": 5000,
+      "patched": true
+    },
+    "attack_field": {
+      "va": "0x004a12b4",
+      "file_offset": "0x0a12b4",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 8,
+      "dawn_val": 8,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 4800,
+        "dawn": 9900
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 4
+  },
+  {
+    "index": 84,
+    "korean_name": "명 조선소",
+    "sprite_id": 123,
+    "sprite_name": "FILE_CHAR_SHIPYARDC",
+    "sprite_path": "char\\\\shipyardc.spr",
+    "call_va": "0x004a13f6",
+    "call_file_offset": "0x0a13f6",
+    "speed_field": {
+      "va": "0x004a13b0",
+      "file_offset": "0x0a13b0",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a13e2",
+      "file_offset": "0x0a13e2",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a13dd",
+      "file_offset": "0x0a13dd",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a13b5",
+      "file_offset": "0x0a13b5",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 85,
+    "korean_name": "조선 곽재우분신",
+    "sprite_id": 141,
+    "sprite_name": "FILE_CHAR_GENERALK32",
+    "sprite_path": "char\\\\generalk32.spr",
+    "call_va": "0x004a14f4",
+    "call_file_offset": "0x0a14f4",
+    "speed_field": {
+      "va": "0x004a14a8",
+      "file_offset": "0x0a14a8",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a14dd",
+      "file_offset": "0x0a14dd",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a14d8",
+      "file_offset": "0x0a14d8",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a14ad",
+      "file_offset": "0x0a14ad",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 1
+  },
+  {
+    "index": 86,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a15e6",
+    "call_file_offset": "0x0a15e6",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 87,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a1701",
+    "call_file_offset": "0x0a1701",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 88,
+    "korean_name": "일본 농부",
+    "sprite_id": 128,
+    "sprite_name": "FILE_CHAR_FARMERJ",
+    "sprite_path": "char\\\\farmerj.spr",
+    "call_va": "0x004a180b",
+    "call_file_offset": "0x0a180b",
+    "speed_field": {
+      "va": "0x004a17c5",
+      "file_offset": "0x0a17c5",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a17f7",
+      "file_offset": "0x0a17f7",
+      "usemap_val": 2500,
+      "dawn_val": 2500,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a17f2",
+      "file_offset": "0x0a17f2",
+      "usemap_val": 2500,
+      "dawn_val": 2500,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a17ca",
+      "file_offset": "0x0a17ca",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3600,
+        "dawn": 3600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 89,
+    "korean_name": "조선 방앗간",
+    "sprite_id": 129,
+    "sprite_name": "FILE_CHAR_MILLK",
+    "sprite_path": "char\\\\millk.spr",
+    "call_va": "0x004a1908",
+    "call_file_offset": "0x0a1908",
+    "speed_field": {
+      "va": "0x004a18c2",
+      "file_offset": "0x0a18c2",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a18f4",
+      "file_offset": "0x0a18f4",
+      "usemap_val": 1000,
+      "dawn_val": 1000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a18ef",
+      "file_offset": "0x0a18ef",
+      "usemap_val": 1000,
+      "dawn_val": 1000,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a18c7",
+      "file_offset": "0x0a18c7",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2800,
+        "dawn": 2800
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 90,
+    "korean_name": "FILE_CHAR_MILLC",
+    "sprite_id": 127,
+    "sprite_name": "FILE_CHAR_MILLC",
+    "sprite_path": "char\\\\millc.spr",
+    "call_va": "0x004a19fe",
+    "call_file_offset": "0x0a19fe",
+    "speed_field": {
+      "va": "0x004a19b7",
+      "file_offset": "0x0a19b7",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a19ea",
+      "file_offset": "0x0a19ea",
+      "usemap_val": 3000,
+      "dawn_val": 3000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a19e5",
+      "file_offset": "0x0a19e5",
+      "usemap_val": 3000,
+      "dawn_val": 3000,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a19bc",
+      "file_offset": "0x0a19bc",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3600,
+        "dawn": 3600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 91,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a1b19",
+    "call_file_offset": "0x0a1b19",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 92,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a1c29",
+    "call_file_offset": "0x0a1c29",
+    "speed_field": {
+      "va": "0x004a1be3",
+      "file_offset": "0x0a1be3",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a1c15",
+      "file_offset": "0x0a1c15",
+      "usemap_val": 1100,
+      "dawn_val": 1100,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a1c10",
+      "file_offset": "0x0a1c10",
+      "usemap_val": 1100,
+      "dawn_val": 1100,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a1be8",
+      "file_offset": "0x0a1be8",
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 11,
+      "dawn_val": 11,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2600,
+        "dawn": 2600
+      },
+      "potato": {
+        "usemap": 60,
+        "dawn": 60
+      },
+      "money": {
+        "usemap": 40,
+        "dawn": 40
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 93,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a1d51",
+    "call_file_offset": "0x0a1d51",
+    "speed_field": {
+      "va": "0x004a1d08",
+      "file_offset": "0x0a1d08",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a1d3d",
+      "file_offset": "0x0a1d3d",
+      "usemap_val": 900,
+      "dawn_val": 900,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a1d38",
+      "file_offset": "0x0a1d38",
+      "usemap_val": 900,
+      "dawn_val": 900,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a1d0e",
+      "file_offset": "0x0a1d0e",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 11,
+      "dawn_val": 11,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2900,
+        "dawn": 2900
+      },
+      "potato": {
+        "usemap": 70,
+        "dawn": 70
+      },
+      "money": {
+        "usemap": 40,
+        "dawn": 40
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 94,
+    "korean_name": "FILE_CHAR_AIRMAKERC",
+    "sprite_id": 124,
+    "sprite_name": "FILE_CHAR_AIRMAKERC",
+    "sprite_path": "char\\\\airmakerc.spr",
+    "call_va": "0x004a1e40",
+    "call_file_offset": "0x0a1e40",
+    "speed_field": {
+      "va": "0x004a1dfa",
+      "file_offset": "0x0a1dfa",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a1e2c",
+      "file_offset": "0x0a1e2c",
+      "usemap_val": 3000,
+      "dawn_val": 3000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a1e27",
+      "file_offset": "0x0a1e27",
+      "usemap_val": 3000,
+      "dawn_val": 3000,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a1dff",
+      "file_offset": "0x0a1dff",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3600,
+        "dawn": 3600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 95,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a1f5d",
+    "call_file_offset": "0x0a1f5d",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 96,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a2058",
+    "call_file_offset": "0x0a2058",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 97,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a216f",
+    "call_file_offset": "0x0a216f",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 98,
+    "korean_name": "명 조선소",
+    "sprite_id": 123,
+    "sprite_name": "FILE_CHAR_SHIPYARDC",
+    "sprite_path": "char\\\\shipyardc.spr",
+    "call_va": "0x004a225e",
+    "call_file_offset": "0x0a225e",
+    "speed_field": {
+      "va": "0x004a2217",
+      "file_offset": "0x0a2217",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a224a",
+      "file_offset": "0x0a224a",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a2245",
+      "file_offset": "0x0a2245",
+      "usemap_val": 1200,
+      "dawn_val": 1200,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a221c",
+      "file_offset": "0x0a221c",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3600,
+        "dawn": 3600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 99,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a237a",
+    "call_file_offset": "0x0a237a",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 100,
+    "korean_name": "조선 사명대사",
+    "sprite_id": 139,
+    "sprite_name": "FILE_CHAR_GENERALK2",
+    "sprite_path": "char\\\\generalk2.spr",
+    "call_va": "0x004a2465",
+    "call_file_offset": "0x0a2465",
+    "speed_field": {
+      "va": "0x004a241e",
+      "file_offset": "0x0a241e",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a2451",
+      "file_offset": "0x0a2451",
+      "usemap_val": 1500,
+      "dawn_val": 1500,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a244c",
+      "file_offset": "0x0a244c",
+      "usemap_val": 1300,
+      "dawn_val": 1300,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a2423",
+      "file_offset": "0x0a2423",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 101,
+    "korean_name": "조선 유성룡",
+    "sprite_id": 138,
+    "sprite_name": "FILE_CHAR_GENERALK13",
+    "sprite_path": "char\\\\generalk13.spr",
+    "call_va": "0x004a255b",
+    "call_file_offset": "0x0a255b",
+    "speed_field": {
+      "va": "0x004a2514",
+      "file_offset": "0x0a2514",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a2547",
+      "file_offset": "0x0a2547",
+      "usemap_val": 2000,
+      "dawn_val": 2000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a2542",
+      "file_offset": "0x0a2542",
+      "usemap_val": 1500,
+      "dawn_val": 1500,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a2519",
+      "file_offset": "0x0a2519",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 102,
+    "korean_name": "조선 곽재우",
+    "sprite_id": 140,
+    "sprite_name": "FILE_CHAR_GENERALK31",
+    "sprite_path": "char\\\\generalk31.spr",
+    "call_va": "0x004a2645",
+    "call_file_offset": "0x0a2645",
+    "speed_field": {
+      "va": "0x004a25ff",
+      "file_offset": "0x0a25ff",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a2631",
+      "file_offset": "0x0a2631",
+      "usemap_val": 2000,
+      "dawn_val": 2000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a262c",
+      "file_offset": "0x0a262c",
+      "usemap_val": 1500,
+      "dawn_val": 1500,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a2604",
+      "file_offset": "0x0a2604",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 103,
+    "korean_name": "조선 권율",
+    "sprite_id": 136,
+    "sprite_name": "FILE_CHAR_GENERALK11",
+    "sprite_path": "char\\\\generalk11.spr",
+    "call_va": "0x004a2747",
+    "call_file_offset": "0x0a2747",
+    "speed_field": {
+      "va": "0x004a2701",
+      "file_offset": "0x0a2701",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a2733",
+      "file_offset": "0x0a2733",
+      "usemap_val": 2000,
+      "dawn_val": 2000,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a272e",
+      "file_offset": "0x0a272e",
+      "usemap_val": 1500,
+      "dawn_val": 1500,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a2706",
+      "file_offset": "0x0a2706",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2400,
+        "dawn": 2400
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 104,
+    "korean_name": "명 화승총병",
+    "sprite_id": 134,
+    "sprite_name": "FILE_CHAR_GUNC2",
+    "sprite_path": "char\\\\gunc2.spr",
+    "call_va": "0x004a2870",
+    "call_file_offset": "0x0a2870",
+    "speed_field": {
+      "va": "0x004a2829",
+      "file_offset": "0x0a2829",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a285c",
+      "file_offset": "0x0a285c",
+      "usemap_val": 800,
+      "dawn_val": 800,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a2857",
+      "file_offset": "0x0a2857",
+      "usemap_val": 1000,
+      "dawn_val": 1000,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a282e",
+      "file_offset": "0x0a282e",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 10,
+      "dawn_val": 10,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3600,
+        "dawn": 3600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 105,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a295f",
+    "call_file_offset": "0x0a295f",
+    "speed_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "hp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "mp_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_field": {
+      "va": null,
+      "file_offset": null,
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": null,
+      "dawn_val": null,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": null,
+        "dawn": null
+      },
+      "potato": {
+        "usemap": null,
+        "dawn": null
+      },
+      "money": {
+        "usemap": null,
+        "dawn": null
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 106,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a2a5b",
+    "call_file_offset": "0x0a2a5b",
+    "speed_field": {
+      "va": "0x004a2a12",
+      "file_offset": "0x0a2a12",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a2a47",
+      "file_offset": "0x0a2a47",
+      "usemap_val": 1100,
+      "dawn_val": 1100,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a2a42",
+      "file_offset": "0x0a2a42",
+      "usemap_val": 1300,
+      "dawn_val": 1300,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a2a17",
+      "file_offset": "0x0a2a17",
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 11,
+      "dawn_val": 11,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 2600,
+        "dawn": 2600
+      },
+      "potato": {
+        "usemap": 55,
+        "dawn": 55
+      },
+      "money": {
+        "usemap": 40,
+        "dawn": 40
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 107,
+    "korean_name": "명 농부",
+    "sprite_id": 126,
+    "sprite_name": "FILE_CHAR_FARMERC",
+    "sprite_path": "char\\\\farmerc.spr",
+    "call_va": "0x004a2b9e",
+    "call_file_offset": "0x0a2b9e",
+    "speed_field": {
+      "va": "0x004a2b57",
+      "file_offset": "0x0a2b57",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a2b8a",
+      "file_offset": "0x0a2b8a",
+      "usemap_val": 1500,
+      "dawn_val": 1500,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a2b85",
+      "file_offset": "0x0a2b85",
+      "usemap_val": 1400,
+      "dawn_val": 1400,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a2b5c",
+      "file_offset": "0x0a2b5c",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3600,
+        "dawn": 3600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 33,
+        "dawn": 33
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 108,
+    "korean_name": "조선 황소",
+    "sprite_id": 135,
+    "sprite_name": "FILE_CHAR_BULLK",
+    "sprite_path": "char\\\\bullk.spr",
+    "call_va": "0x004a2c96",
+    "call_file_offset": "0x0a2c96",
+    "speed_field": {
+      "va": "0x004a2c50",
+      "file_offset": "0x0a2c50",
+      "usemap_val": 4,
+      "dawn_val": 4,
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a2c82",
+      "file_offset": "0x0a2c82",
+      "usemap_val": 2600,
+      "dawn_val": 2600,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a2c7d",
+      "file_offset": "0x0a2c7d",
+      "usemap_val": 2400,
+      "dawn_val": 2400,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a2c55",
+      "file_offset": "0x0a2c55",
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 90,
+      "dawn_val": 90,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 0,
+      "dawn_val": 0,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 3600,
+        "dawn": 3600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 109,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a2d82",
+    "call_file_offset": "0x0a2d82",
+    "speed_field": {
+      "va": "0x004a2d3d",
+      "file_offset": "0x0a2d3d",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a2d6e",
+      "file_offset": "0x0a2d6e",
+      "usemap_val": 300,
+      "dawn_val": 600,
+      "patched": true
+    },
+    "mp_field": {
+      "va": "0x004a2d69",
+      "file_offset": "0x0a2d69",
+      "usemap_val": 300,
+      "dawn_val": 250,
+      "patched": true
+    },
+    "attack_field": {
+      "va": "0x004a2d40",
+      "file_offset": "0x0a2d40",
+      "usemap_val": 2,
+      "dawn_val": 18,
+      "patched": true
+    },
+    "attack_delay": {
+      "usemap_val": 70,
+      "dawn_val": 60,
+      "patched": true
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 8,
+      "patched": true
+    },
+    "defense": {
+      "usemap_val": 6,
+      "dawn_val": 9,
+      "patched": true
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1600,
+        "dawn": 600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 100
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 33
+      },
+      "patched": true
+    },
+    "total_patches_in_unit": 25
+  },
+  {
+    "index": 110,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a2e6e",
+    "call_file_offset": "0x0a2e6e",
+    "speed_field": {
+      "va": "0x004a2e27",
+      "file_offset": "0x0a2e27",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a2e5a",
+      "file_offset": "0x0a2e5a",
+      "usemap_val": 300,
+      "dawn_val": 300,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a2e55",
+      "file_offset": "0x0a2e55",
+      "usemap_val": 300,
+      "dawn_val": 300,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a2e2b",
+      "file_offset": "0x0a2e2b",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 70,
+      "dawn_val": 70,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 6,
+      "dawn_val": 6,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1600,
+        "dawn": 1600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 35,
+        "dawn": 35
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 0
+  },
+  {
+    "index": 111,
+    "korean_name": "FILE_GAME_MOUSE",
+    "sprite_id": 0,
+    "sprite_name": "FILE_GAME_MOUSE",
+    "sprite_path": "fnt\\\\mouse.spr",
+    "call_va": "0x004a2f5c",
+    "call_file_offset": "0x0a2f5c",
+    "speed_field": {
+      "va": "0x004a2f18",
+      "file_offset": "0x0a2f18",
+      "usemap_val": "esi",
+      "dawn_val": "esi",
+      "patched": false
+    },
+    "hp_field": {
+      "va": "0x004a2f48",
+      "file_offset": "0x0a2f48",
+      "usemap_val": 300,
+      "dawn_val": 300,
+      "patched": false
+    },
+    "mp_field": {
+      "va": "0x004a2f43",
+      "file_offset": "0x0a2f43",
+      "usemap_val": 300,
+      "dawn_val": 300,
+      "patched": false
+    },
+    "attack_field": {
+      "va": "0x004a2f1c",
+      "file_offset": "0x0a2f1c",
+      "usemap_val": 2,
+      "dawn_val": 2,
+      "patched": false
+    },
+    "attack_delay": {
+      "usemap_val": 65,
+      "dawn_val": 65,
+      "patched": false
+    },
+    "attack_range": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "defense": {
+      "usemap_val": 7,
+      "dawn_val": 7,
+      "patched": false
+    },
+    "cost": {
+      "rice": {
+        "usemap": 1600,
+        "dawn": 1600
+      },
+      "potato": {
+        "usemap": 0,
+        "dawn": 0
+      },
+      "money": {
+        "usemap": 30,
+        "dawn": 30
+      },
+      "patched": false
+    },
+    "total_patches_in_unit": 1
+  }
+]

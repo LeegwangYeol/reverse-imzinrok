@@ -1,0 +1,114 @@
+{
+  "name": "resource",
+  "version": 9,
+  "width": 20,
+  "height": 24,
+  "frame_count": 10,
+  "atlas_file": "resource_atlas.png",
+  "atlas_width": 200,
+  "atlas_height": 24,
+  "cols": 10,
+  "rows": 1,
+  "frames": [
+    {
+      "index": 0,
+      "width": 20,
+      "height": 24,
+      "hotspot_x": 10,
+      "hotspot_y": 12,
+      "file": "resource_frame_000.png",
+      "u": 0,
+      "v": 0
+    },
+    {
+      "index": 1,
+      "width": 20,
+      "height": 24,
+      "hotspot_x": 10,
+      "hotspot_y": 12,
+      "file": "resource_frame_001.png",
+      "u": 20,
+      "v": 0
+    },
+    {
+      "index": 2,
+      "width": 20,
+      "height": 24,
+      "hotspot_x": 10,
+      "hotspot_y": 12,
+      "file": "resource_frame_002.png",
+      "u": 40,
+      "v": 0
+    },
+    {
+      "index": 3,
+      "width": 20,
+      "height": 24,
+      "hotspot_x": 10,
+      "hotspot_y": 12,
+      "file": "resource_frame_003.png",
+      "u": 60,
+      "v": 0
+    },
+    {
+      "index": 4,
+      "width": 20,
+      "height": 24,
+      "hotspot_x": 10,
+      "hotspot_y": 12,
+      "file": "resource_frame_004.png",
+      "u": 80,
+      "v": 0
+    },
+    {
+      "index": 5,
+      "width": 20,
+      "height": 24,
+      "hotspot_x": 10,
+      "hotspot_y": 12,
+      "file": "resource_frame_005.png",
+      "u": 100,
+      "v": 0
+    },
+    {
+      "index": 6,
+      "width": 20,
+      "height": 24,
+      "hotspot_x": 10,
+      "hotspot_y": 12,
+      "file": "resource_frame_006.png",
+      "u": 120,
+      "v": 0
+    },
+    {
+      "index": 7,
+      "width": 20,
+      "height": 24,
+      "hotspot_x": 10,
+      "hotspot_y": 12,
+      "file": "resource_frame_007.png",
+      "u": 140,
+      "v": 0
+    },
+    {
+      "index": 8,
+      "width": 20,
+      "height": 24,
+      "hotspot_x": 10,
+      "hotspot_y": 12,
+      "file": "resource_frame_008.png",
+      "u": 160,
+      "v": 0
+    },
+    {
+      "index": 9,
+      "width": 20,
+      "height": 24,
+      "hotspot_x": 10,
+      "hotspot_y": 12,
+      "file": "resource_frame_009.png",
+      "u": 180,
+      "v": 0
+    }
+  ]
+}

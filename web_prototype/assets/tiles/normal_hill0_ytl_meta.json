@@ -1,0 +1,366 @@
+{
+  "name": "normal_hill0_ytl",
+  "tile_type": "ytl",
+  "version": 9,
+  "width": 64,
+  "height": 48,
+  "frame_count": 44,
+  "atlas_width": 704,
+  "atlas_height": 192,
+  "data_size": 49280,
+  "frames": [
+    {
+      "index": 0,
+      "offset": 0,
+      "data_length": 1120,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 1,
+      "offset": 1120,
+      "data_length": 1120,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 2,
+      "offset": 2240,
+      "data_length": 1120,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 3,
+      "offset": 3360,
+      "data_length": 1120,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 4,
+      "offset": 4480,
+      "data_length": 1120,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 5,
+      "offset": 5600,
+      "data_length": 1120,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 6,
+      "offset": 6720,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 7,
+      "offset": 8352,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 8,
+      "offset": 9984,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 9,
+      "offset": 11616,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 10,
+      "offset": 13248,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 11,
+      "offset": 14880,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 12,
+      "offset": 16512,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 13,
+      "offset": 18144,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 14,
+      "offset": 18752,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 15,
+      "offset": 19360,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 16,
+      "offset": 19968,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 17,
+      "offset": 20576,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 18,
+      "offset": 21184,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 19,
+      "offset": 21792,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 20,
+      "offset": 22400,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 21,
+      "offset": 23008,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 22,
+      "offset": 23616,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 23,
+      "offset": 24224,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 24,
+      "offset": 24832,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 25,
+      "offset": 25440,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 26,
+      "offset": 26048,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 27,
+      "offset": 26656,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 28,
+      "offset": 28288,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 29,
+      "offset": 29920,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 30,
+      "offset": 31552,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 31,
+      "offset": 33184,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 32,
+      "offset": 34816,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 33,
+      "offset": 36448,
+      "data_length": 1632,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 34,
+      "offset": 38080,
+      "data_length": 1136,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 35,
+      "offset": 39216,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 36,
+      "offset": 39824,
+      "data_length": 1136,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 37,
+      "offset": 40960,
+      "data_length": 1600,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 38,
+      "offset": 42560,
+      "data_length": 1104,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 39,
+      "offset": 43664,
+      "data_length": 608,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 40,
+      "offset": 44272,
+      "data_length": 1104,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 41,
+      "offset": 45376,
+      "data_length": 1664,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 42,
+      "offset": 47040,
+      "data_length": 1088,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    },
+    {
+      "index": 43,
+      "offset": 48128,
+      "data_length": 1152,
+      "width": 64,
+      "height": 48,
+      "file_name": null
+    }
+  ],
+  "atlas_file": "normal_hill0_ytl_atlas.png"
+}

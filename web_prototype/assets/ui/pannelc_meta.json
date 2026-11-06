@@ -1,0 +1,24 @@
+{
+  "name": "pannelc",
+  "version": 9,
+  "width": 831,
+  "height": 160,
+  "frame_count": 1,
+  "atlas_file": "pannelc_atlas.png",
+  "atlas_width": 831,
+  "atlas_height": 160,
+  "cols": 1,
+  "rows": 1,
+  "frames": [
+    {
+      "index": 0,
+      "width": 831,
+      "height": 160,
+      "hotspot_x": 415,
+      "hotspot_y": 80,
+      "file": null,
+      "u": 0,
+      "v": 0
+    }
+  ]
+}

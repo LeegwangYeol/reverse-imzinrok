@@ -1,0 +1,114 @@
+{
+  "name": "movemark",
+  "version": 9,
+  "width": 64,
+  "height": 64,
+  "frame_count": 10,
+  "atlas_file": "movemark_atlas.png",
+  "atlas_width": 640,
+  "atlas_height": 64,
+  "cols": 10,
+  "rows": 1,
+  "frames": [
+    {
+      "index": 0,
+      "width": 64,
+      "height": 64,
+      "hotspot_x": 32,
+      "hotspot_y": 32,
+      "file": null,
+      "u": 0,
+      "v": 0
+    },
+    {
+      "index": 1,
+      "width": 64,
+      "height": 64,
+      "hotspot_x": 32,
+      "hotspot_y": 32,
+      "file": null,
+      "u": 64,
+      "v": 0
+    },
+    {
+      "index": 2,
+      "width": 64,
+      "height": 64,
+      "hotspot_x": 32,
+      "hotspot_y": 32,
+      "file": null,
+      "u": 128,
+      "v": 0
+    },
+    {
+      "index": 3,
+      "width": 64,
+      "height": 64,
+      "hotspot_x": 32,
+      "hotspot_y": 32,
+      "file": null,
+      "u": 192,
+      "v": 0
+    },
+    {
+      "index": 4,
+      "width": 64,
+      "height": 64,
+      "hotspot_x": 32,
+      "hotspot_y": 32,
+      "file": null,
+      "u": 256,
+      "v": 0
+    },
+    {
+      "index": 5,
+      "width": 64,
+      "height": 64,
+      "hotspot_x": 32,
+      "hotspot_y": 32,
+      "file": null,
+      "u": 320,
+      "v": 0
+    },
+    {
+      "index": 6,
+      "width": 64,
+      "height": 64,
+      "hotspot_x": 32,
+      "hotspot_y": 32,
+      "file": null,
+      "u": 384,
+      "v": 0
+    },
+    {
+      "index": 7,
+      "width": 64,
+      "height": 64,
+      "hotspot_x": 32,
+      "hotspot_y": 32,
+      "file": null,
+      "u": 448,
+      "v": 0
+    },
+    {
+      "index": 8,
+      "width": 64,
+      "height": 64,
+      "hotspot_x": 32,
+      "hotspot_y": 32,
+      "file": null,
+      "u": 512,
+      "v": 0
+    },
+    {
+      "index": 9,
+      "width": 64,
+      "height": 64,
+      "hotspot_x": 32,
+      "hotspot_y": 32,
+      "file": null,
+      "u": 576,
+      "v": 0
+    }
+  ]
+}

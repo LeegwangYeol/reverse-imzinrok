@@ -1,0 +1,114 @@
+{
+  "name": "barrackc",
+  "version": 9,
+  "width": 100,
+  "height": 100,
+  "frame_count": 10,
+  "atlas_file": "barrackc_atlas.png",
+  "atlas_width": 500,
+  "atlas_height": 200,
+  "cols": 5,
+  "rows": 2,
+  "frames": [
+    {
+      "index": 0,
+      "width": 100,
+      "height": 100,
+      "hotspot_x": 34,
+      "hotspot_y": 50,
+      "file": null,
+      "u": 0,
+      "v": 0
+    },
+    {
+      "index": 1,
+      "width": 100,
+      "height": 100,
+      "hotspot_x": 50,
+      "hotspot_y": 50,
+      "file": null,
+      "u": 100,
+      "v": 0
+    },
+    {
+      "index": 2,
+      "width": 100,
+      "height": 100,
+      "hotspot_x": 50,
+      "hotspot_y": 50,
+      "file": null,
+      "u": 200,
+      "v": 0
+    },
+    {
+      "index": 3,
+      "width": 100,
+      "height": 100,
+      "hotspot_x": 50,
+      "hotspot_y": 50,
+      "file": null,
+      "u": 300,
+      "v": 0
+    },
+    {
+      "index": 4,
+      "width": 100,
+      "height": 100,
+      "hotspot_x": 50,
+      "hotspot_y": 50,
+      "file": null,
+      "u": 400,
+      "v": 0
+    },
+    {
+      "index": 5,
+      "width": 100,
+      "height": 100,
+      "hotspot_x": 50,
+      "hotspot_y": 50,
+      "file": null,
+      "u": 0,
+      "v": 100
+    },
+    {
+      "index": 6,
+      "width": 100,
+      "height": 100,
+      "hotspot_x": 50,
+      "hotspot_y": 50,
+      "file": null,
+      "u": 100,
+      "v": 100
+    },
+    {
+      "index": 7,
+      "width": 100,
+      "height": 100,
+      "hotspot_x": 18,
+      "hotspot_y": 50,
+      "file": null,
+      "u": 200,
+      "v": 100
+    },
+    {
+      "index": 8,
+      "width": 100,
+      "height": 100,
+      "hotspot_x": 80,
+      "hotspot_y": 50,
+      "file": null,
+      "u": 300,
+      "v": 100
+    },
+    {
+      "index": 9,
+      "width": 100,
+      "height": 100,
+      "hotspot_x": 60,
+      "hotspot_y": 50,
+      "file": null,
+      "u": 400,
+      "v": 100
+    }
+  ]
+}

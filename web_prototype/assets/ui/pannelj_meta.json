@@ -1,0 +1,24 @@
+{
+  "name": "pannelj",
+  "version": 9,
+  "width": 831,
+  "height": 143,
+  "frame_count": 1,
+  "atlas_file": "pannelj_atlas.png",
+  "atlas_width": 831,
+  "atlas_height": 143,
+  "cols": 1,
+  "rows": 1,
+  "frames": [
+    {
+      "index": 0,
+      "width": 831,
+      "height": 143,
+      "hotspot_x": 415,
+      "hotspot_y": 71,
+      "file": null,
+      "u": 0,
+      "v": 0
+    }
+  ]
+}

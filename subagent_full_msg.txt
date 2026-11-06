@@ -1,0 +1,300 @@
+Here is the complete reverse-engineering report for all four game mechanisms in `YM/dawn/dawn.exe` (and `YM_backup_original/dawn.exe`), cross-referenced against `tools/modding/patch_joseon_new_unit.py`.
+
+---
+
+## Core Engine Data Structures & Offsets
+- **`KindInfo` Table Base**: `0x009B5228`, stride **`0x394`** (916 bytes = `0xE5 * 4`).
+  - Initialized by `KindInfo::Init` (`0x0049BAA0`, `ret 0xD8`, 54 `DWORD` stack arguments).
+  - Checksummed by `CalcKindChecksum` (`0x0049BD50`, stores result at `KindInfo + 0x08`).
+- **`cltChar` Instance Array Base**: `0x0066B790`, stride **`0x758`** (1,880 bytes = `0xEB * 8`).
+  - Initialized from `KindInfo[KindID]` inside `cltChar::Init` (`0x004118E0`, specifically `0x00411C84..0x00411D90`):
+    - `cltChar + 0x74` (`uint8_t`, `0x0066B804`): `IsClone` flag (`1` = clone unit)
+    - `cltChar + 0x8D` (`uint8_t`, `0x0066B81D`): `KindID`
+    - `cltChar + 0x8E` (`int8_t`, `0x0066B81E`): `PlayerID`
+    - `cltChar + 0xB4` (`int32_t`, `0x0066B844`): `HP`
+    - `cltChar + 0xB8` (`int32_t`, `0x0066B848`): `MP`
+    - `cltChar + 0x1D8` (`uint32_t`, `0x0066B968`): `Atb1` $\leftarrow$ `KindInfo + 0x4C`
+    - `cltChar + 0x1DC` (`uint32_t`, `0x0066B96C`): `Atb2` $\leftarrow$ `KindInfo + 0x50`
+    - `cltChar + 0x1E0` (`uint32_t`, `0x0066B970`): `Atb3` $\leftarrow$ `KindInfo + 0x54`
+    - `cltChar + 0x1E4` (`uint32_t`, `0x0066B974`): `AttackAtb1` $\leftarrow$ `KindInfo + 0x5C`
+    - `cltChar + 0x1E8` (`uint32_t`, `0x0066B978`): `DefenceAtb` $\leftarrow$ `KindInfo + 0x60`
+    - `cltChar + 0x1EC` (`uint32_t`, `0x0066B97C`): `Atb4` $\leftarrow$ `KindInfo + 0x58`
+    - `cltChar + 0x290` (`uint16_t`, `0x0066BA20`): `CurrentOrder`
+    - `cltChar + 0x29C` (`uint32_t`, `0x0066BA2C`): `UniqueID`
+    - `cltChar + 0x370` (`uint32_t`, `0x0066BB00`): `BindTimer` (`포박술` immobilize countdown)
+    - `cltChar + 0x51A` (`uint32_t`, `0x0066BCAA`): `CloneOwnerUniqueID`
+
+---
+
+## 1. Unit Portrait in Bottom-Left UI Panel
+
+### A. Screen Coordinates (`PortraitStartX` / `PortraitStartY`)
+- Parsed in `0x004B5960` (`0x004B5AD5..0x004B5B05`) from UI layout keys `"PortraitStartX"` (`0x004F5640`) and `"PortraitStartY"` (`0x004F5630`):
+  - **`PortraitStartX`**: `word ptr [0x009E2B8E]` (default **`122`**)
+  - **`PortraitStartY`**: `word ptr [0x009E2B90]` (default **`466`**)
+
+### B. Portrait Rendering Function (`cltChar::DrawPortrait` at `0x00479380..0x00479407`)
+- Called from the bottom-left selection status panel renderer (`0x004797D0`) at **`0x0047982A`**.
+- Exact disassembly (`0x004793D4..0x00479407`):
+  ```asm
+  0x004793D4: xor   eax, eax
+  0x004793D6: mov   al, byte ptr [ecx + 0x8d]           ; al = cltChar->KindID
+  0x004793DC: movsx ecx, word ptr [0x9e2b90]            ; ecx = PortraitStartY (466)
+  0x004793E3: lea   edx, [eax + eax*8]
+  0x004793E6: lea   edx, [eax + edx*2]
+  0x004793E9: lea   edx, [edx + edx*2]
+  0x004793EC: lea   eax, [eax + edx*4]                  ; eax = KindID * 0xE5
+  0x004793EF: mov   dx, word ptr [eax*4 + 0x9b5228]     ; dx = KindInfo[KindID] + 0x00 (PortraitFrame)
+  0x004793F7: movsx eax, word ptr [0x9e2b8e]            ; eax = PortraitStartX (122)
+  0x004793FE: push  edx                                 ; arg4: frame_idx = KindInfo[KindID] + 0x00
+  0x004793FF: push  0x12f                               ; arg3: spr_id = 0x12F (303)
+  0x00479404: push  ecx                                 ; arg2: y = PortraitStartY
+  0x00479405: push  eax                                 ; arg1: x = PortraitStartX
+  0x00479406: call  0x419d80                            ; DrawSprite(x, y, 0x12F, PortraitFrame)
+  ```
+- **How `KindInfo + 0x00` is populated**: In `KindInfo::Init` (`0x0049BAA0`), `arg1` (`[esp + 0x08]`) is written to `word ptr [ecx + 0x00]` at **`0x0049BAAE`**:
+  ```asm
+  0x0049BAA9: mov   ax, word ptr [esp + 8]
+  0x0049BAAE: mov   word ptr [ecx], ax                  ; KindInfo + 0x00 = PortraitFrame
+  ```
+
+### C. Portrait Sprite File & Frame Layout
+- In `ImgFile.dat` (loaded at `0x0041ACE0`), Sprite ID **`0x12F` (303)** is **`fnt\Portrait_plus.Spr`** (`0x004EA45C`, `FILE_PORTRAIT_PLUS`).
+  - Dimensions: **`68 x 68`** pixels per frame.
+  - Header capacity: **300** frame slots (`max_frames = 300`); actual populated frames in `YM/dawn/fnt/Portrait_plus.Spr`: **195** frames (`0..194`).
+  - Existing unit portrait frames:
+    - `0x6E` (`조선 의병`): **`150` (`0x0096`)**
+    - `0x6F` (`일본 낭인`): **`151` (`0x0097`)**
+    - `0x0E` (`명 화랑`): **`152` (`0x0098`)**
+    - Frames `153..164`: Alternate hero portraits (`이순신2`..`도쿠가와2`).
+    - Frames **`165..194`** (30 frames): Already exist in `Portrait_plus.Spr` as blank `136`-byte transparent RLE frames (`fe 44 00` x 68 rows), ready to be overwritten in-place or appended up to frame `299`!
+
+### D. Why Custom Units `0x70..0x79` Show `조선 의병` (`0x6E`) Portrait & How to Fix
+- In `tools/modding/patch_joseon_new_unit.py`, `build_init_cave` (`0x004E4D10`) clones `KindInfo[0x6E]` (`916` bytes via `rep movsd`), which copies `KindInfo[0x6E] + 0x00 = 150` (`0x0096`), and never overwrites `word ptr [ebx + 0x00]`.
+- **Fix**:
+  1. Write custom `68x68` RLE portrait frames into `YM/dawn/fnt/Portrait_plus.Spr` (e.g. frames `165..174`, `0xA5..0xAE`, which already exist as blank frames in `Portrait_plus.Spr`).
+  2. In `build_init_cave`, set `word ptr [ebx + 0x00]` to the desired frame index for each unit `0x70..0x79`.
+  3. **Important Checksum Note**: `CalcKindChecksum` (`0x0049BD50`) adds `movsx edx, word ptr [ecx + 0x00]` into `KindInfo + 0x08` at `0x0049BE59`. Either recompute `KindInfo + 0x08` via `0x0049BD50` or add `(new_portrait_frame - 150)` to `dword ptr [ebx + 0x08]`.
+
+---
+
+## 2. Righteous Army (`조선 의병`, `0x6E`) Building Entry & Command Card
+
+### A. Building Entry Check (Why `0x70..0x79` Can Enter Allied Joseon Buildings)
+- There is **no** hardcoded `KindID == 0x6E` check for entering Joseon buildings or AI building-garrison behavior. Instead, it is controlled entirely by **`Atb2 & 0x20`** (`KindInfo + 0x50` / `cltChar + 0x1DC`):
+  1. **`cltChar::CanEnterCarrierOrBuilding` (`0x00413590..0x00413627`)**:
+     ```asm
+     0x004135F7: test  byte ptr [esi + 0x1dc], 4     ; targetBuilding->Atb2 & 0x04 (Joseon building)
+     0x004135FE: je    0x413625
+     0x00413600: mov   ecx, edi
+     0x00413602: call  0x412120
+     0x00413607: cmp   eax, 5                        ; max 5 units inside building
+     0x0041360A: jge   0x413625
+     0x0041360C: mov   eax, 1
+     0x00413611: test  byte ptr [edi + 0x1dc], 0x20  ; unit->Atb2 & 0x20 (ATB2_ENTER_BUILDING)
+     0x00413618: jne   0x413622                      ; returns 1 (allowed to enter!)
+     ```
+  2. **`cltChar::AI_EnterJoseonBuilding` (`0x00414780..0x00414850`)**:
+     ```asm
+     0x0041478A: test  byte ptr [edi + 0x1dc], 0x20  ; unit->Atb2 & 0x20
+     0x00414791: je    0x41484a
+     ```
+     When `Atb2 & 0x20` is set, AI units automatically scan for friendly Joseon buildings (`Atb2 & 0x04`) and issue Order `0x22` (`34`, Enter Building) via `0x004B0820`.
+- Why `0x70..0x79` inherited this: `KindInfo[0x6E]` (`조선 의병`) is initialized at `0x00426D65` with `Atb2 = 0x28` (`0x08 | 0x20`). Because `build_init_cave` copies `KindInfo[0x6E]`, all custom units `0x70..0x79` inherit `KindInfo + 0x50 = 0x00000028`.
+
+### B. Command Card Setup (Why `0x70 유생` Has `조선 의병` Skills `매복`/`지뢰제거`)
+- In `0x0047F8F0` (`cltCommand::SetupCommandCard`), the switch jump table at `0x004801C8` (indexed via `KindID - 2`) handles `0x6E` (`조선 의병`) at **`0x00486B50` (`VA_JUSTICEK_CMDCARD`)**:
+  - `0x00486BF9`: checks Tech `[edx*4 + 0x95993E] == 1` (`매복`) $\rightarrow$ adds Button `0x2C` (`44`, `매복`) at Slot 8 (`0x00486C14`).
+  - `0x00486C24`: checks Tech `[edx*4 + 0x959936] == 1` (`지뢰제거`) $\rightarrow$ adds Button `0x2D` (`45`, `지뢰제거`) at Slot 4 (`0x00486C3F`).
+- In `patch_joseon_new_unit.py`, `build_cmdcard_dispatcher` (`0x004E4FD4`) explicitly routes `0x70` to `0x00486B50`:
+  ```python
+  # Line 141 of tools/modding/patch_joseon_new_unit.py:
+  # cmp byte ptr [ecx+0x8D], 0x70 -> je VA_JUSTICEK_CMDCARD (0x00486B50)
+  ```
+  Meanwhile `0x71..0x79` jump to `VA_SWORDK_CMDCARD` (`0x00486EE0`, generic combat unit command card: Move, Stop, Attack, Hold, Patrol).
+
+### C. Exact Fix to Decouple `0x70..0x79` from `조선 의병` (`0x6E`)
+1. **Disable Building Entry & AI Garrisoning**: Clear bit `0x20` in `KindInfo + 0x50` (`Atb2`) inside `build_init_cave`:
+   - `and byte ptr [ebx + 0x50], 0xDF` (changes `Atb2` from `0x28` to `0x08`, matching standard infantry like `조선 창병` `0x04`).
+   - Also subtract `0x20` from `dword ptr [ebx + 0x08]` (or call `0x0049BD50`) so `KindInfo` checksum stays valid.
+2. **Give `0x70 유생` a Standard Combat Command Card**: In `build_cmdcard_dispatcher` (`patch_joseon_new_unit.py`), route `0x70` to `VA_SWORDK_CMDCARD` (`0x00486EE0`) instead of `VA_JUSTICEK_CMDCARD` (`0x00486B50`).
+
+---
+
+## 3. Bind (`포박술`) and Immobilize/Freeze Status Effects
+
+### A. Why Setting `AttackAtb=9, BulletID=13` (`유성룡`) or `AttackAtb=26, BulletID=12` (`션웨이징`) Did Not Bind/Freeze
+- **`0x4E 유성룡`**:
+  - `AttackAtb1 = 9`, `BulletID = 13` (`0x0D`).
+  - Its active skill is **`현혹` (Betray/Charm, Button `0x17`)**, validated at `0x00477500` and executed at `0x004777E0` (requires Tech `0x9598CC`, costs 60 MP, converts an enemy unit's allegiance).
+  - Neither `AttackAtb = 9` nor `BulletID = 13` has any immobilize/bind logic in `cltBullet::Hit1` (`0x00401BB0`) or `CalcAttack` (`0x00470A00`).
+- **`0x59 션웨이징`**:
+  - `AttackAtb1 = 26` (`0x1A`), `BulletID = 12` (`0x0C`).
+  - Its active skills are **`흡수` (Absorb HP, Button `0x35`, `0x00470D60` / `0x00470F50`)** and **`기술훔치기` (Steal Tech, Button `0x3A`, `0x0047EA00` / `0x0047EBF0`)**.
+  - In `CalcAttack` (`0x00470A00`), `AttackAtb = 26` (`0x1A`) is simply a normal damage type index into the armor multiplier table `0x004F67E0`.
+- **What about Freeze (`빙결/냉동`)?**
+  - There is **no** separate "Freeze (`빙결`)" unit status timer in `dawn.exe` (`0x00410210` is `김시민`'s `연옥술` rock-drop spell, `cltChar + 0x378` is `기합` buff overlay `0xF9`, and `cltChar + 0x0C` is poison DoT).
+  - The immobilize/bind status effect in `dawn.exe` is **`포박술` (Bind)**, which belongs to **`0x57 명 쑹잉창`**!
+
+### B. Complete `포박술` (Bind) Call Chain & Addresses
+1. **Command Card (`0x00488320`, `0x57 쑹잉창`)**:
+   - At `0x004883C0`: checks `cmp word ptr [edx*4 + 0x95994E], 1` (`포박술 연구` tech).
+   - At `0x004883E1`: adds **Button ID `0x40` (64)** (`포박술[P]`) at Slot 5.
+2. **Cast Validation (`0x0047BD20` & `0x0047BD60`)**:
+   - Checks `Atb3 & 0x400` (`test byte ptr [ecx + 0x1E1], 4`), Tech `[edx*4 + 0x95994E] != 0`, and `cltChar->MP` (`[ecx + 0xB8]`) `>= 0x64` (100 MP).
+3. **Cast Execution (`0x0047BDA0..0x0047C02D`, driven by Order handler `0x0047C030`)**:
+   - Deducts `0x64` (100 MP) at `0x0047BEC3` (`add eax, -0x64; mov [esi + 0xB8], eax`).
+   - At **`0x0047BFBF`**, spawns **Bullet ID `0x1A` (26)** via `SetBullet` (`0x00403800`):
+     ```asm
+     0x0047BFBF: push  0x1a          ; BulletID = 26 (0x1A, 포박술 projectile)
+     0x0047BFC1: mov   ecx, 0x65d5c8
+     0x0047BFC6: call  0x403800      ; cltBulletManager::SetBullet
+     ```
+4. **Bullet Impact (`cltBullet::Hit1` at `0x00401BB0`)**:
+   - Bullet ID `0x1A` (26) is initialized at `0x004015B5` with `BulletAtb = 0x0001081A` (specifically bit **`0x00010000`** set in `BulletKindInfo` at `0x004F8C5C + 26*8`).
+   - At **`0x00401FED`**:
+     ```asm
+     0x00401FED: test  eax, 0x10000  ; BulletAtb & 0x10000 (Bind magic trigger!)
+     0x00401FF2: je    0x40202a
+     ...
+     0x0040201E: call  0x422b70      ; Spawn cltMagicPobak (포박술 wave object)
+     ```
+5. **Bind Magic Wave (`0x00422B70` $\rightarrow$ `0x00422510`, `Action` at `0x00422560..0x00422777`)**:
+   - Expands outward across tiles for 4 steps (`cmp eax, 4` at `0x00422766`), spawning Smoke IDs `0x2E` (46), `0x2F` (47), `0x30` (48).
+   - For every enemy non-building unit (`[edi + 0x66B968] & 1 == 0`) on the affected tiles, at **`0x0042272F`**:
+     ```asm
+     0x0042272F: mov   dword ptr [edi + 0x66bb00], 0x96  ; targetChar->BindTimer (+0x370) = 150
+     0x00422739: call  0x4aeda0                          ; OrderStop(targetUniqueID, 0)
+     ```
+
+### C. How `cltChar + 0x370` (`0x0066BB00`, `BindTimer`) Immobilizes & Renders
+1. **Immobilization Check (`cltChar::SetNewOrder` at `0x0040C67A`)**:
+   ```asm
+   0x0040C67A: cmp   dword ptr [esi + 0x370], 0   ; is BindTimer != 0?
+   0x0040C681: je    0x40c68c
+   0x0040C683: cmp   ax, 2                        ; only Order 2 (Die) is allowed!
+   0x0040C687: jne   0x40e710                     ; reject all Move/Attack/Skill orders!
+   ```
+2. **Per-Tick Countdown (`cltChar::Action` at `0x0048D6B3..0x0048D6BE`)**:
+   - Runs every 2 game frames (`test byte ptr [0x8924B8], 1 == 0` at `0x0048D658`):
+     ```asm
+     0x0048D6B3: mov   eax, dword ptr [esi + 0x370]
+     0x0048D6B9: cmp   eax, edi                     ; edi = 0
+     0x0048D6BB: je    0x48d6c4
+     0x0048D6BD: dec   eax
+     0x0048D6BE: mov   dword ptr [esi + 0x370], eax
+     ```
+     (`0x96` = 150 decrements = **300 game frames** of immobilization).
+3. **Visual Overlay (`cltChar::DrawBindOverlay` at `0x00414260..0x00414366`)**:
+   - Checks `mov eax, dword ptr [edi + 0x370]; test eax, eax; je 0x414361`.
+   - When non-zero, draws **`ImgFile.dat` Sprite ID `0xFA` (250)** (`push 0xfa` at `0x0041428C` / `0x00414337` / `0x00414352`), cycling frames `0..7` (`and edx, 7`) centered over the bound unit.
+
+### D. Two Ways to Give a Custom Unit (`0x76 도사` or `0x73 구미호`) Bind-on-Attack
+- **Option 1 (Zero-Code-Cave Data Patch — Projectile Wave Bind)**:
+  - Set the unit's `BulletID` (`KindInfo + 0x74` for Attack 1, or `KindInfo + 0x78` for Attack 2) to **`0x1A` (26)**!
+  - Because `cltBullet::Hit1` checks `BulletAtb & 0x10000` (which is already set on Bullet `0x1A`), every normal attack projectile fired by the unit will automatically trigger `0x00422B70` on impact, spawning the `포박술` bind effect and setting `BindTimer (+0x370) = 150` on hit targets with zero MP cost!
+- **Option 2 (Single-Target On-Hit Hook in `CalcAttack` at `0x00470A00`)**:
+  - In `CalcAttack` (`0x00470A00`), at `0x00470B14`, `bx` holds `AttackAtb`, `esi` holds `targetCharIndex * 0x758`, and `edi` holds `targetCharIndex`.
+  - Hooking `0x00470B14` (or checking a custom `AttackAtb` / attacker `KindID`) to execute:
+    ```asm
+    mov dword ptr [esi + 0x66bb00], 0x96   ; targetChar->BindTimer (+0x370) = 150
+    push 0
+    mov eax, dword ptr [esi + 0x66ba2c]    ; targetChar->UniqueID
+    push eax
+    call 0x004aeda0                        ; OrderStop(targetUniqueID, 0)
+    add esp, 8
+    ```
+    instantly binds the struck target on normal attack hit.
+
+---
+
+## 4. Clone Skill (`분신술` / `[분신 소환]`) for `0x73 구미호`
+
+### A. Disambiguating the Three Clone Mechanisms in `dawn.exe`
+1. **`[분신 소환]` (`0x004F4DA4`, referenced at `0x004A97F8`)**:
+   - Only a hero item tooltip string (`test dword ptr [eax + 0x669CA8], 0x800` at `0x004A97EB`). Not an active unit skill.
+2. **Targeted Illusion (`환영술`, `0x5D 아사코` at `0x00410DE0` / `0x00410FC0` Case 2, and `Atb3 & 0x01` in `0x00477D70`)**:
+   - Requires clicking a target unit (`Order 0x34`), costs 40–50 MP, spawns 1 clone of the target.
+3. **Self-Clone (`분신술 [C]`, Button `0x39` / 57, Order `0x33` / 51 — used by `0x50 곽재우`)**:
+   - Instant self-cast active skill that spawns multiple clones of the caster in a 5x5 grid around the caster using **`Effect\on_effect_foxclon_appear.Spr`** (Smoke ID **`0x3B` = 59**, `FILE_ON_EFFECT_FOXCLON_APPEAR`)!
+
+### B. Complete `분신술` (`0x50 곽재우`) Call Chain & Addresses
+1. **Command Card Setup (`0x00487790` for `0x50 곽재우`)**:
+   - At **`0x0048781C`**: checks `cmp word ptr [eax*4 + 0x9598DC], 1` (Player's `분신술 연구` tech flag).
+   - At **`0x0048783D`**: adds **Button ID `0x39` (57)** (`분신술[C]`) at Slot 4 (`push 0; push 0; push 0x39; push 4; call 0x4891C0`).
+2. **Button Click Dispatch (`0x00482EB5` & `0x00475BA4`)**:
+   - Clicking Button `0x39` issues internal command `7` (`0x00475B9F: cmp eax, 7`), which checks:
+     - `0x00475BA4`: `mov eax, dword ptr [esi + 0x1DC]; test ah, 8` (**`cltChar->Atb2 & 0x00000800`**).
+     - `0x00475BE1`: calls **`0x00477CA0` (`CanClone`)**.
+   - Dispatches **Order `0x33` (51)** (`0x0040C640` at `0x0040D5C8`), which in `cltChar::Action` (`0x0048E3F4` jump table `0x0048EA5C`) calls **`0x00477D70` (`DoClone`)** at **`0x0048E4AA`**.
+3. **`CanClone` (`0x00477CA0..0x00477D63`)**:
+   ```asm
+   0x00477CA0: mov   edx, dword ptr [ecx + 0x1dc]         ; edx = cltChar->Atb2
+   0x00477CA6: push  esi
+   0x00477CA7: test  dh, 8                                ; check Atb2 & 0x00000800
+   0x00477CAA: je    0x477d0b
+   0x00477CAC: movsx eax, byte ptr [ecx + 0x8e]           ; PlayerID
+   ...
+   0x00477CC0: cmp   word ptr [edx*4 + 0x9598dc], 0       ; check Tech 0x9598DC (분신술)
+   0x00477CC8: je    0x477d0b
+   ...
+   0x00477CEC: movsx eax, word ptr [eax + edx*4 + 0x956818] ; Player.UnitCountByKind[caster->KindID]
+   0x00477CF4: lea   edx, [eax + 2]                       ; numClones = UnitCount + 2
+   0x00477CF7: lea   eax, [edx + edx*4]
+   0x00477CFA: lea   eax, [edx + eax*2]
+   0x00477CFD: mov   ecx, dword ptr [ecx + 0xb8]          ; caster->MP
+   0x00477D03: lea   edx, [edx + eax*2]                   ; requiredMP = numClones * 35 (0x23)
+   0x00477D06: cmp   ecx, edx                             ; caster->MP >= numClones * 35?
+   ```
+4. **`DoClone` (`0x00477D70..0x0047829F`) — The Hardcoded `0x61` (`곽재우분신`) Bottleneck**:
+   - At `0x00477E5C`: checks `test byte ptr [ebx + 0x1DD], 8` (`Atb2 & 0x00000800`).
+   - At `0x00477E6D`: calls `0x00477CA0` (`CanClone`).
+   - At `0x00477EAA`: computes `esi = Player.UnitCountByKind[caster->KindID] + 2` (so if the player has 1 caster, `1 + 2 = 3` clones; if 0, `2` clones).
+   - **CRITICAL HARDCODED INSTRUCTION at `0x00477EC4`**:
+     ```asm
+     0x00477EC4: mov   dword ptr [esp + 0x1c], 0x61       ; <--- HARDCODES spawned KindID = 0x61 (곽재우분신)!
+     ```
+   - Loops over a 5x5 tile offset grid (`x_off = -2..+2`, `y_off = -2..+2`) around `(caster->TileX, caster->TileY)`:
+     - Checks `CanPlaceUnit(KindID, tileX, tileY)` (`0x004A3AC0` at `0x00477FA1`).
+     - Calls **`SetChar` (`0x004AC530`)** at **`0x00477FE9`** using `[esp + 0x1C]` as `KindID`, `caster->HP` (`[ebx + 0xB4]`), and `MP = 0`.
+     - Deducts **`0x23` (35 MP)** per spawned clone from `caster->MP` (`add eax, -0x23` at `0x00477FFF`).
+     - Spawns Smoke ID **`0x3B` (59 = `Effect\on_effect_foxclon_appear.Spr`)** at the clone's pixel position (`push 0x3b; call 0x4ac3e0` at `0x00478033`).
+     - Marks the spawned unit as a clone and links it to the caster (`0x00478136..0x00478253`):
+       ```asm
+       0x00478136: mov   byte ptr [esi + 0x66b804], 1     ; cloneChar->IsClone (+0x74) = 1
+       0x0047824D: mov   ecx, dword ptr [ebx + 0x29c]     ; caster->UniqueID (+0x29C)
+       0x00478253: mov   dword ptr [esi + 0x66bcaa], ecx  ; cloneChar->CloneOwnerUniqueID (+0x51A) = caster->UniqueID
+       ```
+5. **Clone Lifespan & Owner-Death Synchronization**:
+   - **Gradual HP Decay (`0x0048DD73..0x0048DD96`)**: Whenever `cltChar + 0x51A` (`CloneOwnerUniqueID`) `!= 0`, the clone loses `3` HP per periodic tick (`add eax, -3; mov [esi + 0xB4], eax`) until its HP reaches 0 and it dies.
+   - **Instant Death if Caster Dies (`0x0048E14F..0x0048E1A2`)**: Calls `IsAlive(CloneOwnerUniqueID)` (`0x00416F40`); if the caster is dead (`eax == 0`), sets `cloneChar->HP` (`[esi + 0xB4]`) `= 0`.
+   - **Visual Clone Tint for Owner (`0x00478942..0x00478977`)**: When `cltChar + 0x74` (`IsClone`) `== 1`, allies draw the clone via `0x0041AC50` (tinted/translucent) while enemies draw it normally.
+
+### C. How to Enable `분신술` for `0x73 구미호` (Spawning `0x73` Clones)
+To let `0x73 구미호` use `분신술` and spawn clones of herself (`0x73`):
+1. **`KindInfo` Attributes for `0x73 구미호` (in `build_init_cave`)**:
+   - Set bit **`0x00000800`** in `KindInfo[0x73] + 0x50` (`Atb2`), e.g. `or dword ptr [ebx + 0x50], 0x00000800` (which sets `byte ptr [ebx + 0x51] |= 0x08`).
+   - Give `0x73 구미호` sufficient MP (`KindInfo + 0x80` (`MaxMP`), e.g. `150` or `200`, since spawning 3 clones costs `3 * 35 = 105` MP).
+2. **Command Card for `0x73 구미호` (in `build_cmdcard_dispatcher`)**:
+   - For `KindID == 0x73`, after building the standard combat buttons (`0x00486EE0`), call `0x004891C0` to add **Button `0x39` (`57`, `분신술[C]`)** at Slot 4 (or route `0x73` to `0x00487790` / a custom block that adds Button `0x39` unconditionally without requiring `곽재우`'s tech `0x9598DC`).
+3. **Bypass Tech `0x9598DC` Check for `0x73` (or auto-enable Tech `0x9598DC`)**:
+   - `CanClone` (`0x00477CC0`) and button click handler (`0x00475BCA`) check `word ptr [player*0x13EC + 0x9598DC] != 0` (`분신술` tech) and `0x959AF0 != 0`.
+   - Either patch `0x00477CC8` (`je 0x477d0b` $\rightarrow$ `NOP`s) and `0x00475BD2` (`je 0x4758bb` $\rightarrow$ `NOP`s) so any unit with `Atb2 & 0x800` and Button `0x39` can cast `분신술` without researching `곽재우`'s tech, OR check `cmp byte ptr [ecx + 0x8D], 0x73`.
+4. **Replace Hardcoded `0x61` at `0x00477EC4` so `0x73` Spawns `0x73` (or `caster->KindID`)**:
+   - At `0x00477EC4` (`C7 44 24 1C 61 00 00 00`, 8 bytes: `mov dword ptr [esp + 0x1c], 0x61`), `ebx` is the `cltChar*` of the caster (`[ebx + 0x8D]` = `caster->KindID`).
+   - If `0x50` (`곽재우`) should still spawn `0x61` (`곽재우분신`) while any other unit (such as `0x73 구미호`) spawns its own `KindID`, a tiny hook at `0x00477EC4` (8 bytes, enough for `call <code_cave>; nop; nop; nop`) can do:
+     ```asm
+     movzx eax, byte ptr [ebx + 0x8d]   ; eax = caster->KindID
+     cmp   al, 0x50                     ; is caster 곽재우 (0x50)?
+     jne   .use_self_kind
+     mov   al, 0x61                     ; 곽재우 spawns 0x61 (곽재우분신)
+     .use_self_kind:
+     mov   dword ptr [esp + 0x20], eax  ; (+0x20 inside call, or +0x1c if jmp)
+     ret
+     ```
+   - Or, if you want to avoid a hook at `0x00477EC4` entirely, you don't even need a code cave if `0x50` is not used: replacing the 8 bytes at `0x00477EC4` in-place with:
+     ```asm
+     0F B6 83 8D 00 00 00   ; movzx eax, byte ptr [ebx + 0x8d]  (7 bytes)
+     89 44 24 1C            ; mov dword ptr [esp + 0x1c], eax   (4 bytes)
+     ```
+     (via a 5-byte `call` into the existing code cave) makes `분신술` dynamically clone the caster's own `KindID` (`0x73 구미호` $\rightarrow$ spawns `0x73 구미호` clones with the fox-clone smoke effect `0x3B`!).

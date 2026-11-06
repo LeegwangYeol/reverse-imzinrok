@@ -1,0 +1,134 @@
+{
+  "name": "towerk_plus",
+  "version": 9,
+  "width": 74,
+  "height": 106,
+  "frame_count": 12,
+  "atlas_file": "towerk_plus_atlas.png",
+  "atlas_width": 888,
+  "atlas_height": 106,
+  "cols": 12,
+  "rows": 1,
+  "frames": [
+    {
+      "index": 0,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 8,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 0,
+      "v": 0
+    },
+    {
+      "index": 1,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 37,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 74,
+      "v": 0
+    },
+    {
+      "index": 2,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 37,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 148,
+      "v": 0
+    },
+    {
+      "index": 3,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 37,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 222,
+      "v": 0
+    },
+    {
+      "index": 4,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 37,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 296,
+      "v": 0
+    },
+    {
+      "index": 5,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 37,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 370,
+      "v": 0
+    },
+    {
+      "index": 6,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 37,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 444,
+      "v": 0
+    },
+    {
+      "index": 7,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 37,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 518,
+      "v": 0
+    },
+    {
+      "index": 8,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 37,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 592,
+      "v": 0
+    },
+    {
+      "index": 9,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 37,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 666,
+      "v": 0
+    },
+    {
+      "index": 10,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 37,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 740,
+      "v": 0
+    },
+    {
+      "index": 11,
+      "width": 74,
+      "height": 106,
+      "hotspot_x": 37,
+      "hotspot_y": 53,
+      "file": null,
+      "u": 814,
+      "v": 0
+    }
+  ]
+}

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>임진록 2+: 조선의 반격: 여명 (Dawn) - Web RTS & Live Modding Sandbox</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>⚔️</text></svg>">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Top Status Bar -->
+    <header id="top-bar">
+        <div class="top-bar-left">
+            <div class="game-logo">
+                <span class="logo-title">임진록 2+ 여명</span>
+                <span class="logo-badge">WEB RTS</span>
+            </div>
+            <div class="resource-group">
+                <div class="res-item" title="식량 (벼 / 논)">
+                    <span class="res-icon">🌾</span>
+                    <span class="res-label">벼:</span>
+                    <span id="res-rice" class="res-val">2500</span>
+                </div>
+                <div class="res-item" title="식량 (감자밭)">
+                    <span class="res-icon">🥔</span>
+                    <span class="res-label">감자:</span>
+                    <span id="res-potato" class="res-val">1800</span>
+                </div>
+                <div class="res-item" title="목재 (나무 / 대나무)">
+                    <span class="res-icon">🪵</span>
+                    <span class="res-label">목재:</span>
+                    <span id="res-wood" class="res-val">950</span>
+                </div>
+                <div class="res-item" title="엽전 (자금)">
+                    <span class="res-icon">🪙</span>
+                    <span class="res-label">엽전:</span>
+                    <span id="res-money" class="res-val">600</span>
+                </div>
+                <div class="res-item" title="인구수 / 보급">
+                    <span class="res-icon">👥</span>
+                    <span class="res-label">인구:</span>
+                    <span id="res-population" class="res-val">14 / 50</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="top-bar-right">
+            <div class="status-item timer-item" title="게임 경과 시간">
+                <span class="status-icon">⏱️</span>
+                <span id="game-timer" class="status-val">00:00</span>
+            </div>
+            <div class="status-item fps-item" title="초당 프레임 수">
+                <span id="fps-counter" class="status-val">60 FPS</span>
+            </div>
+
+            <div class="toolbar-divider"></div>
+
+            <nav class="toolbar-actions">
+                <button id="btn-toggle-editor" class="toolbar-btn" title="맵 에디터 모드 전환 (Ctrl+E)">
+                    <span class="btn-icon">🗺️</span> 맵 에디터
+                </button>
+                <button id="btn-toggle-audio" class="toolbar-btn" title="사운드 켜기/끄기 (M)">
+                    <span class="btn-icon">🔊</span> 사운드 ON
+                </button>
+                <button id="btn-toggle-modding" class="toolbar-btn active" title="라이브 모딩 패널 열기/닫기">
+                    <span class="btn-icon">🛠️</span> 모딩 패널
+                </button>
+                <button id="btn-help" class="toolbar-btn" title="도움말 및 조작키 안내 (F1)">
+                    <span class="btn-icon">❓</span> 도움말
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Game Viewport -->
+    <main id="game-viewport">
+        <canvas id="rts-canvas" width="1280" height="720"></canvas>
+    </main>
+
+    <!-- Map Editor Mode Toolbar (Toggleable) -->
+    <section id="map-editor-panel" class="editor-toolbar hidden" aria-label="맵 에디터 툴바">
+        <div class="editor-group map-picker">
+            <label for="editor-map-select">맵 선택:</label>
+            <select id="editor-map-select">
+                <option value="taegeuk" selected>(2인, 100x100) 태극 (Taegeuk)</option>
+                <option value="sea_of_cries">(2인, 70x70) 함성이 그치지 않는 바다</option>
+                <option value="gyeongju_bibimbap">(4인, 120x120) 경주비빔밥</option>
+                <option value="mugeuk">(4인, 140x140) 무극</option>
+            </select>
+        </div>
+
+        <div class="editor-divider"></div>
+
+        <div class="editor-group tool-buttons">
+            <button class="editor-tool-btn active" data-tool="paint_tile" title="타일 칠하기">🎨 타일</button>
+            <button class="editor-tool-btn" data-tool="raise_elev" title="지형 높이기 (+1)">⬆️ 높이기</button>
+            <button class="editor-tool-btn" data-tool="lower_elev" title="지형 낮추기 (-1)">⬇️ 낮추기</button>
+            <button class="editor-tool-btn" data-tool="place_resource" title="자원 배치">🌾 자원</button>
+            <button class="editor-tool-btn" data-tool="place_unit" title="유닛/건물 배치">⚔️ 유닛</button>
+            <button class="editor-tool-btn" data-tool="erase" title="지우개 (자원/건물 제거)">🧹 지우개</button>
+        </div>
+
+        <div class="editor-divider"></div>
+
+        <div class="editor-group brush-options">
+            <label for="editor-tile-palette">팔레트:</label>
+            <select id="editor-tile-palette">
+                <option value="1">평원 잔디 (grss1)</option>
+                <option value="2">해안/흙길 (diff1)</option>
+                <option value="3">돌 성곽 (castle0)</option>
+                <option value="4">암벽/언덕 (hill0)</option>
+            </select>
+
+            <label for="editor-resource-palette">자원:</label>
+            <select id="editor-resource-palette">
+                <option value="100">벼 / 쌀 (식량)</option>
+                <option value="1">감자밭 (식량)</option>
+                <option value="3">나무 (목재)</option>
+                <option value="2">대나무 (목재)</option>
+            </select>
+
+            <label for="editor-brush-size">크기:</label>
+            <select id="editor-brush-size">
+                <option value="1">1x1</option>
+                <option value="2">2x2</option>
+                <option value="3">3x3</option>
+            </select>
+        </div>
+
+        <div class="editor-divider"></div>
+
+        <div class="editor-group export-buttons">
+            <button id="btn-export-map-json" class="editor-action-btn">맵 JSON</button>
+            <button id="btn-export-map-bin" class="editor-action-btn accent">.map 생성</button>
+        </div>
+    </section>
+
+    <!-- Bottom RTS HUD (Authentic Imjinrok 2+ Chosun Roof & Parchment Layout) -->
+    <footer id="bottom-hud">
+        <!-- Bottom-Left: Traditional Roof & Diamond Radar Minimap + Octagonal Portrait -->
+        <div id="minimap-container" class="hud-panel minimap-panel">
+            <div class="hud-roof-trim"></div>
+            <div class="minimap-portrait-row">
+                <div class="minimap-bezel">
+                    <canvas id="minimap-canvas" width="160" height="140"></canvas>
+                </div>
+                <div class="portrait-and-compass">
+                    <div id="selection-portrait" class="unit-portrait-octagon" title="선택 대상 초상화 (클릭 시 카메라 이동)">
+                        <div id="portrait-sprite" class="portrait-sprite-inner"></div>
+                    </div>
+                    <div id="hud-settings-btn" class="hud-settings-btn" title="도움말 및 시스템 설정 (F1)">설 정</div>
+                    <div id="hud-compass-dial" class="hud-compass-dial" title="풍향계 및 기상(맑음/기우제 비) — 클릭: 풍향 변경 / Shift+클릭: 기우제 비">
+                        <canvas id="compass-canvas" width="72" height="72"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="minimap-status">
+                <span id="minimap-coords">좌표: 23, 22</span>
+                <span id="minimap-map-name">태극 (100x100)</span>
+            </div>
+        </div>
+
+        <!-- Bottom-Center: F1..F11 Control Bar & Warm Parchment Status Panel -->
+        <div id="selection-card" class="hud-panel selection-panel">
+            <div class="selection-title-strip">
+                <span id="selection-name" class="unit-name-green">조선 훈련소</span>
+                <span id="selection-faction" class="unit-faction">조선군 (플레이어)</span>
+            </div>
+
+            <!-- Authentic F1..F11 Hotkey Slot Bar (ShortCutMenu from screenPt_plus.dat) -->
+            <div id="f-key-bar" class="f-key-bar">
+                <div class="f-slot" data-fslot="0"><span>F1</span></div>
+                <div class="f-slot" data-fslot="1"><span>F2</span></div>
+                <div class="f-slot" data-fslot="2"><span>F3</span></div>
+                <div class="f-slot" data-fslot="3"><span>F4</span></div>
+                <div class="f-slot" data-fslot="4"><span>F5</span></div>
+                <div class="f-slot" data-fslot="5"><span>F6</span></div>
+                <div class="f-slot" data-fslot="6"><span>F7</span></div>
+                <div class="f-slot" data-fslot="7"><span>F8</span></div>
+                <div class="f-slot" data-fslot="8"><span>F9</span></div>
+                <div class="f-slot" data-fslot="9"><span>F10</span></div>
+                <div class="f-slot" data-fslot="10"><span>F11</span></div>
+            </div>
+
+            <!-- Authentic Warm Parchment (한지) Telemetry Area -->
+            <div class="parchment-panel">
+                <div class="parchment-stats-col">
+                    <div class="parchment-stat-line">
+                        <span class="p-label">체&nbsp;&nbsp;&nbsp;력</span>
+                        <span id="selection-hp-text" class="p-val">3600/3600</span>
+                        <div id="selection-hp-bar" class="stat-bar hp-bar-frame" style="display:none;">
+                            <div id="selection-hp-fill" class="stat-bar-fill hp-fill" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div id="parchment-mp-row" class="parchment-stat-line">
+                        <span class="p-label">마법력</span>
+                        <span id="selection-mp-text" class="p-val">200/200</span>
+                        <div id="selection-mp-bar" class="stat-bar mp-bar-frame" style="display:none;">
+                            <div id="selection-mp-fill" class="stat-bar-fill mp-fill" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="parchment-stat-line">
+                        <span class="p-label">공격력</span>
+                        <span class="p-val"><b id="stat-attack">33/45</b></span>
+                    </div>
+                    <div class="parchment-stat-line">
+                        <span class="p-label">방어력</span>
+                        <span class="p-val"><b id="stat-defense">33/33</b></span>
+                        <span class="p-sub">사거리:<b id="stat-range">1.5</b> 이동속도:<b id="stat-speed">12</b></span>
+                    </div>
+                </div>
+
+                <!-- Active Building Production Queue / Hero 4-Slot Item Inventory (screenPt_plus.dat Crew & InventoryMenu) -->
+                <div class="parchment-prod-col">
+                    <div id="target-brackets-box" class="target-brackets-box">
+                        <span>┏</span><span>┓</span>
+                        <span>┗</span><span>┛</span>
+                    </div>
+                    <div id="hud-production-box" class="hud-prod-widget">
+                        <div class="prod-icon-row">
+                            <div id="hud-prod-icon" class="hud-prod-icon"></div>
+                            <span id="hud-prod-pct" class="hud-prod-pct">43%</span>
+                        </div>
+                        <div id="hud-prod-label" class="hud-prod-label">조선 창병</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom-Right: 4x3 Gold-Bordered Command Card -->
+        <div id="command-card-container" class="hud-panel command-card-panel">
+            <div id="command-card" class="command-grid-4x3">
+                <button class="cmd-slot" data-slot="0" title="이동 (Q)"><span class="hotkey">Q</span><div class="cmd-icon">이동</div></button>
+                <button class="cmd-slot" data-slot="1" title="정지 (W)"><span class="hotkey">W</span><div class="cmd-icon">정지</div></button>
+                <button class="cmd-slot" data-slot="2" title="공격 (E)"><span class="hotkey">E</span><div class="cmd-icon">공격</div></button>
+                <button class="cmd-slot" data-slot="3" title="순찰 (R)"><span class="hotkey">R</span><div class="cmd-icon">순찰</div></button>
+                <button class="cmd-slot" data-slot="4" title="홀드 (A)"><span class="hotkey">A</span><div class="cmd-icon">홀드</div></button>
+                <button class="cmd-slot" data-slot="5" title="기술 1 (S)"><span class="hotkey">S</span><div class="cmd-icon">기술</div></button>
+                <button class="cmd-slot" data-slot="6" title="농부 생산 (D)"><span class="hotkey">D</span><div class="cmd-icon">농부</div></button>
+                <button class="cmd-slot" data-slot="7" title="창병 생산 (F)"><span class="hotkey">F</span><div class="cmd-icon">창병</div></button>
+                <button class="cmd-slot" data-slot="8" title="궁수 생산 (Z)"><span class="hotkey">Z</span><div class="cmd-icon">궁수</div></button>
+                <button class="cmd-slot" data-slot="9" title="이순신 소환 (X)"><span class="hotkey">X</span><div class="cmd-icon">이순신</div></button>
+                <button class="cmd-slot" data-slot="10" title="거북선 건조 (C)"><span class="hotkey">C</span><div class="cmd-icon">거북선</div></button>
+                <button class="cmd-slot" data-slot="11" title="커스텀 유닛 (V)"><span class="hotkey">V</span><div class="cmd-icon">신규</div></button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Right Collapsible Sidebar: Live Modding Studio -->
+    <aside id="live-mod-panel" class="sidebar-panel">
+        <div class="sidebar-header">
+            <h3>🛠️ 실시간 모딩 스튜디오</h3>
+            <button id="btn-close-mod-panel" class="close-sidebar-btn" title="패널 닫기">&times;</button>
+        </div>
+
+        <div class="sidebar-content">
+            <!-- Section 1: Live Unit Stat Editor -->
+            <section class="mod-section">
+                <div class="section-title">
+                    <h4>유닛 스탯 실시간 수정</h4>
+                    <span class="section-desc">슬라이더를 움직이면 전장에 즉시 적용됩니다</span>
+                </div>
+
+                <div class="field-group">
+                    <label for="mod-unit-select">수정 대상 유닛:</label>
+                    <select id="mod-unit-select" class="form-control">
+                        <option value="selected">현재 선택된 유닛 (Active Selection)</option>
+                        <option value="chosun_spearman">조선 창병 (swordk)</option>
+                        <option value="chosun_archer">조선 궁수 (archerk)</option>
+                        <option value="chosun_farmer">조선 농부 (farmerk)</option>
+                        <option value="chosun_yisunsin">조선 이순신 (generalk12)</option>
+                        <option value="chosun_gwakjaeu">조선 곽재우 (generalk31)</option>
+                        <option value="chosun_turtleship">조선 거북선 (ashipk)</option>
+                        <option value="japan_samurai">일본 사무라이 (swordj)</option>
+                        <option value="japan_ashigaru">일본 뎃뽀 아시가루 (gunj1)</option>
+                        <option value="ming_swordman">명 창기병 (swordc1)</option>
+                    </select>
+                </div>
+
+                <!-- Mandatory ID: input-move-speed & slider-speed -->
+                <div class="field-group slider-row">
+                    <div class="slider-header">
+                        <label for="input-move-speed">이동 속도 (move_speed):</label>
+                        <span id="val-speed" class="val-pill">12</span>
+                    </div>
+                    <input type="range" id="input-move-speed" min="1" max="40" value="12" step="1">
+                    <input type="hidden" id="slider-speed" value="12">
+                </div>
+
+                <div class="field-group slider-row">
+                    <div class="slider-header">
+                        <label for="slider-hp">체력 (HP):</label>
+                        <span id="val-hp" class="val-pill">700</span>
+                    </div>
+                    <input type="range" id="slider-hp" min="10" max="5000" value="700" step="10">
+                </div>
+
+                <div class="field-group slider-row">
+                    <div class="slider-header">
+                        <label for="slider-atk">공격력 (Attack Power):</label>
+                        <span id="val-atk" class="val-pill">12</span>
+                    </div>
+                    <input type="range" id="slider-atk" min="0" max="250" value="12" step="1">
+                </div>
+
+                <div class="field-group slider-row">
+                    <div class="slider-header">
+                        <label for="slider-range">공격 사거리 (Range):</label>
+                        <span id="val-range" class="val-pill">1.5</span>
+                    </div>
+                    <input type="range" id="slider-range" min="1" max="15" value="1.5" step="0.5">
+                </div>
+
+                <div class="field-group slider-row">
+                    <div class="slider-header">
+                        <label for="slider-delay">공격 딜레이 (Attack Delay):</label>
+                        <span id="val-delay" class="val-pill">30</span>
+                    </div>
+                    <input type="range" id="slider-delay" min="5" max="100" value="30" step="1">
+                </div>
+
+                <div class="field-group slider-row">
+                    <div class="slider-header">
+                        <label for="slider-scale">크기 배율 (Unit Scale):</label>
+                        <span id="val-scale" class="val-pill">1.0</span>
+                    </div>
+                    <input type="range" id="slider-scale" min="0.5" max="3.0" value="1.0" step="0.1">
+                </div>
+            </section>
+
+            <!-- Section 2: Custom Unit Creator -->
+            <section class="mod-section">
+                <div class="section-title">
+                    <h4>신규 커스텀 유닛 생성</h4>
+                    <span class="section-desc">새로운 유닛을 디자인하고 4x3 커맨드 카드에 등록합니다</span>
+                </div>
+
+                <div class="field-group">
+                    <label for="custom-name">유닛 이름:</label>
+                    <input type="text" id="custom-name" class="form-control" placeholder="유닛 이름" value="조선 초인검사">
+                </div>
+
+                <div class="field-group">
+                    <label for="custom-base-sprite">외형 베이스 스프라이트:</label>
+                    <select id="custom-base-sprite" class="form-control">
+                        <option value="char/swordk.spr">조선 창병 (swordk)</option>
+                        <option value="char/generalk12.spr">조선 이순신 (generalk12)</option>
+                        <option value="char/generalk31.spr">조선 곽재우 (generalk31)</option>
+                        <option value="char/ashipk.spr">조선 거북선 (ashipk)</option>
+                        <option value="char/swordj.spr">일본 사무라이 (swordj)</option>
+                        <option value="char/gunj1.spr">일본 뎃뽀 아시가루 (gunj1)</option>
+                        <option value="char/flametankj.spr">일본 귀갑차 (flametankj)</option>
+                        <option value="char/swordc1.spr">명 창기병 (swordc1)</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="custom-projectile">공격/발사체 타입:</label>
+                    <select id="custom-projectile" class="form-control">
+                        <option value="melee">근접 도검 (Melee Slash)</option>
+                        <option value="arrow">곡사 화살 (Curved Arrow)</option>
+                        <option value="bullet">직사 탄환 (Musket Bullet)</option>
+                        <option value="cannon">곡사 대포탄 (Heavy Cannon)</option>
+                        <option value="fireball">화염 공격 (Fire Thrower)</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="custom-faction">소속 진영:</label>
+                    <select id="custom-faction" class="form-control">
+                        <option value="0">조선군 (플레이어 청군)</option>
+                        <option value="1">일본군 (적군 홍군)</option>
+                        <option value="2">명군 (동맹군 녹군)</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="custom-cmd-slot">커맨드 카드 슬롯:</label>
+                    <select id="custom-cmd-slot" class="form-control">
+                        <option value="11">슬롯 V (3행 4열)</option>
+                        <option value="10">슬롯 C (3행 3열)</option>
+                        <option value="9">슬롯 X (3행 2열)</option>
+                        <option value="8">슬롯 Z (3행 1열)</option>
+                    </select>
+                </div>
+
+                <button id="spawn-custom-btn" class="btn btn-primary full-width">
+                    ⚡ 커스텀 유닛 생성 & 소환
+                </button>
+            </section>
+
+            <!-- Section 3: Mod Export Actions -->
+            <section class="mod-section">
+                <div class="section-title">
+                    <h4>모드 내보내기 & 바이너리 패치</h4>
+                    <span class="section-desc">수정한 밸런스를 저장하거나 dawn.exe에 바이너리 패치합니다</span>
+                </div>
+
+                <div class="button-stack">
+                    <button id="export-mod-json-btn" class="btn btn-secondary full-width">
+                        💾 모드 설정 JSON 저장 (Save Config)
+                    </button>
+                    <button id="patch-binary-btn" class="btn btn-accent full-width">
+                        ⚙️ dawn.exe 실행 파일에 패치 적용
+                    </button>
+                </div>
+
+                <div id="mod-export-status" class="status-box" role="status">
+                    시스템 준비 완료.
+                </div>
+            </section>
+        </div>
+    </aside>
+
+    <!-- Help & Hotkeys Modal Dialog -->
+    <div id="help-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="help-modal-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="help-modal-title">⚔️ 임진록 2+: 여명 웹 프로토타입 조작 가이드</h3>
+                <button id="btn-close-help" class="modal-close-btn" aria-label="닫기">&times;</button>
+            </div>
+            <div class="modal-body">
+                <table class="hotkey-table">
+                    <thead>
+                        <tr>
+                            <th>단축키 / 조작</th>
+                            <th>기능 설명</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> / 방향키</td>
+                            <td>전장 카메라 이동 (팬 스크롤)</td>
+                        </tr>
+                        <tr>
+                            <td>화면 가장자리 마우스 이동</td>
+                            <td>엣지 스크롤 (화면 테두리 감지 시 자동 이동)</td>
+                        </tr>
+                        <tr>
+                            <td>마우스 휠 스크롤</td>
+                            <td>카메라 줌 인 / 줌 아웃 (0.5x ~ 2.0x)</td>
+                        </tr>
+                        <tr>
+                            <td>마우스 좌클릭</td>
+                            <td>유닛 / 건물 선택 또는 선택 해제</td>
+                        </tr>
+                        <tr>
+                            <td>마우스 드래그 박스</td>
+                            <td>다수 유닛 드래그 박스 멀티 선택</td>
+                        </tr>
+                        <tr>
+                            <td>마우스 우클릭</td>
+                            <td>지면 클릭 시 이동 명령, 적 클릭 시 공격 명령</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Alt</kbd> (누른 채 유지)</td>
+                            <td><strong>모든 유닛의 체력바 / 마나바 상시 표시</strong> (syw2x.dll 강화 기능)</td>
+                        </tr>
+                        <tr>
+                            <td>미니맵 좌클릭</td>
+                            <td>카메라 즉시 점프 이동</td>
+                        </tr>
+                        <tr>
+                            <td>미니맵 우클릭</td>
+                            <td>선택 유닛에게 해당 미니맵 좌표로 이동 명령</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Q</kbd> <kbd>W</kbd> <kbd>E</kbd> <kbd>R</kbd></td>
+                            <td>커맨드 1행: 이동(Move), 정지(Stop), 공격(Attack), 순찰(Patrol)</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>F</kbd></td>
+                            <td>커맨드 2행: 홀드(Hold), 기술(Skill), 농부생산, 창병생산</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Z</kbd> <kbd>X</kbd> <kbd>C</kbd> <kbd>V</kbd></td>
+                            <td>커맨드 3행: 궁수생산, 영웅소환, 거북선, 커스텀 유닛 생산</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>M</kbd></td>
+                            <td>배경음악 및 효과음 음소거 토글</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>Ctrl</kbd> + <kbd>E</kbd></td>
+                            <td>인브라우저 맵 에디터 모드 On / Off</td>
+                        </tr>
+                        <tr>
+                            <td><kbd>F1</kbd></td>
+                            <td>도움말 및 단축키 안내 팝업 열기 / 닫기</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-modal-confirm" class="btn btn-primary">확인 (닫기)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Main Application Module -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
