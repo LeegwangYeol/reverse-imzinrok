@@ -622,8 +622,8 @@ def _extract_sp_3d_legs(state: str, d: int, step: int) -> Tuple[np.ndarray, floa
             sub[:, :15] = 0
             sub[:, 29:] = 0
     else:
-        sub[:, : max(0, c_i - 12)] = 0
-        sub[:, min(sub.shape[1], c_i + 13) :] = 0
+        sub[:, : max(0, c_i - 14)] = 0
+        sub[:, min(sub.shape[1], c_i + 18) :] = 0
 
     # Remove detached specks/islands (< 20px)
     vis = np.zeros_like(sub, dtype=bool)
@@ -810,23 +810,88 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
         arr = cl
 
     out = np.zeros((60, 60), dtype=np.uint8)
+    ub_dx, ub_dy = get_upper_body_offset(state, d, step)
 
-    # 3. Render 3ds Max Lower Body (Thighs 바지, Knee Ties 행전끈, Shin Greaves/Wraps 행전/경갑, War Boots 전투화)
-    #    from SwordPirate_online.spr at ty = 27..51 BEFORE overlaying the upper torso/hip tassets
+    # 3. Build Knee-Length Heavy Armored Lower Body (무릎까지 내려온 중장갑 갑상/슬갑 ty=27..40 + 철제 정강이 경갑/전투화 ty=41..51)
     sub_leg, cx_ref = _extract_sp_3d_legs(state, d, step)
     sh_l, sw_l = sub_leg.shape
+    leg_buf = np.zeros((60, 60), dtype=np.uint8)
     for ty in range(27, 52):
         sy_l = int(round((ty - 27) * 1.05))
         if not (0 <= sy_l < sh_l):
             continue
-        row_lv: List[Tuple[int, int]] = []
         for tx in range(10, 50):
             sx_l = int(round(cx_ref + (tx - 30)))
             if 0 <= sx_l < sw_l and int(sub_leg[sy_l, sx_l]) > 0:
-                row_lv.append((tx, int(sub_leg[sy_l, sx_l])))
+                leg_buf[ty, tx] = int(sub_leg[sy_l, sx_l])
+
+    # 3a. Horizontally dilate thigh & shin segments by +1px so heavy-infantry cuisses & greaves have full 3D bulk
+    dilated = leg_buf.copy()
+    for ty in range(27, 51):
+        for tx in range(12, 48):
+            if leg_buf[ty, tx] == 0:
+                if leg_buf[ty, tx - 1] > 0 and leg_buf[ty, tx - 1] not in SP_LEG_OUTLINE:
+                    dilated[ty, tx] = leg_buf[ty, tx - 1]
+                elif leg_buf[ty, tx + 1] > 0 and leg_buf[ty, tx + 1] not in SP_LEG_OUTLINE:
+                    dilated[ty, tx] = leg_buf[ty, tx + 1]
+    leg_buf = dilated
+
+    # 3b. Ensure solid Knee-Length Heavy Armored Tasset Flaps (좌우 중장갑 갑상/슬갑, ty=28..40) with zero hollow hip/thigh gaps
+    if state == "move":
+        l_knee_y = 40 + (-1, -1, 0, 1, 1, 0, -1, -1)[step]
+        r_knee_y = 40 + (1, 0, -1, -1, -1, 0, 1, 1)[step]
+        l_sway = (-1, -1, 0, 1, 1, 0, 0, -1)[step] if d in (0, 1, 2) else 0
+        r_sway = (1, 1, 0, -1, -1, 0, 0, 1)[step] if d in (0, 1, 2) else 0
+    elif state == "attack":
+        l_knee_y, r_knee_y = 40, 40
+        l_sway, r_sway = -1, 1
+    else:
+        l_knee_y, r_knee_y = 40, 40
+        l_sway, r_sway = 0, 0
+
+    for ty in range(28, 41):
+        # Upper-to-mid thigh (ty <= 35): continuous wide heavy tasset skirt; Lower knee flaps (ty = 36..40): split left/right cuisses
+        if ty <= 35:
+            for tx in range(23 + ub_dx, 38 + ub_dx):
+                if leg_buf[ty, tx] == 0:
+                    leg_buf[ty, tx] = 75
+        else:
+            if ty <= l_knee_y:
+                l_x0 = (22 if state == "attack" else 23) + ub_dx + l_sway
+                l_x1 = 29 + ub_dx + max(0, l_sway)
+                for tx in range(l_x0, l_x1 + 1):
+                    if leg_buf[ty, tx] == 0:
+                        leg_buf[ty, tx] = 75
+            if ty <= r_knee_y:
+                r_x0 = 31 + ub_dx + min(0, r_sway)
+                r_x1 = (38 if state == "attack" else 37) + ub_dx + r_sway
+                for tx in range(r_x0, r_x1 + 1):
+                    if leg_buf[ty, tx] == 0:
+                        leg_buf[ty, tx] = 75
+
+    # 3c. In Move (0..39), ensure both left & right armored shin greaves (ty=41..47) are always visible below the knee skirt
+    #     (when one leg lifts in N/S or crossover steps, render the raised second shin/boot down to ty=45..46)
+    if state == "move":
+        has_left_shin = np.any(leg_buf[42:48, 15:30] > 0)
+        has_right_shin = np.any(leg_buf[42:48, 31:46] > 0)
+        lift_max_y = 45 + (step % 2)
+        if not has_left_shin:
+            for ty in range(40, lift_max_y + 1):
+                for tx in range(24 + ub_dx, 29 + ub_dx):
+                    if leg_buf[ty, tx] == 0:
+                        leg_buf[ty, tx] = 75
+        if not has_right_shin:
+            for ty in range(40, lift_max_y + 1):
+                for tx in range(32 + ub_dx, 37 + ub_dx):
+                    if leg_buf[ty, tx] == 0:
+                        leg_buf[ty, tx] = 75
+
+    # 3d. Shade Knee-Length Heavy Armor (ty=27..40) and Iron/Steel Shin Greaves & War Boots (ty=41..51)
+    for ty in range(27, 52):
+        sy_l = int(round((ty - 27) * 1.05))
+        row_lv: List[Tuple[int, int]] = [(tx, int(leg_buf[ty, tx])) for tx in range(10, 50) if leg_buf[ty, tx] > 0]
         if not row_lv:
             continue
-        # Group into contiguous horizontal leg segments [x_start .. x_end]
         segs: List[List[Tuple[int, int]]] = [[row_lv[0]]]
         for item in row_lv[1:]:
             if item[0] == segs[-1][-1][0] + 1:
@@ -840,53 +905,82 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
             half_w = max(1.0, 0.5 * w_seg)
             for tx, lv in seg:
                 is_edge = (w_seg >= 3 and (tx == x_s or tx == x_e)) or (w_seg == 2 and tx == x_e)
-                if lv == IDX_OUTLINE and is_edge:
-                    out[ty, tx] = IDX_OUTLINE
-                    continue
-                if is_edge and (lv in SP_LEG_OUTLINE or sy_l >= 14):
+                if is_edge:
                     out[ty, tx] = IDX_OUTLINE
                     continue
                 nx_leg = (tx - mid_x) / half_w
-                cyl_lit = math.sqrt(max(0.0, 1.0 - nx_leg * nx_leg)) * 0.72 + max(0.0, -nx_leg) * 0.28
+                cyl_lit = math.sqrt(max(0.0, 1.0 - nx_leg * nx_leg)) * 0.75 + max(0.0, -nx_leg) * 0.25
                 l_b = float(lum[lv])
-                eff_l = max(l_b, 0.36 + 0.52 * cyl_lit)
-                if sy_l <= 12:
-                    # Traditional Joseon Baji (warm off-white cotton trousers)
-                    if lv in SP_LEG_DARK_WRAP and sy_l <= 4 and is_edge:
-                        out[ty, tx] = _pick_ramp(RAMP_DARK_IRON, eff_l)
-                    else:
-                        out[ty, tx] = _pick_ramp(RAMP_BAJI, eff_l, boost=0.10)
-                elif sy_l == 13:
-                    # Knee tie (행전끈)
+                eff_l = max(l_b * 0.85, 0.34 + 0.54 * cyl_lit)
+                tx_rel = tx - ub_dx
+
+                # Check if this pixel is on the bottom knee hem of the heavy armored tasset (ty in 39..40)
+                is_knee_hem = (ty == 40) or (ty in (38, 39) and leg_buf[ty + 1, tx] == 0)
+                if is_knee_hem:
+                    # Gleaming Brass / Crimson Knee-Guard Border (슬갑 하단 황동/주홍 테두리)
+                    out[ty, tx] = _pick_ramp(
+                        RAMP_CRIMSON if style == "gyeongbeongap_heavy" else RAMP_BRASS,
+                        max(0.50, eff_l),
+                        boost=0.18,
+                    )
+                elif ty <= 39:
+                    # Knee-Length Heavy Armored Thigh Tassets (무릎까지 내려온 중장갑 갑상/하갑) matching upper body armor!
+                    s_dy = ty - 27
+                    if style == "dujeonggap_crimson":
+                        if (tx_rel + s_dy) % 3 == 0 and (s_dy % 2 == 0):
+                            out[ty, tx] = _pick_ramp(RAMP_BRASS, max(0.55, eff_l), boost=0.22)
+                        else:
+                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.08)
+                    elif style == "dujeonggap_blue":
+                        if abs(tx_rel - 30) >= 5:
+                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.08)
+                        elif (tx_rel + s_dy) % 3 == 0 and (s_dy % 2 == 0):
+                            out[ty, tx] = _pick_ramp(RAMP_BRASS, max(0.55, eff_l), boost=0.22)
+                        else:
+                            out[ty, tx] = _pick_ramp(RAMP_BLUE, eff_l, boost=0.06)
+                    elif style == "dujeonggap_vanguard":
+                        if abs(tx_rel - 30) >= 5:
+                            out[ty, tx] = _pick_ramp(RAMP_STEEL, eff_l, boost=0.10)
+                        elif (tx_rel + s_dy) % 3 == 0 and (s_dy % 2 == 0):
+                            out[ty, tx] = _pick_ramp(RAMP_BRASS, max(0.55, eff_l), boost=0.22)
+                        else:
+                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.08)
+                    elif style == "gyeongbeongap_steel":
+                        plate_mod = -0.06 if (s_dy % 2 == 1) else 0.08
+                        if (s_dy % 3 == 0) and (tx_rel % 3 == 0):
+                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.12)
+                        else:
+                            out[ty, tx] = _pick_ramp(RAMP_STEEL, eff_l, boost=0.08 + plate_mod)
+                    elif style == "gyeongbeongap_heavy":
+                        if (s_dy // 2) % 2 == 0:
+                            out[ty, tx] = _pick_ramp(RAMP_BRASS, eff_l, boost=0.14)
+                        else:
+                            out[ty, tx] = _pick_ramp(RAMP_STEEL, eff_l, boost=0.10)
+                elif ty == 41:
+                    # Crimson/Brass Under-Knee Tie Band (행전끈 / 경갑 상단 끈)
                     out[ty, tx] = _pick_ramp(
                         RAMP_CRIMSON if "dujeonggap" in style else RAMP_BRASS,
-                        max(0.45, eff_l),
+                        max(0.48, eff_l),
                         boost=0.14,
                     )
-                elif sy_l <= 19:
-                    # Shin wraps / greaves (행전 / 정강이 경갑): crisp white cotton or bright steel with dark border
-                    if "gyeongbeongap" in style:
-                        out[ty, tx] = _pick_ramp(RAMP_STEEL, max(0.48, eff_l), boost=0.14)
-                    else:
-                        out[ty, tx] = _pick_ramp(RAMP_BAJI, max(0.42, eff_l), boost=0.06)
+                elif ty <= 46:
+                    # Heavy Iron/Steel Shin Greaves (중장갑 철제 정강이 경갑)
+                    out[ty, tx] = _pick_ramp(RAMP_STEEL, max(0.46, eff_l), boost=0.12)
                 else:
-                    # War boots (전투화 / 목화): lit vamp/instep + dark sole
+                    # Heavy Armored War Boots (중장갑 전투화 / 철제 목화)
                     out[ty, tx] = _pick_ramp(
-                        RAMP_BAJI if eff_l > 0.62 else RAMP_DARK_IRON,
-                        max(0.38, eff_l),
+                        RAMP_STEEL if eff_l > 0.64 else RAMP_DARK_IRON,
+                        max(0.40, eff_l),
                         boost=0.08,
                     )
 
-    # 4. Compute upper-torso vertical bounce (뜀박질 바운스) & lunge/lean offset
-    ub_dx, ub_dy = get_upper_body_offset(state, d, step)
-
-    # 5. Overlay 3ds Max Upper Body (Conical Helmet, Face, Pauldrons, Chest Armor, Waist Sash, and Short Hip Tassets dy <= 27)
-    for ty in range(2, 34):
+    # 5. Overlay 3ds Max Upper Body (Conical Helmet, Face, Pauldrons, Chest Armor, Waist Sash, and Upper-to-Mid Tassets dy <= 31)
+    for ty in range(2, 36):
         sy = hy_top - 4 + (ty - ub_dy)
         if not (0 <= sy < gh):
             continue
         dy = sy - hy_top
-        if dy > 27:
+        if dy > 31:
             continue
 
         row_lean = ub_dx
@@ -900,7 +994,7 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
         elif dy <= 23:
             x_min, x_max = 25 + row_lean, 35 + row_lean  # Chest & Waist Sash (전대)
         else:
-            x_min, x_max = 24 + row_lean, 36 + row_lean  # Short Hip Tassets (갑상: dy = 24..27)
+            x_min, x_max = 23 + row_lean, 37 + row_lean  # Heavy Armored Hip & Thigh Tassets (갑상: dy = 24..31)
 
         for tx in range(max(0, x_min), min(60, x_max + 1)):
             sx = hx_c - 30 + (tx - row_lean)
@@ -909,7 +1003,7 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
             v = int(arr[sy, sx])
             if v == 0:
                 continue
-            if v == IDX_OUTLINE or tx == x_min or tx == x_max or dy == 27:
+            if v == IDX_OUTLINE or tx == x_min or tx == x_max:
                 out[ty, tx] = IDX_OUTLINE
                 continue
 
@@ -1500,19 +1594,19 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 c[ty, tx] = val
 
         if state == "die":
-            # Fallen rattan shield and hwando beside corpse
+            # Fallen 1.5x-scaled rattan shield (80~90cm diameter) and hwando beside corpse
             sx, sy = cx - 8 - step, cy + 10 + step // 2
-            rx, ry = 6.0, 4.5
+            rx, ry = 9.0, 6.75
             draw_line_indices(c, cx + 2, cy + 8, cx + 14, cy + 12, IDX_STEEL_GLEAM, width=1)
             set_safe_pixel(c, cx + 2, cy + 8, IDX_GOLD_BRIGHT)
         else:
-            # Shield held on the shield forearm (with breathing poise in Idle and running counter-swing in Move)
+            # 1.5x-scaled 80~90cm Large Rattan Shield (대형 등패) held on the shield forearm
             shield_pos = [
-                (cx - 6, cy - 1, 5.5, 6.8),  # 0: SW
-                (cx - 6, cy - 2, 5.0, 6.8),  # 1: W
-                (cx - 5, cy - 5, 4.8, 6.2),  # 2: NW (in front of front-left shoulder)
-                (cx - 5, cy - 5, 4.5, 5.8),  # 3: N  (in front of left shoulder)
-                (cx + 6, cy - 1, 5.5, 6.8),  # 4: S
+                (cx - 7, cy + 1, 8.25, 10.2),  # 0: SW (1.5x of 5.5 x 6.8)
+                (cx - 7, cy + 0, 7.50, 10.2),  # 1: W  (1.5x of 5.0 x 6.8)
+                (cx - 7, cy - 3, 7.20, 9.3),   # 2: NW (1.5x of 4.8 x 6.2)
+                (cx - 7, cy - 3, 6.75, 8.7),   # 3: N  (1.5x of 4.5 x 5.8)
+                (cx + 7, cy + 1, 8.25, 10.2),  # 4: S  (1.5x of 5.5 x 6.8)
             ]
             sx, sy, rx, ry = shield_pos[d]
             sx += b_dx
@@ -1533,7 +1627,7 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             sh_shield_y = cy + b_dy - 9
             draw_3d_cyl_limb(c, sh_shield_x, sh_shield_y, int(sx), int(sy), upper_ramp, radius=1.05)
 
-        # 1. Render 3D convex hemisphere normal-shaded woven rattan shield (등패) FIRST
+        # 1. Render 1.5x-scaled 3D convex hemisphere normal-shaded woven rattan shield (80~90cm 등패) FIRST
         irx, iry = int(math.ceil(rx)), int(math.ceil(ry))
         for dy_s in range(-iry, iry + 1):
             for dx_s in range(-irx, irx + 1):
@@ -1544,14 +1638,17 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                     if 0 <= py < th and 0 <= px < tw:
                         nz_s = math.sqrt(max(0.0, 1.0 - nd * nd))
                         s_lit = max(0.0, min(1.0, (-0.58 * nx_s - 0.52 * ny_s + 0.63 * nz_s) * 0.90 + 0.12))
-                        if nd >= 0.85:
+                        if nd >= 0.88:
                             c[py, px] = _pick_ramp(RAMP_BRASS, s_lit * 0.62, boost=-0.05) if s_lit > 0.45 else IDX_OUTLINE
-                        elif nd <= 0.28:
-                            c[py, px] = 255 if (dx_s <= 0 and dy_s <= 0 and nd <= 0.16) else _pick_ramp(RAMP_BRASS, s_lit, boost=0.25)
-                        elif nd <= 0.38:
+                        elif nd <= 0.24:
+                            c[py, px] = 255 if (dx_s <= 0 and dy_s <= 0 and nd <= 0.12) else _pick_ramp(RAMP_BRASS, s_lit, boost=0.25)
+                        elif nd <= 0.33:
                             c[py, px] = _pick_ramp(RAMP_DARK_IRON, s_lit * 0.55)
+                        elif 0.60 <= nd <= 0.72 and (abs(dx_s) <= 1 or abs(dy_s) <= 1):
+                            # 4 radial brass reinforcing studs (사방 방패 두정) on the large 80~90cm shield
+                            c[py, px] = _pick_ramp(RAMP_BRASS, max(0.65, s_lit), boost=0.22)
                         else:
-                            ring_wave = 0.08 if (int(round(nd * 7.5)) % 2 == 0) else -0.06
+                            ring_wave = 0.09 if (int(round(nd * 9.5)) % 2 == 0) else -0.07
                             weave_mod = 0.04 if ((dx_s + dy_s) % 2 == 0) else -0.04
                             c[py, px] = _pick_ramp(RAMP_BRASS, s_lit, boost=ring_wave + weave_mod)
 
@@ -1642,7 +1739,7 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 set_safe_pixel(c, hx, hy, IDX_GOLD_BRIGHT)
                 set_safe_pixel(c, tx, ty, IDX_STEEL_GLEAM)
 
-            if d in (1, 2, 3):
+            if d in (2, 3):
                 apply_back_view_body_occlusion(
                     c, base, ox, oy, b_dx, b_dy, cx, cy, d,
                     style="dujeonggap_blue",
