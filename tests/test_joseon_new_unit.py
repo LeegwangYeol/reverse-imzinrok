@@ -2020,7 +2020,7 @@ class TestJoseonNewUnitsPatch(unittest.TestCase):
         char_dir = self.root / "YM" / "dawn" / "char"
         pairs = [
             ("dengpaesu.spr", "Gangsi1_online.spr", 68, 68),
-            ("ssangsudo.spr", "Gangsi2_online.spr", 80, 74),
+            ("ssangsudo.spr", "Gangsi2_online.spr", 96, 88),
             ("jangchangsu.spr", "Gangsi3_online.spr", 144, 140),
             ("woldo.spr", "RaccoonDog_online.spr", 78, 74),
             ("nangseon.spr", "Deer_online.spr", 144, 140),

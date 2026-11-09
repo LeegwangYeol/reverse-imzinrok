@@ -51,10 +51,10 @@ UNIT_SPECS = {
     },
     "ssangsudo": {
         "kor_name": "쌍수도병",
-        "desc": "Two-handed sword (쌍수도) + cheollik / po coat armor",
+        "desc": "Two-handed 150cm streamlined curved greatsword (1.2x 쌍수도) + gyeongbeon-gap armor",
         "file_name": "ssangsudo.spr",
-        "width": 80,
-        "height": 74,
+        "width": 96,
+        "height": 88,
         "btn_index": 218,
         "portrait_index": 176,
         "portrait_alt_index": 176,

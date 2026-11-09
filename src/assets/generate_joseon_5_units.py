@@ -1794,18 +1794,99 @@ def build_dengpaesu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     return frames
 
 
+def draw_streamlined_ssangsudo(
+    c: np.ndarray,
+    butt_x: int,
+    butt_y: int,
+    gx: int,
+    gy: int,
+    ux: float,
+    uy: float,
+    blen: float = 33.0,
+    curve_dir: float = -1.0,
+) -> Tuple[int, int]:
+    """
+    Render an authentic 150cm (1.2x length: 11px hilt + 33px blade = 44px total)
+    streamlined, sleekly curved Joseon Ssangsudo (유선형 쌍수도):
+      - Sleek cord-wrapped two-handed hilt with brass pommel cap (환두) and compact oval disc guard (원형 코등이)
+      - Brass habaki collar (동호인) at the blade base
+      - Continuous parabolic sori curve (유선형 반리 곡선: curve_offset(t) = curve_dir * 3.5 * t^1.85)
+      - Uniform sleek 1.8px blade profile tapering smoothly over the top 22% into a 1px needle kissaki tip!
+    """
+    px_a, py_a = -uy, ux
+
+    # 1. Streamlined two-handed hilt (자루: butt -> gx, gy) with subtle ergonomic curve continuity
+    hilt_len = max(1.0, math.hypot(gx - butt_x, gy - butt_y))
+    n_hilt = int(round(hilt_len * 2.5))
+    for i in range(n_hilt + 1):
+        th_p = i / max(1, n_hilt)
+        # Subtle handle curve matching the blade tangent at (gx, gy)
+        h_curve = curve_dir * 0.55 * ((1.0 - th_p) ** 1.5)
+        hx_p = butt_x + (gx - butt_x) * th_p + h_curve * px_a
+        hy_p = butt_y + (gy - butt_y) * th_p + h_curve * py_a
+        set_safe_pixel(c, int(round(hx_p - 0.30 * px_a)), int(round(hy_p - 0.30 * py_a)), IDX_WOOD_DARK)
+        set_safe_pixel(c, int(round(hx_p + 0.30 * px_a)), int(round(hy_p + 0.30 * py_a)), IDX_WOOD_MID if (i % 3 == 0) else IDX_WOOD_DARK)
+    # Brass pommel cap (자루 끝 장식)
+    set_safe_pixel(c, butt_x, butt_y, IDX_GOLD_BRIGHT)
+
+    # 2. Sleek parabolic curved blade (유선형 33px 도신)
+    n_steps = int(round(blen * 2.8))
+    tip_rx, tip_ry = gx, gy
+    for i in range(n_steps + 1):
+        t = i / max(1, n_steps)
+        s = t * blen
+        # Smooth continuous parabolic curve (0 at guard -> 3.5px graceful arc at tip)
+        c_off = curve_dir * 3.5 * (t ** 1.85)
+        bx = gx + s * ux + c_off * px_a
+        by = gy + s * uy + c_off * py_a
+        if i == n_steps:
+            tip_rx, tip_ry = int(round(bx)), int(round(by))
+
+        # Smooth aerodynamic kissaki taper over the top 24% of the blade (t = 0.76..1.0)
+        taper = 1.0 if t < 0.76 else max(0.0, (1.0 - t) / 0.24)
+        spine_off = -0.44 * curve_dir * taper
+        edge_off = 0.38 * curve_dir * taper
+
+        sx_p = int(round(bx + spine_off * px_a))
+        sy_p = int(round(by + spine_off * py_a))
+        ex_p = int(round(bx + edge_off * px_a))
+        ey_p = int(round(by + edge_off * py_a))
+
+        if t <= 0.055:
+            # Gleaming brass habaki blade collar (동호인) right in front of the guard
+            set_safe_pixel(c, sx_p, sy_p, IDX_GOLD_HIGH)
+            set_safe_pixel(c, ex_p, ey_p, IDX_GOLD_BRIGHT)
+        elif t < 0.90:
+            # Dark-to-mid steel spine (칼등) + razor-sharp gleaming white-silver cutting edge (칼날)
+            spine_col = IDX_STEEL_LOW if t < 0.30 else IDX_STEEL_MID
+            edge_col = IDX_STEEL_GLEAM if (t > 0.18) else IDX_STEEL_HIGH
+            set_safe_pixel(c, sx_p, sy_p, spine_col)
+            set_safe_pixel(c, ex_p, ey_p, edge_col)
+        else:
+            # Razor-sharp 1px streamlined needle point (예리한 유선형 칼끝)
+            set_safe_pixel(c, int(round(bx)), int(round(by)), IDX_STEEL_GLEAM)
+
+    # 3. Compact oval brass disc guard (유선형 원반 코등이 — no bulky T-crossbar!)
+    for d_g in (-1.2, -0.5, 0.0, 0.5, 1.2):
+        gx_p = int(round(gx + d_g * px_a))
+        gy_p = int(round(gy + d_g * py_a))
+        set_safe_pixel(c, gx_p, gy_p, IDX_GOLD_BRIGHT if abs(d_g) <= 0.6 else IDX_GOLD_HIGH)
+
+    return tip_rx, tip_ry
+
+
 def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
     """
-    80x74, 168 frames for 쌍수도병 (0x7B):
+    96x88, 168 frames for 쌍수도병 (0x7B):
     - Solid Team-Blue & Steel Gyeongbeongap lamellar armor
-    - Two-Handed Greatsword (쌍수도) swaying with both moving arm tips in Idle/Move,
-      and executing a wide 2-bone IK arm-led 3D elliptical cleave during Attack,
-      with full back-view torso occlusion in d=1,2,3.
+    - 150cm (1.2x scaled: 44px total = 11px hilt + 33px blade) Streamlined Curved Two-Handed Greatsword (유선형 쌍수도)
+      swaying with both moving arm tips in Idle/Move, and executing a wide 2-bone IK arm-led 3D elliptical cleave
+      during Attack, with full back-view torso occlusion in d=1,2,3.
     """
     spec = UNIT_SPECS["ssangsudo"]
-    tw, th = spec["width"], spec["height"]  # 80x74
+    tw, th = spec["width"], spec["height"]  # 96x88
     bw, bh = 60, 60
-    ox, oy = (tw - bw) // 2, (th - bh) // 2  # 10, 7
+    ox, oy = (tw - bw) // 2, (th - bh) // 2  # 18, 14
     cx, cy = tw // 2, th // 2 - 1
     frames = []
 
@@ -1827,59 +1908,46 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                 c[ty, tx] = val
 
         if state == "die":
-            draw_line_indices(c, cx - 17, cy + 12, cx - 6, cy + 12, IDX_WOOD_DARK, width=1)
-            set_safe_pixel(c, cx - 17, cy + 12, IDX_GOLD_BRIGHT)
-            set_safe_pixel(c, cx - 6, cy + 12, IDX_GOLD_BRIGHT)
-            draw_line_indices(c, cx - 5, cy + 12, cx + 20, cy + 12, IDX_STEEL_GLEAM, width=2)
+            draw_streamlined_ssangsudo(
+                c,
+                cx - 21,
+                cy + 12,
+                cx - 10,
+                cy + 12,
+                1.0,
+                0.0,
+                blen=33.0,
+                curve_dir=-1.0,
+            )
         elif state == "attack":
-            # Full two-handed 3D elliptical arm-led greatsword cleave (1.2x scaled 양손 대도 회전 베기)
-            # (hand_cx, hand_cy) is the true midpoint between the warrior's two hands at the tips of his arms!
+            # Full two-handed 3D elliptical arm-led greatsword cleave (1.2x scaled 150cm 유선형 쌍수도 회전 베기)
             h_dx, h_dy, ang_deg = SWORD_SLASH_KEYFRAMES[d][step]
             hand_cx, hand_cy = cx + b_dx + h_dx, cy + b_dy + h_dy
             ang = math.radians(ang_deg)
             cos_a, sin_a = math.cos(ang), math.sin(ang)
-            px_a, py_a = -sin_a, cos_a
 
-            # Two hands spaced cleanly along the greatsword handle so both hands & arms are distinct
-            r_off = 1.8 if (d in (2, 3) and step >= 2) else 2.2
-            f_off = 2.4
+            # Two hands spaced cleanly along the 1.2x longer (11px) greatsword handle
+            r_off = 2.2 if (d in (2, 3) and step >= 2) else 2.8
+            f_off = 2.8
             r_hand = (int(round(hand_cx - r_off * cos_a)), int(round(hand_cy - r_off * sin_a)))
             f_hand = (int(round(hand_cx + f_off * cos_a)), int(round(hand_cy + f_off * sin_a)))
-            butt_off = 2.8 if (d in (2, 3) and step >= 2) else 4.5
+            butt_off = 3.5 if (d in (2, 3) and step >= 2) else 5.8
             butt_x = int(round(hand_cx - butt_off * cos_a))
             butt_y = int(round(hand_cy - butt_off * sin_a))
-            gx = int(round(hand_cx + 3.8 * cos_a))
-            gy = int(round(hand_cy + 3.8 * sin_a))
-            blen = 27  # 1.2x scaled greatsword blade
-            tip_x = int(round(gx + blen * cos_a))
-            tip_y = int(round(gy + blen * sin_a))
+            gx = int(round(hand_cx + 4.6 * cos_a))
+            gy = int(round(hand_cy + 4.6 * sin_a))
+            blen = 33.0  # 1.2x scaled (27 * 1.2 = 32.4 -> 33px) 150cm Ssangsudo blade!
 
             # Both 3D 2-bone IK arms connecting shoulders to the two grip positions on the greatsword hilt
             draw_two_handed_arms(c, cx + b_dx, cy + b_dy, f_hand, r_hand, "gyeongbeongap_steel", d=d)
 
-            # Long two-handed wrapped hilt + brass ring pommel
-            draw_line_indices(c, butt_x, butt_y, gx, gy, IDX_WOOD_DARK, width=2)
-            set_safe_pixel(c, butt_x, butt_y, IDX_GOLD_BRIGHT)
-            # Heavy steel spine + broad gleaming cutting belly
-            belly_x = int(round(gx + (blen * 0.65) * cos_a + 1.8 * px_a))
-            belly_y = int(round(gy + (blen * 0.65) * sin_a + 1.8 * py_a))
-            draw_line_indices(c, gx, gy, tip_x, tip_y, IDX_STEEL_MID, width=2)
-            draw_line_indices(c, int(round(gx + px_a)), int(round(gy + py_a)), belly_x, belly_y, IDX_STEEL_GLEAM, width=1)
-            draw_line_indices(c, belly_x, belly_y, tip_x, tip_y, IDX_STEEL_GLEAM, width=1)
-            # Prominent brass crossguard (코등이)
-            draw_line_indices(
-                c,
-                int(round(gx - 3 * px_a)),
-                int(round(gy - 3 * py_a)),
-                int(round(gx + 3 * px_a)),
-                int(round(gy + 3 * py_a)),
-                IDX_GOLD_BRIGHT,
-                width=1,
-            )
+            # Streamlined curved 150cm Ssangsudo (11px hilt + oval guard + 33px parabolic curved blade)
+            c_dir = 1.0 if d == 3 else -1.0
+            draw_streamlined_ssangsudo(c, butt_x, butt_y, gx, gy, cos_a, sin_a, blen=blen, curve_dir=c_dir)
+
             # Both hands visibly clasping the long two-handed hilt ON TOP OF the hilt
             draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], cos_a, sin_a, cuff_col=IDX_STEEL_HIGH)
             draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], cos_a, sin_a, cuff_col=IDX_STEEL_HIGH)
-            set_safe_pixel(c, tip_x, tip_y, IDX_STEEL_GLEAM)
 
             if d in (1, 2, 3):
                 apply_back_view_body_occlusion(
@@ -1888,23 +1956,18 @@ def build_ssangsudo_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                     is_overhead=(step in (0, 1)),
                 )
         else:
-            # Living two-handed shoulder/chest guard stance (1.2x scaled: rear_len=9, front_len=27 -> 36px total)
-            butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy = get_polearm_pose(
-                state, d, step, cx + b_dx, cy + b_dy, rear_len=9, front_len=27, sway_scale=1.0
+            # Living two-handed shoulder/chest guard stance (1.2x scaled: rear_len=11, front_len=33 -> 44px total 150cm scale!)
+            butt_x, butt_y, gx, gy, _, _, ux, uy = get_polearm_pose(
+                state, d, step, cx + b_dx, cy + b_dy, rear_len=11, front_len=33, sway_scale=1.0
             )
-            px_a, py_a = -uy, ux
-            f_hand = (int(round(gx - 1.5 * ux)), int(round(gy - 1.5 * uy)))
-            r_hand = (int(round(gx - (3.8 if d in (1, 2, 3) else 5.5) * ux)), int(round(gy - (3.8 if d in (1, 2, 3) else 5.5) * uy)))
+            f_hand = (int(round(gx - 1.8 * ux)), int(round(gy - 1.8 * uy)))
+            r_hand = (int(round(gx - (4.5 if d in (1, 2, 3) else 6.5) * ux)), int(round(gy - (4.5 if d in (1, 2, 3) else 6.5) * uy)))
 
             draw_two_handed_arms(c, cx + b_dx, cy + b_dy, f_hand, r_hand, "gyeongbeongap_steel", d=d)
-            draw_line_indices(c, butt_x, butt_y, gx, gy, IDX_WOOD_DARK, width=2)
-            set_safe_pixel(c, butt_x, butt_y, IDX_GOLD_BRIGHT)
-            draw_line_indices(c, gx, gy, tip_x, tip_y, IDX_STEEL_MID, width=2)
-            draw_line_indices(c, int(round(gx + px_a)), int(round(gy + py_a)), tip_x, tip_y, IDX_STEEL_GLEAM, width=1)
+            c_dir = -1.0 if d == 3 else 1.0
+            draw_streamlined_ssangsudo(c, butt_x, butt_y, gx, gy, ux, uy, blen=33.0, curve_dir=c_dir)
             draw_hand_wrapping_weapon(c, r_hand[0], r_hand[1], ux, uy, cuff_col=IDX_STEEL_HIGH)
             draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], ux, uy, cuff_col=IDX_STEEL_HIGH)
-            set_safe_pixel(c, gx, gy, IDX_GOLD_BRIGHT)
-            set_safe_pixel(c, tip_x, tip_y, IDX_STEEL_GLEAM)
 
             if d in (1, 2, 3):
                 apply_back_view_body_occlusion(
@@ -2322,7 +2385,7 @@ def generate_all_unit_sprites():
 
     generators = {
         "dengpaesu.spr": (build_dengpaesu_frames(base_frames), 68, 68),
-        "ssangsudo.spr": (build_ssangsudo_frames(base_frames), 80, 74),
+        "ssangsudo.spr": (build_ssangsudo_frames(base_frames), 96, 88),
         "jangchangsu.spr": (build_jangchangsu_frames(base_frames), 144, 140),
         "woldo.spr": (build_woldo_frames(base_frames), 78, 74),
         "nangseon.spr": (build_nangseon_frames(base_frames), 144, 140),
