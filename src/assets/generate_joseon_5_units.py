@@ -511,6 +511,8 @@ RAMP_DARK_IRON = [241, 242, 208, 243, 244, 65, 156, 246, 248, 211, 250, 253]
 RAMP_BRASS = [191, 214, 214, 69, 69, 69, 41, 41, 35, 35, 33, 33]
 RAMP_BLUE = [206, 236, 237, 204, 201, 238, 200, 239, 136, 193, 159, 250]
 RAMP_BAJI = [242, 95, 90, 83, 52, 53, 54, 54, 55, 55, 240, 240]
+RAMP_SHIN_GREAVE = [243, 244, 246, 211, 211, 250, 250, 54, 55, 253, 253, 240]
+RAMP_BLACK_LEATHER_BOOT = [241, 241, 191, 242, 242, 212, 208, 208, 243, 243, 65, 244]
 
 HELMET_SET_GK11 = {17, 22, 23, 24, 66, 98, 99, 107, 108, 109, 110, 111, 112, 170, 188, 191, 212, 224}
 RED_SET_GK11 = {46, 47, 48, 113, 114, 115, 116, 117, 118, 119, 120, 163, 164, 165, 166, 232, 233, 234, 235}
@@ -812,10 +814,10 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
     out = np.zeros((60, 60), dtype=np.uint8)
     ub_dx, ub_dy = get_upper_body_offset(state, d, step)
 
-    # 3. Build Knee-Length Heavy Armored Lower Body (무릎까지 내려온 중장갑 갑상/슬갑 ty=27..40 + 철제 정강이 경갑/전투화 ty=41..51)
+    # 3. Build Knee-Length Heavy Armored Lower Body (무릎까지 내려온 중장갑 갑상/슬갑 ty=27..40 + 철제 경갑 + 검은 가죽 전투화 ty=41..50)
     sub_leg, cx_ref = _extract_sp_3d_legs(state, d, step)
     sh_l, sw_l = sub_leg.shape
-    leg_buf = np.zeros((60, 60), dtype=np.uint8)
+    raw_leg = np.zeros((60, 60), dtype=np.uint8)
     for ty in range(27, 52):
         sy_l = int(round((ty - 27) * 1.05))
         if not (0 <= sy_l < sh_l):
@@ -823,72 +825,129 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
         for tx in range(10, 50):
             sx_l = int(round(cx_ref + (tx - 30)))
             if 0 <= sx_l < sw_l and int(sub_leg[sy_l, sx_l]) > 0:
-                leg_buf[ty, tx] = int(sub_leg[sy_l, sx_l])
+                raw_leg[ty, tx] = int(sub_leg[sy_l, sx_l])
 
-    # 3a. Horizontally dilate thigh & shin segments by +1px so heavy-infantry cuisses & greaves have full 3D bulk
-    dilated = leg_buf.copy()
-    for ty in range(27, 51):
-        for tx in range(12, 48):
-            if leg_buf[ty, tx] == 0:
-                if leg_buf[ty, tx - 1] > 0 and leg_buf[ty, tx - 1] not in SP_LEG_OUTLINE:
-                    dilated[ty, tx] = leg_buf[ty, tx - 1]
-                elif leg_buf[ty, tx + 1] > 0 and leg_buf[ty, tx + 1] not in SP_LEG_OUTLINE:
-                    dilated[ty, tx] = leg_buf[ty, tx + 1]
-    leg_buf = dilated
+    def _sample_leg_val(ty_q: int, tx_q: int) -> int:
+        v_q = int(raw_leg[ty_q, tx_q])
+        if v_q > 0 and v_q not in SP_LEG_OUTLINE:
+            return v_q
+        return 75
 
-    # 3b. Ensure solid Knee-Length Heavy Armored Tasset Flaps (좌우 중장갑 갑상/슬갑, ty=28..40) with zero hollow hip/thigh gaps
+    leg_buf = np.zeros((60, 60), dtype=np.uint8)
+
+    # 3a. Upper-to-Mid Heavy Armored Thigh Skirt (중장갑 갑상 상·중단: ty = 28..35)
+    for ty in range(28, 36):
+        taper = (ty - 28) // 4  # subtle A-line armored skirt flare (0..1px)
+        for tx in range(23 - taper + ub_dx, 38 + taper + ub_dx):
+            leg_buf[ty, tx] = _sample_leg_val(ty, tx)
+
+    # 3b. Anatomical Two-Leg Knee Tassets (좌/우 슬갑 ty=36..40), 3D Iron Shin Greaves (정강이 경갑), & Dark-Leather/Black War Boots (검은 가죽 전투화)
+    #     Strictly keep Left Leg x1 <= 28 + ub_dx and Right Leg x0 >= 32 + ub_dx so a clean 3px gap (tx=28..31) separates both legs in 100% of frames!
     if state == "move":
-        l_knee_y = 40 + (-1, -1, 0, 1, 1, 0, -1, -1)[step]
-        r_knee_y = 40 + (1, 0, -1, -1, -1, 0, 1, 1)[step]
-        l_sway = (-1, -1, 0, 1, 1, 0, 0, -1)[step] if d in (0, 1, 2) else 0
-        r_sway = (1, 1, 0, -1, -1, 0, 0, 1)[step] if d in (0, 1, 2) else 0
+        ph_l = step
+        ph_r = (step + 4) % 8
+        l_knee_y = (40, 40, 39, 39, 39, 39, 40, 40)[ph_l]
+        r_knee_y = (40, 40, 39, 39, 39, 39, 40, 40)[ph_r]
+        l_bot_y = (50, 49, 48, 46, 46, 47, 49, 50)[ph_l]
+        r_bot_y = (50, 49, 48, 46, 46, 47, 49, 50)[ph_r]
+
+        if d in (0, 1, 2):
+            l_k_dx = (-1, -1, 0, 0, 0, 0, 0, -1)[ph_l]
+            l_f_dx = (-2, -2, -1, 0, 0, 0, -1, -2)[ph_l]
+            r_k_dx = (0, 0, 0, 1, 1, 1, 0, 0)[ph_r]
+            r_f_dx = (0, 0, 1, 2, 2, 2, 1, 0)[ph_r]
+        else:
+            l_k_dx = (0, 0, 0, 0, 0, 0, 0, 0)[ph_l]
+            l_f_dx = (-1, -1, 0, 0, 0, 0, 0, -1)[ph_l]
+            r_k_dx = (0, 0, 0, 0, 0, 0, 0, 0)[ph_r]
+            r_f_dx = (0, 0, 0, 1, 1, 1, 0, 0)[ph_r]
+
+        for ty in range(36, l_knee_y + 1):
+            t_k = (ty - 36) / max(1.0, float(l_knee_y - 36))
+            dx_r = int(round(t_k * l_k_dx))
+            for tx in range(21 + ub_dx + dx_r, 28 + ub_dx + dx_r + 1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
+
+        for ty in range(36, r_knee_y + 1):
+            t_k = (ty - 36) / max(1.0, float(r_knee_y - 36))
+            dx_r = int(round(t_k * r_k_dx))
+            for tx in range(32 + ub_dx + dx_r, 39 + ub_dx + dx_r + 1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
+
+        # Left Shin & Black-Leather War Boot (strictly x1 <= 28 + ub_dx)
+        for ty in range(l_knee_y + 1, l_bot_y + 1):
+            t_s = (ty - l_knee_y) / max(1.0, float(l_bot_y - l_knee_y))
+            dx_s = int(round((1.0 - t_s) * l_k_dx + t_s * l_f_dx))
+            is_toe = ty >= l_bot_y - 1
+            x0 = (21 if (is_toe and d != 3) else 22) + ub_dx + dx_s
+            x1 = min(28 + ub_dx, (29 if (is_toe and d == 3) else 28) + ub_dx + dx_s)
+            for tx in range(x0, x1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
+
+        # Right Shin & Black-Leather War Boot (strictly x0 >= 32 + ub_dx)
+        for ty in range(r_knee_y + 1, r_bot_y + 1):
+            t_s = (ty - r_knee_y) / max(1.0, float(r_bot_y - r_knee_y))
+            dx_s = int(round((1.0 - t_s) * r_k_dx + t_s * r_f_dx))
+            is_toe = ty >= r_bot_y - 1
+            x0 = max(32 + ub_dx, (31 if (is_toe and d in (0, 1, 2)) else 32) + ub_dx + dx_s)
+            x1 = (39 if (is_toe and d in (3, 4)) else 38) + ub_dx + dx_s
+            for tx in range(x0, x1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
+
     elif state == "attack":
         l_knee_y, r_knee_y = 40, 40
-        l_sway, r_sway = -1, 1
+        l_bot_y, r_bot_y = 49, 49
+        f_flex = -1 if (step in (2, 3, 4, 5) and d in (0, 1, 2)) else 0
+
+        for ty in range(36, 41):
+            spread = (ty - 35) // 2  # 0..2px outward martial stance flare
+            for tx in range(22 - spread + ub_dx + f_flex, 28 + ub_dx + 1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
+            for tx in range(32 + ub_dx, 38 + spread + ub_dx + 1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
+
+        for ty in range(41, l_bot_y + 1):
+            slant = (ty - 41) // 4  # 0..2px forward martial lunge angle while boot stays planted
+            k_shift = f_flex if ty <= 45 else 0
+            x0 = (18 if ty >= 48 else 20 - slant) + ub_dx + k_shift
+            x1 = (25 if ty >= 48 else 26 - slant) + ub_dx + k_shift
+            for tx in range(x0, x1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
+
+        for ty in range(41, r_bot_y + 1):
+            slant = (ty - 41) // 4  # 0..2px rear brace angle
+            x0 = 34 + slant + ub_dx
+            x1 = (42 if ty >= 48 else 40 + slant) + ub_dx
+            for tx in range(x0, x1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
+
     else:
         l_knee_y, r_knee_y = 40, 40
-        l_sway, r_sway = 0, 0
+        l_bot_y, r_bot_y = 49, 49
 
-    for ty in range(28, 41):
-        # Upper-to-mid thigh (ty <= 35): continuous wide heavy tasset skirt; Lower knee flaps (ty = 36..40): split left/right cuisses
-        if ty <= 35:
-            for tx in range(23 + ub_dx, 38 + ub_dx):
-                if leg_buf[ty, tx] == 0:
-                    leg_buf[ty, tx] = 75
-        else:
-            if ty <= l_knee_y:
-                l_x0 = (22 if state == "attack" else 23) + ub_dx + l_sway
-                l_x1 = 29 + ub_dx + max(0, l_sway)
-                for tx in range(l_x0, l_x1 + 1):
-                    if leg_buf[ty, tx] == 0:
-                        leg_buf[ty, tx] = 75
-            if ty <= r_knee_y:
-                r_x0 = 31 + ub_dx + min(0, r_sway)
-                r_x1 = (38 if state == "attack" else 37) + ub_dx + r_sway
-                for tx in range(r_x0, r_x1 + 1):
-                    if leg_buf[ty, tx] == 0:
-                        leg_buf[ty, tx] = 75
+        for ty in range(36, 41):
+            spread = (ty - 36) // 3
+            for tx in range(22 - spread + ub_dx, 28 + ub_dx + 1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
+            for tx in range(32 + ub_dx, 38 + spread + ub_dx + 1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
 
-    # 3c. In Move (0..39), ensure both left & right armored shin greaves (ty=41..47) are always visible below the knee skirt
-    #     (when one leg lifts in N/S or crossover steps, render the raised second shin/boot down to ty=45..46)
-    if state == "move":
-        has_left_shin = np.any(leg_buf[42:48, 15:30] > 0)
-        has_right_shin = np.any(leg_buf[42:48, 31:46] > 0)
-        lift_max_y = 45 + (step % 2)
-        if not has_left_shin:
-            for ty in range(40, lift_max_y + 1):
-                for tx in range(24 + ub_dx, 29 + ub_dx):
-                    if leg_buf[ty, tx] == 0:
-                        leg_buf[ty, tx] = 75
-        if not has_right_shin:
-            for ty in range(40, lift_max_y + 1):
-                for tx in range(32 + ub_dx, 37 + ub_dx):
-                    if leg_buf[ty, tx] == 0:
-                        leg_buf[ty, tx] = 75
+        for ty in range(41, l_bot_y + 1):
+            slant = (ty - 41) // 5
+            x0 = (20 if ty >= 48 else 22 - slant) + ub_dx
+            x1 = (27 if ty >= 48 else 28 - slant) + ub_dx
+            for tx in range(x0, x1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
 
-    # 3d. Shade Knee-Length Heavy Armor (ty=27..40) and Iron/Steel Shin Greaves & War Boots (ty=41..51)
-    for ty in range(27, 52):
-        sy_l = int(round((ty - 27) * 1.05))
+        for ty in range(41, r_bot_y + 1):
+            slant = (ty - 41) // 5
+            x0 = 33 + slant + ub_dx
+            x1 = (40 if ty >= 48 else 39 + slant) + ub_dx
+            for tx in range(x0, x1):
+                leg_buf[ty, tx] = _sample_leg_val(ty, tx)
+
+    # 3c. Shade Knee-Length Heavy Armor (ty=28..40), 3D Iron Shin Greaves (ty=41..bot_y-4), and Dark-Leather/Black War Boots (bot_y-3..bot_y)
+    for ty in range(28, 52):
         row_lv: List[Tuple[int, int]] = [(tx, int(leg_buf[ty, tx])) for tx in range(10, 50) if leg_buf[ty, tx] > 0]
         if not row_lv:
             continue
@@ -903,76 +962,92 @@ def apply_joseon_armor(base: np.ndarray, f_idx: int, style: str) -> np.ndarray:
             x_s, x_e = seg[0][0], seg[-1][0]
             mid_x = 0.5 * (x_s + x_e)
             half_w = max(1.0, 0.5 * w_seg)
+            is_left_leg = mid_x <= (30.0 + ub_dx)
+            leg_knee_y = l_knee_y if is_left_leg else r_knee_y
+            leg_bot_y = l_bot_y if is_left_leg else r_bot_y
+
             for tx, lv in seg:
                 is_edge = (w_seg >= 3 and (tx == x_s or tx == x_e)) or (w_seg == 2 and tx == x_e)
                 if is_edge:
                     out[ty, tx] = IDX_OUTLINE
                     continue
                 nx_leg = (tx - mid_x) / half_w
-                cyl_lit = math.sqrt(max(0.0, 1.0 - nx_leg * nx_leg)) * 0.75 + max(0.0, -nx_leg) * 0.25
+                cyl_lit = math.sqrt(max(0.0, 1.0 - nx_leg * nx_leg)) * 0.72 + max(0.0, -nx_leg) * 0.28
                 l_b = float(lum[lv])
-                eff_l = max(l_b * 0.85, 0.34 + 0.54 * cyl_lit)
+                eff_l = 0.20 + 0.62 * cyl_lit + 0.08 * (l_b - 0.50)
                 tx_rel = tx - ub_dx
 
-                # Check if this pixel is on the bottom knee hem of the heavy armored tasset (ty in 39..40)
-                is_knee_hem = (ty == 40) or (ty in (38, 39) and leg_buf[ty + 1, tx] == 0)
-                if is_knee_hem:
+                if ty == leg_knee_y:
                     # Gleaming Brass / Crimson Knee-Guard Border (슬갑 하단 황동/주홍 테두리)
                     out[ty, tx] = _pick_ramp(
                         RAMP_CRIMSON if style == "gyeongbeongap_heavy" else RAMP_BRASS,
-                        max(0.50, eff_l),
-                        boost=0.18,
+                        max(0.45, eff_l),
+                        boost=0.14,
                     )
-                elif ty <= 39:
+                elif ty < leg_knee_y:
                     # Knee-Length Heavy Armored Thigh Tassets (무릎까지 내려온 중장갑 갑상/하갑) matching upper body armor!
                     s_dy = ty - 27
                     if style == "dujeonggap_crimson":
                         if (tx_rel + s_dy) % 3 == 0 and (s_dy % 2 == 0):
-                            out[ty, tx] = _pick_ramp(RAMP_BRASS, max(0.55, eff_l), boost=0.22)
+                            out[ty, tx] = _pick_ramp(RAMP_BRASS, max(0.50, eff_l), boost=0.18)
                         else:
-                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.08)
+                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.06)
                     elif style == "dujeonggap_blue":
                         if abs(tx_rel - 30) >= 5:
-                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.08)
+                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.06)
                         elif (tx_rel + s_dy) % 3 == 0 and (s_dy % 2 == 0):
-                            out[ty, tx] = _pick_ramp(RAMP_BRASS, max(0.55, eff_l), boost=0.22)
+                            out[ty, tx] = _pick_ramp(RAMP_BRASS, max(0.50, eff_l), boost=0.18)
                         else:
-                            out[ty, tx] = _pick_ramp(RAMP_BLUE, eff_l, boost=0.06)
+                            out[ty, tx] = _pick_ramp(RAMP_BLUE, eff_l, boost=0.05)
                     elif style == "dujeonggap_vanguard":
                         if abs(tx_rel - 30) >= 5:
-                            out[ty, tx] = _pick_ramp(RAMP_STEEL, eff_l, boost=0.10)
+                            out[ty, tx] = _pick_ramp(RAMP_STEEL, eff_l, boost=0.08)
                         elif (tx_rel + s_dy) % 3 == 0 and (s_dy % 2 == 0):
-                            out[ty, tx] = _pick_ramp(RAMP_BRASS, max(0.55, eff_l), boost=0.22)
+                            out[ty, tx] = _pick_ramp(RAMP_BRASS, max(0.50, eff_l), boost=0.18)
                         else:
-                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.08)
+                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.06)
                     elif style == "gyeongbeongap_steel":
                         plate_mod = -0.06 if (s_dy % 2 == 1) else 0.08
                         if (s_dy % 3 == 0) and (tx_rel % 3 == 0):
-                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.12)
+                            out[ty, tx] = _pick_ramp(RAMP_CRIMSON, eff_l, boost=0.10)
                         else:
-                            out[ty, tx] = _pick_ramp(RAMP_STEEL, eff_l, boost=0.08 + plate_mod)
+                            out[ty, tx] = _pick_ramp(RAMP_STEEL, eff_l, boost=0.06 + plate_mod)
                     elif style == "gyeongbeongap_heavy":
                         if (s_dy // 2) % 2 == 0:
-                            out[ty, tx] = _pick_ramp(RAMP_BRASS, eff_l, boost=0.14)
+                            out[ty, tx] = _pick_ramp(RAMP_BRASS, eff_l, boost=0.12)
                         else:
-                            out[ty, tx] = _pick_ramp(RAMP_STEEL, eff_l, boost=0.10)
-                elif ty == 41:
+                            out[ty, tx] = _pick_ramp(RAMP_STEEL, eff_l, boost=0.08)
+                elif ty >= leg_bot_y - 4:
+                    # 5-Row Jet-Black & Dark-Leather War Boots (검은색/진한 가죽색 전투화/목화: bottom 5 rows of each planted leg)
+                    if ty == leg_bot_y:
+                        # Solid Jet-Black Boot Sole (검은색 바닥창)
+                        out[ty, tx] = 241
+                    elif ty == leg_bot_y - 4:
+                        # Dark-Leather Boot Top Cuff (목화 상단 가죽 테두리: RGB(60,28,0) / RGB(44,24,8) / RGB(32,12,0))
+                        out[ty, tx] = 188 if nx_leg < -0.10 else (66 if nx_leg < 0.25 else 191)
+                    else:
+                        # Jet-Black & Dark-Espresso Leather Boot Vamp (검은 가죽 발등: 좌측 다크가죽 하이라이트 -> 우측 칠흑색)
+                        if nx_leg < -0.20:
+                            out[ty, tx] = 66 if ty == leg_bot_y - 2 else 212
+                        elif nx_leg < 0.20:
+                            out[ty, tx] = 191 if ty == leg_bot_y - 2 else 242
+                        else:
+                            out[ty, tx] = 241
+                elif ty == leg_knee_y + 1:
                     # Crimson/Brass Under-Knee Tie Band (행전끈 / 경갑 상단 끈)
                     out[ty, tx] = _pick_ramp(
                         RAMP_CRIMSON if "dujeonggap" in style else RAMP_BRASS,
-                        max(0.48, eff_l),
-                        boost=0.14,
+                        max(0.42, eff_l),
+                        boost=0.10,
                     )
-                elif ty <= 46:
-                    # Heavy Iron/Steel Shin Greaves (중장갑 철제 정강이 경갑)
-                    out[ty, tx] = _pick_ramp(RAMP_STEEL, max(0.46, eff_l), boost=0.12)
                 else:
-                    # Heavy Armored War Boots (중장갑 전투화 / 철제 목화)
-                    out[ty, tx] = _pick_ramp(
-                        RAMP_STEEL if eff_l > 0.64 else RAMP_DARK_IRON,
-                        max(0.40, eff_l),
-                        boost=0.08,
-                    )
+                    # 3D Cylindrical Metallic Shin Greaves (철제 정강이 경갑: 좌측 211 강철 하이라이트 -> 중앙 246 -> 우측 244 암철색)
+                    if nx_leg < -0.15:
+                        out[ty, tx] = 211
+                    elif nx_leg < 0.25:
+                        out[ty, tx] = 246
+                    else:
+                        out[ty, tx] = 244
 
     # 5. Overlay 3ds Max Upper Body (Conical Helmet, Face, Pauldrons, Chest Armor, Waist Sash, and Upper-to-Mid Tassets dy <= 31)
     for ty in range(2, 36):
