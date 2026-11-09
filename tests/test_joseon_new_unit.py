@@ -2021,9 +2021,9 @@ class TestJoseonNewUnitsPatch(unittest.TestCase):
         pairs = [
             ("dengpaesu.spr", "Gangsi1_online.spr", 68, 68),
             ("ssangsudo.spr", "Gangsi2_online.spr", 96, 88),
-            ("jangchangsu.spr", "Gangsi3_online.spr", 144, 140),
+            ("jangchangsu.spr", "Gangsi3_online.spr", 208, 200),
             ("woldo.spr", "RaccoonDog_online.spr", 78, 74),
-            ("nangseon.spr", "Deer_online.spr", 144, 140),
+            ("nangseon.spr", "Deer_online.spr", 208, 200),
         ]
         for primary, online, exp_w, exp_h in pairs:
             p_bytes = (char_dir / primary).read_bytes()
@@ -2065,20 +2065,20 @@ class TestJoseonNewUnitsPatch(unittest.TestCase):
             }
             self.assertGreaterEqual(len(move_legs), 6, f"{primary} Move (0..7) must have >= 6 distinct running leg poses")
 
-        # Verify 장창수 and 낭선병 2x spear span (>= 65px in Idle and Attack) + 낭선병 prominent branches & sub-twigs
+        # Verify 장창수 and 낭선병 1.5x-upscaled spear span (>= 98px in Idle and Attack) + 낭선병 prominent 7-tier branches & sub-twigs
         dec_jc = SpriteDecoder.from_file(char_dir / "jangchangsu.spr")
-        arr_idle = np.frombuffer(dec_jc.decode_frame_raw(128), dtype=np.uint8).reshape((140, 144))
+        arr_idle = np.frombuffer(dec_jc.decode_frame_raw(128), dtype=np.uint8).reshape((200, 208))
         ys_idle, xs_idle = np.nonzero(arr_idle)
         span_idle = float(np.hypot(xs_idle.max() - xs_idle.min(), ys_idle.max() - ys_idle.min()))
-        self.assertGreaterEqual(span_idle, 68.0, f"장창수 Idle 2x spear span must be >= 68px, got {span_idle:.1f}px")
+        self.assertGreaterEqual(span_idle, 100.0, f"장창수 Idle 1.5x spear span must be >= 100px, got {span_idle:.1f}px")
 
         dec_ns = SpriteDecoder.from_file(char_dir / "nangseon.spr")
-        arr_ns_idle = np.frombuffer(dec_ns.decode_frame_raw(128), dtype=np.uint8).reshape((140, 144))
+        arr_ns_idle = np.frombuffer(dec_ns.decode_frame_raw(128), dtype=np.uint8).reshape((200, 208))
         ys_ns, xs_ns = np.nonzero(arr_ns_idle)
         span_ns = float(np.hypot(xs_ns.max() - xs_ns.min(), ys_ns.max() - ys_ns.min()))
-        self.assertGreaterEqual(span_ns, 65.0, f"낭선병 Idle 2x spear span must be >= 65px, got {span_ns:.1f}px")
+        self.assertGreaterEqual(span_ns, 95.0, f"낭선병 Idle 1.5x spear span must be >= 95px, got {span_ns:.1f}px")
         bamboo_and_barb_px = sum(int(np.sum(arr_ns_idle == idx)) for idx in (7, 21, 27, 70, 77, 253, 255))
-        self.assertGreaterEqual(bamboo_and_barb_px, 180, f"낭선병 must have prominent multi-tier branches & sub-twigs (>=180 px), got {bamboo_and_barb_px}")
+        self.assertGreaterEqual(bamboo_and_barb_px, 240, f"낭선병 must have prominent 7-tier branches & sub-twigs (>=240 px), got {bamboo_and_barb_px}")
 
     def test_joseon_production_buildings_zero_hotkey_overlap(self) -> None:
         """Verify zero hotkey overlap in all 4 Joseon production buildings and 15/15 globally unique custom unit hotkeys."""

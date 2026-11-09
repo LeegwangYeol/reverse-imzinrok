@@ -2014,25 +2014,25 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                     c[ty, tx] = val
 
         if state == "die":
-            # Fallen 2x-length long spear (86px total: cx-42 to cx+44)
-            draw_line_indices(c, cx - 42, cy + 13, cx + 34, cy + 13, IDX_WOOD_MID, width=2)
-            draw_line_indices(c, cx - 42, cy + 13, cx + 34, cy + 13, IDX_WOOD_LIGHT, width=1)
-            set_safe_pixel(c, cx - 42, cy + 13, IDX_STEEL_LOW)
-            draw_line_indices(c, cx + 34, cy + 13, cx + 43, cy + 13, IDX_STEEL_MID, width=2)
-            draw_line_indices(c, cx + 35, cy + 13, cx + 44, cy + 13, IDX_STEEL_GLEAM, width=1)
-            draw_line_indices(c, cx + 32, cy + 13, cx + 37, cy + 17, IDX_RED_BRIGHT, width=1)
+            # Fallen 1.5x-upscaled long spear (129px total: cx-63 to cx+66)
+            draw_line_indices(c, cx - 63, cy + 13, cx + 52, cy + 13, IDX_WOOD_MID, width=2)
+            draw_line_indices(c, cx - 63, cy + 13, cx + 52, cy + 13, IDX_WOOD_LIGHT, width=1)
+            set_safe_pixel(c, cx - 63, cy + 13, IDX_STEEL_LOW)
+            draw_line_indices(c, cx + 52, cy + 13, cx + 65, cy + 13, IDX_STEEL_MID, width=2)
+            draw_line_indices(c, cx + 53, cy + 13, cx + 66, cy + 13, IDX_STEEL_GLEAM, width=1)
+            draw_line_indices(c, cx + 50, cy + 13, cx + 57, cy + 18, IDX_RED_BRIGHT, width=2)
         else:
-            # Rigid 70px spear length (52px front + 18px rear) while get_polearm_pose physically thrusts the hands/arms!
+            # 1.5x-upscaled 105px spear length (78px front + 27px rear, up from 52 + 18 = 70px)!
             if state == "attack":
                 thrust = (step / 4.0) if step <= 4 else (1.0 - (step - 4) / 3.0)
-                front_len = int(52 + 4 * thrust)
-                rear_len = (10 if d == 4 else max(10, int(18 - 4 * thrust)))
+                front_len = int(78 + 6 * thrust)
+                rear_len = (15 if d == 4 else max(15, int(27 - 6 * thrust)))
             else:
-                front_len = 52
-                rear_len = 18
+                front_len = 78
+                rear_len = 27
 
             butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy = get_polearm_pose(
-                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len, sway_scale=0.55
+                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len, sway_scale=0.50
             )
             perp_x, perp_y = -uy, ux
 
@@ -2044,10 +2044,10 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             draw_two_handed_arms(c, cx + b_dx, cy + b_dy, f_hand, r_hand, "dujeonggap_crimson", d=d)
 
             # 2. Solid hardwood/red-lacquered long spear shaft from rear butt through both hands to neck
-            neck_x = int(round(tip_x - 10 * ux))
-            neck_y = int(round(tip_y - 10 * uy))
-            mid_shaft_x = int(round(gx + (front_len * 0.55) * ux))
-            mid_shaft_y = int(round(gy + (front_len * 0.55) * uy))
+            neck_x = int(round(tip_x - 14 * ux))
+            neck_y = int(round(tip_y - 14 * uy))
+            mid_shaft_x = int(round(gx + (front_len * 0.58) * ux))
+            mid_shaft_y = int(round(gy + (front_len * 0.58) * uy))
             draw_line_indices(c, butt_x, butt_y, mid_shaft_x, mid_shaft_y, IDX_WOOD_DARK, width=2)
             draw_line_indices(c, butt_x, butt_y, neck_x, neck_y, IDX_WOOD_MID, width=1)
             draw_line_indices(c, gx, gy, mid_shaft_x, mid_shaft_y, IDX_WOOD_LIGHT, width=1)
@@ -2058,15 +2058,15 @@ def build_jangchangsu_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             draw_hand_wrapping_weapon(c, f_hand[0], f_hand[1], ux, uy, cuff_col=IDX_STEEL_MID)
 
             # 4. Prominent crimson horsehair tassel (붉은 영자) at neck collar
-            tassel_end_x = int(round(neck_x + 5 * perp_x - 3 * ux))
-            tassel_end_y = int(round(neck_y + 5 * perp_y + 3))
+            tassel_end_x = int(round(neck_x + 7 * perp_x - 4 * ux))
+            tassel_end_y = int(round(neck_y + 7 * perp_y + 4))
             draw_line_indices(c, neck_x, neck_y, tassel_end_x, tassel_end_y, IDX_RED_BRIGHT, width=2)
-            set_safe_pixel(c, int(round(neck_x + 3 * perp_x)), int(round(neck_y + 3 * perp_y + 1)), IDX_RED_HIGH)
+            set_safe_pixel(c, int(round(neck_x + 4 * perp_x)), int(round(neck_y + 4 * perp_y + 2)), IDX_RED_HIGH)
             set_safe_pixel(c, neck_x, neck_y, IDX_GOLD_BRIGHT)
 
-            # 5. 10px tapered steel spearhead (2px base -> 1px gleaming razor tip)
-            mid_head_x = int(round(tip_x - 4 * ux))
-            mid_head_y = int(round(tip_y - 4 * uy))
+            # 5. 14px (1.5x scaled) tapered steel spearhead (2px base -> 1px gleaming razor tip)
+            mid_head_x = int(round(tip_x - 6 * ux))
+            mid_head_y = int(round(tip_y - 6 * uy))
             draw_line_indices(c, neck_x, neck_y, mid_head_x, mid_head_y, IDX_STEEL_MID, width=2)
             draw_line_indices(c, neck_x, neck_y, tip_x, tip_y, IDX_STEEL_GLEAM, width=1)
             set_safe_pixel(c, tip_x, tip_y, IDX_STEEL_GLEAM)
@@ -2240,38 +2240,42 @@ def build_nangseon_frames(base_frames: List[bytes]) -> List[np.ndarray]:
                     c[ty, tx] = val
 
         if state == "die":
-            # Fallen 2x-length multi-branched bamboo spear (cx-40 to cx+42)
-            draw_line_indices(c, cx - 40, cy + 14, cx + 36, cy + 14, IDX_BAMBOO_HIGH, width=2)
-            draw_line_indices(c, cx - 40, cy + 14, cx + 36, cy + 14, IDX_BAMBOO_GOLD, width=1)
-            draw_line_indices(c, cx + 36, cy + 14, cx + 42, cy + 14, IDX_STEEL_GLEAM, width=1)
-            for bx_n in (cx - 10, cx - 1, cx + 8, cx + 17, cx + 26):
+            # Fallen 1.5x-upscaled multi-branched bamboo spear (cx-60 to cx+63, 7 tiers)
+            draw_line_indices(c, cx - 60, cy + 14, cx + 54, cy + 14, IDX_BAMBOO_HIGH, width=2)
+            draw_line_indices(c, cx - 60, cy + 14, cx + 54, cy + 14, IDX_BAMBOO_GOLD, width=1)
+            draw_line_indices(c, cx + 54, cy + 14, cx + 63, cy + 14, IDX_STEEL_GLEAM, width=1)
+            for bx_n in (cx - 18, cx - 8, cx + 2, cx + 12, cx + 22, cx + 32, cx + 42):
                 # Upper & lower primary branches + sub-twigs
-                draw_line_indices(c, bx_n, cy + 14, bx_n + 7, cy + 8, IDX_BAMBOO_GOLD, width=1)
-                draw_line_indices(c, bx_n + 3, cy + 11, bx_n + 6, cy + 6, IDX_BAMBOO_VIVID, width=1)
-                set_safe_pixel(c, bx_n + 7, cy + 8, IDX_STEEL_GLEAM)
-                set_safe_pixel(c, bx_n + 6, cy + 6, IDX_STEEL_GLEAM)
-                draw_line_indices(c, bx_n, cy + 14, bx_n + 7, cy + 20, IDX_BAMBOO_LIGHT, width=1)
-                draw_line_indices(c, bx_n + 3, cy + 17, bx_n + 6, cy + 22, IDX_BAMBOO_HIGH, width=1)
-                set_safe_pixel(c, bx_n + 7, cy + 20, IDX_STEEL_GLEAM)
-                set_safe_pixel(c, bx_n + 6, cy + 22, IDX_STEEL_GLEAM)
+                draw_line_indices(c, bx_n, cy + 14, bx_n + 9, cy + 6, IDX_BAMBOO_GOLD, width=1)
+                draw_line_indices(c, bx_n + 4, cy + 10, bx_n + 8, cy + 4, IDX_BAMBOO_VIVID, width=1)
+                set_safe_pixel(c, bx_n + 9, cy + 6, IDX_STEEL_GLEAM)
+                set_safe_pixel(c, bx_n + 8, cy + 4, IDX_STEEL_GLEAM)
+                draw_line_indices(c, bx_n, cy + 14, bx_n + 9, cy + 22, IDX_BAMBOO_LIGHT, width=1)
+                draw_line_indices(c, bx_n + 4, cy + 18, bx_n + 8, cy + 24, IDX_BAMBOO_HIGH, width=1)
+                set_safe_pixel(c, bx_n + 9, cy + 22, IDX_STEEL_GLEAM)
+                set_safe_pixel(c, bx_n + 8, cy + 24, IDX_STEEL_GLEAM)
         else:
+            # 1.5x-upscaled 99px bamboo spear length (75px front + 24px rear, up from 50 + 16 = 66px)!
             if state == "attack":
                 thrust = (step / 4.0) if step <= 4 else (1.0 - (step - 4) / 3.0)
-                front_len = int(50 + 4 * thrust)
-                rear_len = (10 if d == 4 else max(10, int(16 - 4 * thrust)))
+                front_len = int(75 + 6 * thrust)
+                rear_len = (14 if d == 4 else max(14, int(24 - 6 * thrust)))
             else:
-                front_len = 50
-                rear_len = 16
+                front_len = 75
+                rear_len = 24
+            # 7 full multi-tiered bamboo branch nodes along the 1.5x longer (75px) shaft!
             tier_specs = (
-                (0.26, 9, 5),
-                (0.40, 11, 6),
-                (0.54, 11, 6),
-                (0.68, 10, 5),
-                (0.82, 8, 4),
+                (0.20, 11, 6),
+                (0.31, 13, 7),
+                (0.42, 15, 8),
+                (0.53, 15, 8),
+                (0.64, 14, 7),
+                (0.75, 12, 6),
+                (0.86, 10, 5),
             )
 
             butt_x, butt_y, gx, gy, tip_x, tip_y, ux, uy = get_polearm_pose(
-                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len, sway_scale=0.55
+                state, d, step, cx + b_dx, cy + b_dy, rear_len=rear_len, front_len=front_len, sway_scale=0.50
             )
             perp_x, perp_y = -uy, ux
 
@@ -2282,8 +2286,8 @@ def build_nangseon_frames(base_frames: List[bytes]) -> List[np.ndarray]:
             draw_two_handed_arms(c, cx + b_dx, cy + b_dy, f_hand, r_hand, "dujeonggap_vanguard", d=d)
 
             # 1. Prominent 2px bamboo main shaft (dark bamboo green shadow + bright golden bamboo ridge)
-            neck_x = int(round(tip_x - 6 * ux))
-            neck_y = int(round(tip_y - 6 * uy))
+            neck_x = int(round(tip_x - 9 * ux))
+            neck_y = int(round(tip_y - 9 * uy))
             draw_line_indices(c, butt_x, butt_y, neck_x, neck_y, IDX_BAMBOO_HIGH, width=2)
             draw_line_indices(c, butt_x, butt_y, neck_x, neck_y, IDX_BAMBOO_GOLD, width=1)
             set_safe_pixel(c, butt_x, butt_y, IDX_STEEL_LOW)
@@ -2386,9 +2390,9 @@ def generate_all_unit_sprites():
     generators = {
         "dengpaesu.spr": (build_dengpaesu_frames(base_frames), 68, 68),
         "ssangsudo.spr": (build_ssangsudo_frames(base_frames), 96, 88),
-        "jangchangsu.spr": (build_jangchangsu_frames(base_frames), 144, 140),
+        "jangchangsu.spr": (build_jangchangsu_frames(base_frames), 208, 200),
         "woldo.spr": (build_woldo_frames(base_frames), 78, 74),
-        "nangseon.spr": (build_nangseon_frames(base_frames), 144, 140),
+        "nangseon.spr": (build_nangseon_frames(base_frames), 208, 200),
     }
 
     # 1:1 online character slot mapping for dawn.exe engine runtime extraction
